@@ -51,6 +51,15 @@
     <ClCompile Include="game\debug_print.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\shader.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\resource_manager.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\shader_loader.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -87,6 +96,15 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\camera.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\shader.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\resource_manager.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\shader_loader.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>

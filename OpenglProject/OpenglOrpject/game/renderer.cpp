@@ -180,18 +180,6 @@ bool CRenderer::SetShaderMesh(CMesh* mesh, const char* vert, const char* frag) {
     ShaderProgramSource ss = ParseShader("game/ShaderFiles/Basic.shader");
     const GLchar* vertexShader = ss.VertexSource.c_str();
     printf(vertexShader);
-    //const char* vertexShader = 
-    //CFileLoader::GetText("shader.vert", vertexShader);
-    //const GLchar* vertexShader = R"#(
-    //                                attribute vec3 position;
-    //                                uniform mat4 MVP;
-    //                                void main(void){
-    //                                vec4 v = vec4(position, 1.0);
-    //                                gl_Position = MVP * v;
-    //                                }
-    //                            )#";
-
-
 
 
     glShaderSource(vertShaderID, 1, &vertexShader, NULL);
