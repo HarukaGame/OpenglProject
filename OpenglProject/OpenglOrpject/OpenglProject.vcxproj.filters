@@ -45,6 +45,12 @@
     <ClCompile Include="game\ray_cast.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\opengl_device.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\debug_print.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -72,6 +78,15 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\common_math.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\opengl_device.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\debug_print.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\camera.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>

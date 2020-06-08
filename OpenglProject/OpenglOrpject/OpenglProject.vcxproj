@@ -21,10 +21,12 @@
   <ItemGroup>
     <ClCompile Include="game\application.cpp" />
     <ClCompile Include="game\camera.cpp" />
+    <ClCompile Include="game\debug_print.cpp" />
     <ClCompile Include="game\fileloader.cpp" />
     <ClCompile Include="game\input.cpp" />
     <ClCompile Include="game\main.cpp" />
     <ClCompile Include="game\Mesh.cpp" />
+    <ClCompile Include="game\opengl_device.cpp" />
     <ClCompile Include="game\ray_cast.cpp" />
     <ClCompile Include="game\renderer.cpp" />
     <ClCompile Include="game\vertexfiles\cube.cpp" />
@@ -32,9 +34,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h" />
+    <ClInclude Include="game\camera.h" />
+    <ClInclude Include="game\debug_print.h" />
     <ClInclude Include="game\fileloader.h" />
     <ClInclude Include="game\input.h" />
     <ClInclude Include="game\Mesh.h" />
+    <ClInclude Include="game\opengl_device.h" />
     <ClInclude Include="game\ray_cast.h" />
     <ClInclude Include="game\renderer.h" />
     <ClInclude Include="game\vertexfiles\cube.h" />
@@ -127,6 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)game/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

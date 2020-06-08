@@ -6,6 +6,7 @@
 #define __APPLICATION_H__
 
 class CWindow;
+class COpenglDevice;
 //class MSG;
 
 class CApplication {
@@ -20,6 +21,7 @@ public:
 	void Quit();
 private:
     CWindow* m_pwindow;
+    COpenglDevice* m_pOpenglDevice  = nullptr;
 };
 
 

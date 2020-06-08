@@ -21,7 +21,6 @@ public:
 	bool Initialize(HWND _hwnd);
 	void StartDisplay();
 	void MeshDraw(CMesh* _mesh);
-	void EndDisplay();
 	void Release();
 
 	bool SetShaderMesh(CMesh* mesh,const char* vert,const char* frag);
@@ -38,7 +37,6 @@ private:
 	glm::mat4 GetProjectionMatrix(float _angle, float _aspect, float _far, float _near);
 	//正規化デバイス座標からスクリーン座標への変換
 	glm::mat4 GetViewPortMatrix(float _width, float hwight);
-	bool GLSetUp(HWND _hwnd);
 	void GLRelease();
 
 	

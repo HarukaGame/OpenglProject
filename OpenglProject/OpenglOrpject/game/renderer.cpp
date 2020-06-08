@@ -54,19 +54,17 @@ static ShaderProgramSource ParseShader(const std::string& filepath) {
 bool CRenderer::Initialize(HWND _hwnd) {
     m_hwnd = _hwnd;
 
-    if (GLSetUp(_hwnd) == false) {
-        printf("GLのセットアップに失敗しました");
-        return false;
-    }
+    //if (GLSetUp(_hwnd) == false) {
+    //    printf("GLのセットアップに失敗しました");
+    //    return false;
+    //}
 
     return true;
 
 }
 
 void CRenderer::StartDisplay() {
-    if (!wglMakeCurrent(m_hdc, m_glrc)) {
-        printf("test");
-    }
+
     glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
     glDepthRange(-1.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
@@ -168,70 +166,11 @@ void CRenderer::MeshDraw(CMesh* _mesh) {
     glUseProgram(0);
 }
 
-void CRenderer::EndDisplay() {
-    SwapBuffers(m_hdc);
-    wglMakeCurrent(NULL, NULL);
 
-}
-
-bool CRenderer::GLSetUp(HWND _hwnd){
-    PIXELFORMATDESCRIPTOR pfd =
-    {
-        sizeof(PIXELFORMATDESCRIPTOR),
-        1,
-        PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER, //Flags
-        PFD_TYPE_RGBA,                                              //The kind of framebuffer. RGBA or palette.
-        32,                                                         //Colordepth of the framebuffer.
-        0, 0, 0, 0, 0, 0,
-        0,
-        0,
-        0,
-        0, 0, 0, 0,
-        24,                                                         //Number of bits for the depthbuffer
-        8,                                                          //Number of bits for the stencilbuffer
-        0,                                                          //Number of Aux buffers in the framebuffer.
-        PFD_MAIN_PLANE,
-        0,
-        0, 0, 0
-    };
-
-    m_hdc = GetDC(_hwnd);
-    int format = ChoosePixelFormat(m_hdc, &pfd);
-    if (format == 0) {
-        printf("ピクセルフォーマットの選択に失敗しました");
-
-        return false; // 該当するピクセルフォーマットが無い
-    }
-
-    // OpenGLが使うデバイスコンテキストに指定のピクセルフォーマットをセット
-    if (!SetPixelFormat(m_hdc, format, &pfd)) {
-        printf("ピクセルフォーマットのセットに失敗しました");
-
-        return false; // DCへフォーマットを設定するのに失敗
-    }
-
-    // OpenGL contextを作成
-    m_glrc = wglCreateContext(m_hdc);
-
-    // 作成されたコンテキストがカレント（現在使用中のコンテキスト）か？
-    if (!wglMakeCurrent(m_hdc, m_glrc)) {
-        printf("カレントコンテキスト");
-
-        return false; // 何か正しくないみたい…
-    }
-
-    if (glewInit() != GLEW_OK) {
-        printf("GLの初期化に失敗しました");
-
-        return false;
-    }
-    return true;
-
-}
 
 void CRenderer::Release() {
 
-    GLRelease();
+    //GLRelease();
 }
 
 bool CRenderer::SetShaderMesh(CMesh* mesh, const char* vert, const char* frag) {

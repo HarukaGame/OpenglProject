@@ -18,6 +18,7 @@ public:
 
     void SetClientSize(HWND _hwnd, int width, int height);
 
+    HWND GetHWND();
 
     void DispUpdate();
     //void ObjectDisp(float add);

@@ -69,10 +69,9 @@ bool CWindow::WinInitilize(HINSTANCE hInstance,
     ShowWindow(m_hwnd, nCmdShow);
 
     UpdateWindow(m_hwnd);
-
     testMesh = new CMesh();
     testMesh->InitVertex();
-    m_prenderer->SetShaderMesh(testMesh, "shader.vert", "shader.frag");
+
     Input::CreateInstance();
     Input::SetWnd(m_hwnd);
     //CreateMesh();
@@ -84,11 +83,12 @@ bool CWindow::WinInitilize(HINSTANCE hInstance,
 
 
 void CWindow::DispUpdate() {
+    m_prenderer->SetShaderMesh(testMesh, "shader.vert", "shader.frag");
+
     m_prenderer->StartDisplay();
 
     m_prenderer->MeshDraw(testMesh);
 
-    m_prenderer->EndDisplay();
 }
 
 
@@ -137,4 +137,9 @@ void CWindow::SetClientSize(HWND _hwnd, int width, int height)
     int newWidth = (window.right - window.left) - (client.right - client.left) + width;
     int newHeight = (window.bottom - window.top) - (client.bottom - client.top) + height;
     SetWindowPos(_hwnd,NULL, 0, 0, newWidth, newHeight, NULL);
+}
+
+HWND CWindow::GetHWND()
+{
+    return m_hwnd;
 }
