@@ -53,7 +53,9 @@
     <ClInclude Include="game\common_math.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="game\ShaderFiles\basic.fs" />
     <None Include="game\ShaderFiles\Basic.shader" />
+    <None Include="game\ShaderFiles\basic.vs" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

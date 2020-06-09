@@ -113,5 +113,11 @@
     <None Include="game\ShaderFiles\Basic.shader">
       <Filter>game\res\shaderfiles</Filter>
     </None>
+    <None Include="game\ShaderFiles\basic.fs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+    <None Include="game\ShaderFiles\basic.vs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
   </ItemGroup>
 </Project>
