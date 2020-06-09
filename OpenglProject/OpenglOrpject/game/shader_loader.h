@@ -3,6 +3,6 @@
 #define __SHADER_LOADER_H__
 
 class CShaderLoader {
-
+	int CreateShaderProgram(const char* _vertSource,int _vertLength, const char* _fragSource,int _fragLength);
 };
 #endif // !__SHADER_LOADER_H__
