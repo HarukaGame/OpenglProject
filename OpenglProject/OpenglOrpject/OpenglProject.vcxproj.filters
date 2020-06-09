@@ -30,9 +30,6 @@
     <ClCompile Include="game\camera.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="game\Mesh.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
     <ClCompile Include="game\fileloader.cpp">
       <Filter>game</Filter>
     </ClCompile>
@@ -60,6 +57,9 @@
     <ClCompile Include="game\shader_loader.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\mesh.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -69,9 +69,6 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\renderer.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="game\Mesh.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\fileloader.h">
@@ -105,6 +102,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\shader_loader.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\mesh.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>

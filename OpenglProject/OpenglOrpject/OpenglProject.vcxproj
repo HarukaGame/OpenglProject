@@ -25,7 +25,7 @@
     <ClCompile Include="game\fileloader.cpp" />
     <ClCompile Include="game\input.cpp" />
     <ClCompile Include="game\main.cpp" />
-    <ClCompile Include="game\Mesh.cpp" />
+    <ClCompile Include="game\mesh.cpp" />
     <ClCompile Include="game\opengl_device.cpp" />
     <ClCompile Include="game\ray_cast.cpp" />
     <ClCompile Include="game\renderer.cpp" />
@@ -41,7 +41,7 @@
     <ClInclude Include="game\debug_print.h" />
     <ClInclude Include="game\fileloader.h" />
     <ClInclude Include="game\input.h" />
-    <ClInclude Include="game\Mesh.h" />
+    <ClInclude Include="game\mesh.h" />
     <ClInclude Include="game\opengl_device.h" />
     <ClInclude Include="game\ray_cast.h" />
     <ClInclude Include="game\renderer.h" />
