@@ -3,6 +3,7 @@
 #include "opengl_device.h"
 #include "renderer.h"
 #include "object_manager.h"
+#include "resource_manager.h"
 #include "mesh.h"
 
 bool CApplication::Initilize(HINSTANCE hInstance,
@@ -27,6 +28,8 @@ bool CApplication::Initilize(HINSTANCE hInstance,
 
     m_pObjectManager = new CObjectManager();
 
+    CResourceManager::CreateInstance();
+
     testMesh = new CMesh();
     testMesh->InitVertex();
 
@@ -44,8 +47,12 @@ void CApplication::Update(MSG* msg) {
 }
 
 void CApplication::Quit() {
+
     m_pOpenglDevice->Finalize();
     delete m_pOpenglDevice;
 
     delete m_pwindow;
+    delete m_pObjectManager;
+
+    CResourceManager::Destroy();
 }

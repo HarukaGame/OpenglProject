@@ -10,6 +10,7 @@ class CRenderer;
 class CObjectManager {
 public:
 	void AllObjectDraw(CRenderer* _renderer);
+	CGameObject* CreateGameObject();
 private:
 	CList<CGameObject*> m_gameObjectList;
 };

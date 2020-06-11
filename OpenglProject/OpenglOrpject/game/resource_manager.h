@@ -7,7 +7,11 @@ class CShader;
 
 class CResourceManager {
 public:
-	CShader* CreateShader();
-	CMesh* CreateMesh();
+	static bool CreateInstance();
+	static void Destroy();
+	static CShader* CreateShader();
+	static CMesh* CreateMesh();
+private:
+	static CResourceManager* s_instance;
 };
 #endif // !__RESOURCE_MANAGER_H__
