@@ -60,6 +60,9 @@
     <ClCompile Include="game\mesh.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\object_manager.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -105,6 +108,12 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\mesh.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\object_manager.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\my_list.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
