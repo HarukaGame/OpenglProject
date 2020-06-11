@@ -2,6 +2,7 @@
 #include "window.h"
 #include "opengl_device.h"
 #include "renderer.h"
+#include "object_manager.h"
 #include "mesh.h"
 
 bool CApplication::Initilize(HINSTANCE hInstance,
@@ -23,6 +24,8 @@ bool CApplication::Initilize(HINSTANCE hInstance,
         delete m_prenderer;
         return false;
     }
+
+    m_pObjectManager = new CObjectManager();
 
     testMesh = new CMesh();
     testMesh->InitVertex();

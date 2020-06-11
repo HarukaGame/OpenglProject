@@ -7,13 +7,12 @@
 ///@brief	ノードクラス
 template<class T>
 struct Node {
-	T m_value = NULL;		//格納する値
+	T m_value;		//格納する値
 	Node* m_pPrev = nullptr;//前のノードポインタ
 	Node* m_pNext = nullptr;//後のノードポインタ
 
 	///@brief	コンストラクタ
 	Node() {
-		m_value = NULL;
 		m_pPrev = this;
 		m_pNext = this;
 	}

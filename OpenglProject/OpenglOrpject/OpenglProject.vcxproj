@@ -23,6 +23,7 @@
     <ClCompile Include="game\camera.cpp" />
     <ClCompile Include="game\debug_print.cpp" />
     <ClCompile Include="game\fileloader.cpp" />
+    <ClCompile Include="game\gameobject.cpp" />
     <ClCompile Include="game\input.cpp" />
     <ClCompile Include="game\main.cpp" />
     <ClCompile Include="game\mesh.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="game\camera.h" />
     <ClInclude Include="game\debug_print.h" />
     <ClInclude Include="game\fileloader.h" />
+    <ClInclude Include="game\gameobject.h" />
     <ClInclude Include="game\input.h" />
     <ClInclude Include="game\mesh.h" />
     <ClInclude Include="game\my_list.h" />
