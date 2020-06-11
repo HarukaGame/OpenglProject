@@ -7,6 +7,8 @@
 
 class CWindow;
 class COpenglDevice;
+class CRenderer;
+class CMesh;
 //class MSG;
 
 class CApplication {
@@ -22,6 +24,9 @@ public:
 private:
     CWindow* m_pwindow;
     COpenglDevice* m_pOpenglDevice  = nullptr;
+    CRenderer* m_prenderer = nullptr;
+
+    CMesh* testMesh = nullptr;
 };
 
 

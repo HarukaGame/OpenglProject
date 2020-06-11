@@ -55,15 +55,7 @@ bool CWindow::WinInitilize(HINSTANCE hInstance,
     freopen_s(&fp, "CONOUT$", "w", stdout);
     freopen_s(&fp, "CONIN$", "r", stdin);
 
-    m_prenderer = new CRenderer();
-    if (m_prenderer == nullptr) {
-        return false;
-    }
-    bool success = m_prenderer->Initialize(m_hwnd);
-    if (success == false) {
-        delete m_prenderer;
-        return false;
-    }
+
 
 
     ShowWindow(m_hwnd, nCmdShow);
@@ -83,11 +75,6 @@ bool CWindow::WinInitilize(HINSTANCE hInstance,
 
 
 void CWindow::DispUpdate() {
-    m_prenderer->SetShaderMesh(testMesh, "shader.vert", "shader.frag");
-
-    m_prenderer->StartDisplay();
-
-    m_prenderer->MeshDraw(testMesh);
 
 }
 
