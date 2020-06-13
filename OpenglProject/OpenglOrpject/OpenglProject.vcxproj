@@ -34,6 +34,7 @@
     <ClCompile Include="game\ray_cast.cpp" />
     <ClCompile Include="game\renderer.cpp" />
     <ClCompile Include="game\resource_manager.cpp" />
+    <ClCompile Include="game\scene.cpp" />
     <ClCompile Include="game\shader.cpp" />
     <ClCompile Include="game\shader_loader.cpp" />
     <ClCompile Include="game\vertexfiles\cube.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="game\ray_cast.h" />
     <ClInclude Include="game\renderer.h" />
     <ClInclude Include="game\resource_manager.h" />
+    <ClInclude Include="game\scene.h" />
     <ClInclude Include="game\shader.h" />
     <ClInclude Include="game\shader_loader.h" />
     <ClInclude Include="game\vertexfiles\cube.h" />

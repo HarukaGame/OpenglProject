@@ -4,6 +4,8 @@
 #include "renderer.h"
 #include "object_manager.h"
 #include "resource_manager.h"
+#include "scene.h"
+#include "input.h"
 #include "mesh.h"
 
 bool CApplication::Initilize(HINSTANCE hInstance,
@@ -33,6 +35,8 @@ bool CApplication::Initilize(HINSTANCE hInstance,
 
     CResourceManager::CreateInstance();
 
+    m_pScene = new CScene();
+
     //testMesh = new CMesh();
     //testMesh->InitVertex();
 
@@ -41,12 +45,16 @@ bool CApplication::Initilize(HINSTANCE hInstance,
 
 void CApplication::Update(MSG* msg) {
     //m_prenderer->SetShaderMesh(testMesh, "shader.vert", "shader.frag");
+    Input::StackInput();
+
+    m_pScene->Update();
 
     m_prenderer->StartDisplay();
     m_pObjectManager->AllObjectDraw(m_prenderer);
     //m_prenderer->MeshDraw(testMesh);
 
     m_pOpenglDevice->SwapBuffer();
+    Input::ReleaseInput();
 }
 
 void CApplication::Quit() {
@@ -54,7 +62,7 @@ void CApplication::Quit() {
     m_pOpenglDevice->Finalize();
     m_pObjectManager->Finalize();
     delete m_pOpenglDevice;
-
+    delete m_pScene;
     delete m_pwindow;
     delete m_pObjectManager;
 

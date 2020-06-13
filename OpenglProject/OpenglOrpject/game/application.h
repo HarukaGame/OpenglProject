@@ -10,6 +10,7 @@ class COpenglDevice;
 class CRenderer;
 class CObjectManager;
 class CMesh;
+class CScene;
 //class MSG;
 
 class CApplication {
@@ -28,6 +29,7 @@ private:
     CRenderer* m_prenderer = nullptr;
     CObjectManager* m_pObjectManager = nullptr;
     CMesh* testMesh = nullptr;
+    CScene* m_pScene = nullptr;
 };
 
 
