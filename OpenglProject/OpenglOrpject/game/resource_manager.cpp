@@ -44,8 +44,6 @@ CMesh* CResourceManager::CreateMesh()
 {
 	CMesh* tempMesh = new CMesh();
 	tempMesh->InitVertex();
-	CBuffer* buffer = new CBuffer();
-	buffer->CreateBuffer(tempMesh);
-	tempMesh->SetBuffer(buffer);
+	tempMesh->CreateBuffer();
 	return tempMesh;
 }

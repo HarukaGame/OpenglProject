@@ -20,11 +20,13 @@ public:
 
 	//void SetColor(float r, float g, float b, float a);
 	//void SetLight(float x, float y, float z);
-	void SetBuffer(CBuffer* _buffer);
+	bool CreateBuffer();
 	CBuffer* GetBuffer()const;
 	GLuint GetVertexNum()const { return vertexNum; }
 	GLuint GetElementNum()const { return elementNum; }
 	glm::mat4 GetModelMatrix()const;
+	void Finalize();
+
 	const float* myvertices;
 	glm::vec3 m_pos = glm::vec3(0, 0, 0);
 	glm::vec3 m_rot = glm::vec3(0, 0, 0);

@@ -1,4 +1,6 @@
 ﻿#include "mesh.h"
+#include "buffer.h"
+
 #include <windows.h>
 #include "GL/glew.h"
 #include <iostream>
@@ -95,9 +97,16 @@ void CMesh::InitVertex()
 //    glUniform3f(m_uniformLight, x/length, y/length, z/length);
 //}
 
-void CMesh::SetBuffer(CBuffer* _buffer)
+
+
+bool CMesh::CreateBuffer()
 {
-    m_pBuffer = _buffer;
+    m_pBuffer = new CBuffer();
+    if (m_pBuffer == nullptr) {
+        return false;
+    }
+    m_pBuffer->CreateBuffer(this);
+    return false;
 }
 
 CBuffer* CMesh::GetBuffer() const
@@ -112,6 +121,13 @@ glm::mat4 CMesh::GetModelMatrix() const
     glm::mat4 scaleMat = GetScaleMatrix(m_scale);
 
     return transMat * rotateMat * scaleMat;
+}
+
+void CMesh::Finalize()
+{
+    if (m_pBuffer != nullptr) {
+        delete m_pBuffer;
+    }
 }
 
 glm::mat4 CMesh::GetTransMatrix(glm::vec3 trans)const {

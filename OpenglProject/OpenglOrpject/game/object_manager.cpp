@@ -28,6 +28,14 @@ bool CObjectManager::Initilize()
 
 void CObjectManager::Finalize()
 {
+	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();
+	while (m_gameObjectList.Empty() == false) {
+		(*iter)->Finalize();
+		delete (*iter);
+		m_gameObjectList.PopFront();
+		iter = m_gameObjectList.Begin();
+	}
+
 	CCamera::Destroy();
 	CLight::Destory();
 }

@@ -1,4 +1,5 @@
 #include "gameobject.h"
+#include "mesh.h"
 
 void CGameObject::SetShader(CShader* _shader)
 {
@@ -18,4 +19,9 @@ CShader* CGameObject::GetShader() const
 CMesh* CGameObject::GetMesh() const
 {
 	return m_pMesh;
+}
+
+void CGameObject::Finalize()
+{
+	m_pMesh->Finalize();
 }

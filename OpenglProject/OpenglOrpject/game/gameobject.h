@@ -11,6 +11,7 @@ public:
 	void SetMesh(CMesh* _mesh);
 	CShader* GetShader()const;
 	CMesh* GetMesh()const;
+	void Finalize();
 private:
 	CMesh* m_pMesh = nullptr;
 	CShader* m_pShader = nullptr;
