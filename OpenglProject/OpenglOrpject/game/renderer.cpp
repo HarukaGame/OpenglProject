@@ -3,6 +3,7 @@
 #include "shader.h"
 #include "buffer.h"
 #include "camera.h"
+#include "light.h"
 #include "debug_print.h"
 
 #include "GL/glew.h"
@@ -87,7 +88,8 @@ void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat)
     //glUseProgram(_buffer->GetProgramID());
 
     //_mesh->SetColor(0, 1, 1, 1);
-    SetLight(_shader, 1, 2, 3);
+    glm::vec3 lightDir = CLight::GetInstance()->GetDirection();
+    SetLight(_shader, lightDir.x, lightDir.y, lightDir.z);
     SetColor(_shader,0, 1, 1, 1);
     //_mesh->SetLight(1, 2, 3);
 

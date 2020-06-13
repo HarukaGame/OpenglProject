@@ -8,6 +8,7 @@
 #include "mesh.h"
 
 #include "camera.h"
+#include "light.h"
 
 bool CObjectManager::Initilize()
 {
@@ -16,12 +17,19 @@ bool CObjectManager::Initilize()
 	}
 
 	CCamera::GetInstance()->SetTargetPosition(glm::vec3(0, 0, 0));
+
+	if (CLight::CreateInstance() == false) {
+		return false;
+	}
+
+	CLight::GetInstance()->SetRotate(0, 0);
 	return true;
 }
 
 void CObjectManager::Finalize()
 {
 	CCamera::Destroy();
+	CLight::Destory();
 }
 
 void CObjectManager::AllObjectDraw(CRenderer* _renderer)

@@ -73,6 +73,9 @@
     <ClCompile Include="game\scene.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\light.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -133,6 +136,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\scene.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\light.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
