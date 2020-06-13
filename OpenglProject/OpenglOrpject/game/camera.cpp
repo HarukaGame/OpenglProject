@@ -61,6 +61,11 @@ void CCamera::Rotate(const float _x, const float _y)
 {
 	m_angleAxisX += _x;
 	m_angleAxisY += _y;
+	if (m_angleAxisX > ANGLE_X_MAX) {
+		m_angleAxisX = ANGLE_X_MAX;
+	}else if (m_angleAxisX < ANGLE_X_MIN) {
+		m_angleAxisX = ANGLE_X_MIN;
+	}
 	ReCalcTransform();
 }
 
