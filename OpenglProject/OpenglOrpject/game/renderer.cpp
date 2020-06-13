@@ -1,5 +1,8 @@
 ﻿#include "renderer.h"
 #include "Mesh.h"
+#include "shader.h"
+#include "buffer.h"
+
 #include "GL/glew.h"
 #include <cmath>
 
@@ -22,7 +25,7 @@ struct ShaderProgramSource {
     std::string FragmentSource;
 };
 
-float test = 0;
+float test = -1;
 
 static ShaderProgramSource ParseShader(const std::string& filepath) {
     std::ifstream stream(filepath);
@@ -75,26 +78,26 @@ void CRenderer::StartDisplay() {
     glClearDepth(1.0f);
 }
 
-void CRenderer::MeshDraw(CMesh* _mesh) {
+void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat) {
 
 
-    glUseProgram(_mesh->m_programID);
+    glUseProgram(_shader->GetProgramID());
+    //glUseProgram(_buffer->GetProgramID());
 
-    _mesh->CreateVAO();
-
-    _mesh->SetColor(0, 1, 1, 1);
-    _mesh->SetLight(1, 2, 3);
+    //_mesh->SetColor(0, 1, 1, 1);
+    SetLight(_shader, 1, 2, 3);
+    SetColor(_shader,0, 1, 1, 1);
+    //_mesh->SetLight(1, 2, 3);
 
     test += 0.1f;
 
     //カメラ座標の設定
-    glm::vec3 cameraPos = glm::vec3(4, 4,4);
+    glm::vec3 cameraPos = glm::vec3(0, 0,4);
     //モデル行列の取得
-    glm::mat4 model = _mesh->GetModelMatrix();
     //ビュー行列の取得
     glm::mat4 view = GetViewMatirix(
         cameraPos,
-        glm::vec3(45, 45, 0)
+        glm::vec3(0, 0, 0)
     );
     //プロジェクション行列の取得
     glm::mat4 pro = GetProjectionMatrix(60, (float)WINDOW_WIDTH / WINDOW_HEIGHT, -1, 1);
@@ -102,66 +105,26 @@ void CRenderer::MeshDraw(CMesh* _mesh) {
     //ビューポート行列の取得
     glm::mat4 viewportMat = GetViewPortMatrix((float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
 
-    //ビューポート行列の逆行列
-    glm::mat4 inversePort = glm::inverse(viewportMat);
-    //プロジェクション行列の逆行列
-    glm::mat4 inverseProjection = glm::inverse(pro);
-    //ビュー行列の逆行列
-    glm::mat4 inverseView = glm::inverse(view);
-
-    //マウス座標（スクリーン座標）
-    POINT mouse = Input::GetMousePosition();
-    //ベクトル４に登録（zは正規化デバイスの一番手前の値=`near）
-    glm::vec4 preScreenPos = glm::vec4(mouse.x, mouse.y, -1, 1);
-
-    //スクリーンのワールド座標上でのマウスの座標
-    glm::vec4 toScreenWorldPos = inverseView * inverseProjection * inversePort * preScreenPos;
-    glm::vec3 screenWorldPos3 = glm::vec3(toScreenWorldPos.x, toScreenWorldPos.y, toScreenWorldPos.z);
     
-    //モデルの変数設定
-    //_mesh->m_rot.x = test*10;
-    //_mesh->m_rot.y = test*10;
-    //_mesh->m_rot.z = test*10;
-    _mesh->m_scale.x = 2;
-    _mesh->m_scale.y = 3;
-    _mesh->m_scale.z = 4;
 
     //MVP行列の計算
-    glm::mat4 mvp = pro * view * model;
-
-
-    //レイの準備
-    Ray ray = Ray(cameraPos, screenWorldPos3 - cameraPos);
-    glm::vec3 min = glm::vec3(-1, -1.5, -2);
-    glm::vec3 max = glm::vec3(1, 1.5, 2);
-    if (CRayCast::RayHitAABB(ray, min, max)) {
-        printf("hit\n");
-    }
-    else {
-        printf("none\n");
-
-    }
-    
-    ////あたったオブジェクトの情報を格納
-    //RayCastHit raycasthit;
-    ////当たったかどうか
-    //bool hit = CRayCast::RayHitMesh(ray, _mesh,raycasthit);
-    //if (hit) {
-    //    printf("hit     point(X:%f    Y:%f    Z:%f)    normal(X:%f    Y:%f    Z:%f)\n",
-    //        raycasthit.m_point.x, raycasthit.m_point.y, raycasthit.m_point.z,
-    //        raycasthit.m_normal.x, raycasthit.m_normal.y, raycasthit.m_normal.z);
-    //}
-    //else {
-    //    printf("none\n");
-    //}
+    glm::mat4 mvp = pro * view * modelMat;
 
 
 
-    glUniformMatrix4fv(_mesh->m_uniformModelMat, 1, GL_FALSE, &mvp[0][0]);
 
-    glBindVertexArray(_mesh->m_vaoID);
 
-    glDrawArrays(GL_TRIANGLES, 0, _mesh->GetVertexNum());
+    glUniformMatrix4fv(_shader->GetUniform(SHADER_UNIFORM_MVP), 1, GL_FALSE, &mvp[0][0]);
+
+
+    glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION), 3, GL_FLOAT, GL_FALSE, 0, 0);
+    //glBufferData(GL_ARRAY_BUFFER, _mesh->vertexNum * 3 * sizeof(GL_FLOAT), &_mesh->myvertices, GL_STATIC_DRAW);
+
+
+    glBindVertexArray(_buffer->GetProgramID());
+
+    glDrawArrays(GL_TRIANGLES, 0, _buffer->GetVertexNum());
 
     glUseProgram(0);
 }
@@ -173,92 +136,18 @@ void CRenderer::Release() {
     //GLRelease();
 }
 
-bool CRenderer::SetShaderMesh(CMesh* mesh, const char* vert, const char* frag) {
-    //バーテックスシェーダーコンパイル
-    GLuint vertShaderID = glCreateShader(GL_VERTEX_SHADER);
 
-    ShaderProgramSource ss = ParseShader("game/ShaderFiles/Basic.shader");
-    const GLchar* vertexShader = ss.VertexSource.c_str();
-    printf(vertexShader);
-
-
-    glShaderSource(vertShaderID, 1, &vertexShader, NULL);
-    glCompileShader(vertShaderID);
-    GLint success = 0;
-    glGetShaderiv(vertShaderID, GL_COMPILE_STATUS, &success);
-    if (success == GL_FALSE) {
-        printf("バーテックスシェーダーのコンパイルに失敗しました");
-    }
-
-    //フラグメントシェーダーのコンパイル
-    GLuint fragShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-    const GLchar* fragmentShader = ss.FragmentSource.c_str();
-    //ReadShaderCode(frag, fragmentShader);
-    //const GLchar* fragmentShader = R"#(
-    //                                uniform vec4 color;
-    //                                void main(void){
-    //                                gl_FragColor = color;
-    //                                }
-    //                            )#";
-    glShaderSource(fragShaderID, 1, &fragmentShader, NULL);
-    glCompileShader(fragShaderID);
-
-    glGetShaderiv(fragShaderID, GL_COMPILE_STATUS, &success);
-    if (success == GL_FALSE) {
-        printf("フラグメントシェーダーのコンパイルに失敗しました");
-
-    }
-
-    //プログラムオブジェクトの作成
-    GLuint programID = glCreateProgram();
-    if (programID == 0) {
-        printf("プログラムオブジェクトの生成に失敗しました");
-    }
-    glAttachShader(programID, vertShaderID);
-    glAttachShader(programID, fragShaderID);
-    GLint attached;
-    glGetProgramiv(programID, GL_ATTACHED_SHADERS, &attached);
-    if (attached == GL_FALSE) {
-        printf("シェーダーのアタッチに失敗しました");
-
-    }
-    //リンク
-    GLint linked;
-    glLinkProgram(programID);
-    glGetProgramiv(programID, GL_LINK_STATUS, &linked);
-    if (linked == GL_FALSE) {
-        printf("シェーダーのリンクに失敗しました");
-
-    }
-    mesh->CreateShaderProgram(programID);
-
-
-    //mesh->m_programID = programID;
-
-    return true;
+void CRenderer::SetLight(CShader* _shader,const float _x, const float _y, const float _z)
+{
+    float length = sqrtf(_x * _x + _y * _y + _z * _z);
+    glUniform3f(_shader->GetUniform(SHADER_UNIFORM_LIGHT), _x / length, _y / length, _z / length);
 }
 
-//
-//const char* CRenderer::ReadShaderCode(const char* filename,const char* code) {
-//    //ファイルの読み込み
-//    std::ifstream ifs(filename);
-//    if (!ifs)
-//    {
-//        printf("%sを読み込めませんでした\n",filename);
-//        return "";
-//    }
-//
-//    std::string source;
-//    std::string line;
-//    while (getline(ifs, line))
-//    {
-//        source += line + "\n";
-//    }
-//
-//    code = source.c_str();
-//    std::cout << code << std::endl;
-//    return code;
-//}
+void CRenderer::SetColor(CShader* _shader, const float _r, const float _g, const float _b, const float _a)
+{
+    glUniform4f(_shader->GetUniform(SHADER_UNIFORM_COLOR), _r, _g, _b, _a);
+}
+
 
 
 void CRenderer::GLRelease() {
@@ -398,6 +287,7 @@ glm::mat4 CRenderer::GetProjectionMatrix(float _angle, float _aspect, float _far
         0,0,(_far+_near) / (_far - _near),-1,
         0,0,-2.0f*_far * _near / (_far - _near),0
     };
+    ret = glm::transpose(ret);
     return ret;
 }
 

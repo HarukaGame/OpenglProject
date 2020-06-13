@@ -9,16 +9,19 @@ typedef float GLfloat;
 
 
 class CRenderer;
+class CBuffer;
 class CMesh {
 	friend class CRenderer;
 public:
-	GLuint CreateShaderProgram(GLuint programID);
-	GLint CreateVAO();
+	//GLuint CreateShaderProgram(GLuint programID);
+	//GLint CreateVAO();
 
 	void InitVertex();
 
-	void SetColor(float r, float g, float b, float a);
-	void SetLight(float x, float y, float z);
+	//void SetColor(float r, float g, float b, float a);
+	//void SetLight(float x, float y, float z);
+	void SetBuffer(CBuffer* _buffer);
+	CBuffer* GetBuffer()const;
 	GLuint GetVertexNum()const { return vertexNum; }
 	glm::mat4 GetModelMatrix()const;
 	const float* myvertices;
@@ -30,6 +33,8 @@ private:
 	glm::mat4 GetTransMatrix(glm::vec3 trans)const;
 	glm::mat4 GetRotateMatrix(glm::vec3 rotate)const;
 	glm::mat4 GetScaleMatrix(glm::vec3 scale)const;
+
+	CBuffer* m_pBuffer = nullptr;
 
 	//float myvertices[18] = {
 	//-0.5f , -0.5f ,0.0f, // Bottom left corner
@@ -43,15 +48,15 @@ private:
 
 	GLuint vertexNum = 0;
 
-	GLuint m_programID = 0;
+	//GLuint m_programID = 0;
 
-	GLint m_uniformColor = -1;
-	GLint m_uniformModelMat = -1;
-	GLint m_uniformLight = -1;
+	//GLint m_uniformColor = -1;
+	//GLint m_uniformModelMat = -1;
+	//GLint m_uniformLight = -1;
 
-	GLuint m_vaoID = -1;
-	GLuint m_vboID = -1;
-	GLuint m_normalID = -1;
+	//GLuint m_vaoID = -1;
+	//GLuint m_vboID = -1;
+	//GLuint m_normalID = -1;
 };
 
 #endif

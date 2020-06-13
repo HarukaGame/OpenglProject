@@ -59,11 +59,11 @@ public:
 
 	///@brief	一番前の要素を取り出す
 	///@return	T
-	T PopFront();
+	void PopFront();
 
 	///@brief	一番後ろの要素を取り出す
 	///@return	T
-	T PopBack();
+	void PopBack();
 
 	///@brief	すべての要素を削除する
 	void Clear();
@@ -80,7 +80,7 @@ private:
 	///@brief	ノードを削除する
 	///@param[in]	_node	削除するノード
 	///@return		T	削除するノードに入っていた要素
-	T Remove(Node<T>* node);
+	void Remove(Node<T>* node);
 
 	Node<T>* m_root = nullptr;	//環状リストのダミーノードポインタ
 	int m_length = 0;			//ノードの数
@@ -268,17 +268,15 @@ void CList<T>::Add(T _value, Node<T>* _node)
 }
 
 template<class T>
-T CList<T>::Remove(Node<T>* node)
+void CList<T>::Remove(Node<T>* node)
 {
 	if (Empty() == true) {
-		throw;
+		return;
 	}
-	T ret = node->m_value;
 	node->m_pPrev->m_pNext = node->m_pNext;
 	node->m_pNext->m_pPrev = node->m_pPrev;
 	delete node;
 	m_length--;
-	return ret;
 }
 
 template<class T>
@@ -293,14 +291,14 @@ void CList<T>::PushBack(T _value)
 }
 
 template<class T>
-T CList<T>::PopFront() {
-	return Remove(m_root->m_pNext);
+void CList<T>::PopFront() {
+	Remove(m_root->m_pNext);
 }
 
 
 template<class T>
-T CList<T>::PopBack() {
-	return Remove(m_root->m_pPrev);
+void CList<T>::PopBack() {
+	Remove(m_root->m_pPrev);
 }
 
 template<class T>

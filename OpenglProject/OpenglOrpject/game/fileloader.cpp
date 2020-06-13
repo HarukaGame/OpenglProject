@@ -35,7 +35,7 @@ bool CFileLoader::LoadFile(const char* _filePath)
 
 const char* CFileLoader::GetBuffer()
 {
-    return (char*)m_pBuffer;
+    return (const char*)m_pBuffer;
 }
 
 int CFileLoader::GetLength()

@@ -27,21 +27,23 @@ bool CApplication::Initilize(HINSTANCE hInstance,
     }
 
     m_pObjectManager = new CObjectManager();
+    m_pObjectManager->CreateGameObject();
+    //m_pObjectManager->CreateGameObject();
 
     CResourceManager::CreateInstance();
 
-    testMesh = new CMesh();
-    testMesh->InitVertex();
+    //testMesh = new CMesh();
+    //testMesh->InitVertex();
 
     return true;
 }
 
 void CApplication::Update(MSG* msg) {
-    m_prenderer->SetShaderMesh(testMesh, "shader.vert", "shader.frag");
+    //m_prenderer->SetShaderMesh(testMesh, "shader.vert", "shader.frag");
 
     m_prenderer->StartDisplay();
-
-    m_prenderer->MeshDraw(testMesh);
+    m_pObjectManager->AllObjectDraw(m_prenderer);
+    //m_prenderer->MeshDraw(testMesh);
 
     m_pOpenglDevice->SwapBuffer();
 }

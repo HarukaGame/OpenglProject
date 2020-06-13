@@ -18,7 +18,7 @@ int CShaderLoader::CreateShaderProgram(const char* _vertSource, int _vertLength,
 
     //フラグメントシェーダーのコンパイル
     GLuint fragShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragShaderID, 1, &_fragSource, NULL);
+    glShaderSource(fragShaderID, 1, &_fragSource, &_fragLength);
     glCompileShader(fragShaderID);
 
     glGetShaderiv(fragShaderID, GL_COMPILE_STATUS, &_fragLength);

@@ -1,5 +1,3 @@
-#shader fragment
-#version 120
 uniform vec4 color;
 uniform vec3 light;
 varying vec3 _normals;
