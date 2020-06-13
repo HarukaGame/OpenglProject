@@ -7,6 +7,21 @@
 #include "buffer.h"
 #include "mesh.h"
 
+#include "camera.h"
+
+bool CObjectManager::Initilize()
+{
+	if (CCamera::CreateInstance(800,600) == false) {
+		return false;
+	}
+	return true;
+}
+
+void CObjectManager::Finalize()
+{
+	CCamera::Destroy();
+}
+
 void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 {
 	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();

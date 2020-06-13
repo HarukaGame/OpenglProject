@@ -11,6 +11,8 @@ class CShader;
 
 class CObjectManager {
 public:
+	bool Initilize();
+	void Finalize();
 	void AllObjectDraw(CRenderer* _renderer);
 	CGameObject* CreateGameObject();
 private:

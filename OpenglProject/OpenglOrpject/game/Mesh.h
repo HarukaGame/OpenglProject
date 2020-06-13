@@ -23,6 +23,7 @@ public:
 	void SetBuffer(CBuffer* _buffer);
 	CBuffer* GetBuffer()const;
 	GLuint GetVertexNum()const { return vertexNum; }
+	GLuint GetElementNum()const { return elementNum; }
 	glm::mat4 GetModelMatrix()const;
 	const float* myvertices;
 	glm::vec3 m_pos = glm::vec3(0, 0, 0);
@@ -47,6 +48,7 @@ private:
 	const float* m_normals;
 
 	GLuint vertexNum = 0;
+	GLuint elementNum = 0;
 
 	//GLuint m_programID = 0;
 

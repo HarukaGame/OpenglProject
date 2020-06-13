@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include "shader.h"
 #include "buffer.h"
+#include "debug_print.h"
 
 #include "GL/glew.h"
 #include <cmath>
@@ -112,17 +113,19 @@ void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat)
 
 
 
-
-
+    //行列のUniform設定
     glUniformMatrix4fv(_shader->GetUniform(SHADER_UNIFORM_MVP), 1, GL_FALSE, &mvp[0][0]);
 
 
+    int a = sizeof(GLfloat) * 6;
+    //PRINT("%d\n",a);
+    //Attribure設定
     glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION));
-    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION), 3, GL_FLOAT, GL_FALSE, 0, 0);
-    //glBufferData(GL_ARRAY_BUFFER, _mesh->vertexNum * 3 * sizeof(GL_FLOAT), &_mesh->myvertices, GL_STATIC_DRAW);
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, 0);
+    glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (void*)(sizeof(GLfloat)*3));
 
 
-    glBindVertexArray(_buffer->GetProgramID());
 
     glDrawArrays(GL_TRIANGLES, 0, _buffer->GetVertexNum());
 

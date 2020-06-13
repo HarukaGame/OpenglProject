@@ -22,6 +22,7 @@
     <ClCompile Include="game\application.cpp" />
     <ClCompile Include="game\buffer.cpp" />
     <ClCompile Include="game\camera.cpp" />
+    <ClCompile Include="game\common_math.cpp" />
     <ClCompile Include="game\debug_print.cpp" />
     <ClCompile Include="game\fileloader.cpp" />
     <ClCompile Include="game\gameobject.cpp" />

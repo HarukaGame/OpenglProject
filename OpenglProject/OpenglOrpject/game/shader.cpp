@@ -7,6 +7,10 @@ bool CShader::SetUpUniform(int _programID)
     m_programID = _programID;
     glUseProgram(m_programID);
 
+    //----------------------------------------------------------
+    //uniformê›íË
+    //----------------------------------------------------------
+
     m_uniformList[SHADER_UNIFORM_COLOR] = -1;
     m_uniformList[SHADER_UNIFORM_COLOR] = glGetUniformLocation(m_programID, "color");
     if (m_uniformList[SHADER_UNIFORM_COLOR] == -1) {
@@ -30,9 +34,17 @@ bool CShader::SetUpUniform(int _programID)
 
     }
 
+    //----------------------------------------------------------
+    //attributeê›íË
+    //----------------------------------------------------------
+
     m_attributeList[SHADER_ATTRIBUTE_POSITION] = glGetAttribLocation(m_programID, "position");
     if (m_attributeList[SHADER_ATTRIBUTE_POSITION] == -1) {
         PRINT("position attributeÇÃéÊìæÇ…é∏îsÇµÇ‹ÇµÇΩ\n");
+    }
+    m_attributeList[SHADER_ATTRIBUTE_NORMAL] = glGetAttribLocation(m_programID, "normals");
+    if (m_attributeList[SHADER_ATTRIBUTE_NORMAL] == -1) {
+        PRINT("normal attributeÇÃéÊìæÇ…é∏îsÇµÇ‹ÇµÇΩ\n");
     }
 
 
