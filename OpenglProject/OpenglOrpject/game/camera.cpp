@@ -1,16 +1,12 @@
 ﻿#include "camera.h"
 #include "common_math.h"
 
-#define DISTANCE_START (10)
+#define DISTANCE_START (5)
 #define DISTANCE_MIN (5)
 #define DISTANCE_MAX (30)
 
 #define ANGLE_X_MAX (70)
 #define ANGLE_X_MIN (-70)
-
-#define SPEED_ZOOM (1)
-#define SPEED_MOVE (1)
-#define SPEED_ROTATE (1)
 
 CCamera* CCamera::s_mainCamera = nullptr;
 
@@ -26,10 +22,11 @@ bool CCamera::CreateInstance(const float _width, const float _height)
 	}
 	s_mainCamera->m_width = _width;
 	s_mainCamera->m_height = _height;
+	s_mainCamera->CameraInitilize();
 	return true;
 }
 
-const CCamera* CCamera::GetInstance()
+CCamera* CCamera::GetInstance()
 {
 	return s_mainCamera;
 }
@@ -74,7 +71,7 @@ glm::mat4 CCamera::GetViewMatrix() const
 
 glm::mat4 CCamera::GetProjectionMatrix() const
 {
-	return GlmMath::ProjectionMatrix(60,m_width/m_height,-1,1);
+	return GlmMath::ProjectionMatrix(deg_to_rad(60.0f),m_width/m_height,-1,1);
 }
 
 
@@ -94,4 +91,9 @@ void CCamera::ReCalcTransform()
 	m_rotation.z = 0;
 	//姿勢行列登録
 	m_transMat = GlmMath::Trans(m_position)* GlmMath::Rotate(m_rotation);
+}
+
+void CCamera::CameraInitilize()
+{
+	m_targetDistance = DISTANCE_START;
 }

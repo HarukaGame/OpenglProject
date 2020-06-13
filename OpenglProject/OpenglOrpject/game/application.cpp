@@ -27,6 +27,7 @@ bool CApplication::Initilize(HINSTANCE hInstance,
     }
 
     m_pObjectManager = new CObjectManager();
+    m_pObjectManager->Initilize();
     m_pObjectManager->CreateGameObject();
     //m_pObjectManager->CreateGameObject();
 
@@ -51,6 +52,7 @@ void CApplication::Update(MSG* msg) {
 void CApplication::Quit() {
 
     m_pOpenglDevice->Finalize();
+    m_pObjectManager->Finalize();
     delete m_pOpenglDevice;
 
     delete m_pwindow;

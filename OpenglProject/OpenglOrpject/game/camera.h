@@ -9,7 +9,7 @@
 class CCamera {
 public:
 	static bool CreateInstance(const float _width,const float _height);
-	static const CCamera* GetInstance();
+	static CCamera* GetInstance();
 	static void Destroy();
 
 	void SetAngle(const float _axisX, const float _axisY);
@@ -23,6 +23,7 @@ public:
 
 private:
 	void ReCalcTransform();
+	void CameraInitilize();
 
 	static CCamera* s_mainCamera;
 

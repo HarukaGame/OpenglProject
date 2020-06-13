@@ -2,6 +2,7 @@
 #include "Mesh.h"
 #include "shader.h"
 #include "buffer.h"
+#include "camera.h"
 #include "debug_print.h"
 
 #include "GL/glew.h"
@@ -92,16 +93,10 @@ void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat)
 
     test += 0.1f;
 
-    //カメラ座標の設定
-    glm::vec3 cameraPos = glm::vec3(0, 0,4);
-    //モデル行列の取得
     //ビュー行列の取得
-    glm::mat4 view = GetViewMatirix(
-        cameraPos,
-        glm::vec3(0, 0, 0)
-    );
+    glm::mat4 view = CCamera::GetInstance()->GetViewMatrix();
     //プロジェクション行列の取得
-    glm::mat4 pro = GetProjectionMatrix(60, (float)WINDOW_WIDTH / WINDOW_HEIGHT, -1, 1);
+    glm::mat4 pro = CCamera::GetInstance()->GetProjectionMatrix();
 
     //ビューポート行列の取得
     glm::mat4 viewportMat = GetViewPortMatrix((float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);

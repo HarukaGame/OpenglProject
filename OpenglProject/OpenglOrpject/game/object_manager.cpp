@@ -14,6 +14,8 @@ bool CObjectManager::Initilize()
 	if (CCamera::CreateInstance(800,600) == false) {
 		return false;
 	}
+
+	CCamera::GetInstance()->SetTargetPosition(glm::vec3(0, 0, 0));
 	return true;
 }
 
