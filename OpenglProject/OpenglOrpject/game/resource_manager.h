@@ -14,6 +14,7 @@ public:
 	static bool CreateInstance();
 	static void Destroy();
 	template<class T>static T* CreateResourceObject(const hash _hash);
+	template<class T>static T* SearchResourceObject(const hash _hash);
 private:
 	static CShader* CreateShader();
 	static CMesh* CreateMesh();

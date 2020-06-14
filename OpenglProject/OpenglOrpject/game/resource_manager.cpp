@@ -28,16 +28,53 @@ void CResourceManager::Destroy()
 		delete s_instance;
 	}
 }
+//---------------------------------------------------------------------------------------
+//SearchResourceObject
+//---------------------------------------------------------------------------------------
+template<class T>
+T* CResourceManager::SearchResourceObject(const hash _hash) {
+	PRINT("CResourceManager::SearchResourceObject() T not Supported\n");
+	return nullptr;
+}
+
+template<>
+CMesh* CResourceManager::SearchResourceObject(const hash _hash) {
+	CList<CMesh*>::iterator iter = s_instance->m_meshList.Begin();
+	CList<CMesh*>::iterator end = s_instance->m_meshList.End();
+	for (; iter != end; iter++) {
+		if ((*iter)->GetHash() == _hash) {
+			return (*iter);
+		}
+	}
+	return nullptr;
+}
+
+template<>
+CShader* CResourceManager::SearchResourceObject(const hash _hash) {
+	CList<CShader*>::iterator iter = s_instance->m_shaderList.Begin();
+	CList<CShader*>::iterator end = s_instance->m_shaderList.End();
+	for (; iter != end; iter++) {
+		if ((*iter)->GetHash() == _hash) {
+			return (*iter);
+		}
+	}
+	return nullptr;
+}
+
+//---------------------------------------------------------------------------------------
+//CreateResourceObject
+//---------------------------------------------------------------------------------------
 
 template<class T>
 T* CResourceManager::CreateResourceObject(const hash _hash) {
 	PRINT("CResourceManager::CreateResourceObject() T not Supported\n");
-	return T();
+	return nullptr;
 }
 
 template<>
 CMesh* CResourceManager::CreateResourceObject(const hash _hash) {
 	CMesh* ret = CResourceManager::CreateMesh();
+	s_instance->m_meshList.PushBack(ret);
 	ret->SetHash(_hash);
 	return ret;
 }
@@ -45,6 +82,7 @@ CMesh* CResourceManager::CreateResourceObject(const hash _hash) {
 template<>
 CShader* CResourceManager::CreateResourceObject(const hash _hash) {
 	CShader* ret = CResourceManager::CreateShader();
+	s_instance->m_shaderList.PushBack(ret);
 	ret->SetHash(_hash);
 	return ret;
 }

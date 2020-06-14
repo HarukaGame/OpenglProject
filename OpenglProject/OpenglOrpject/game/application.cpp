@@ -27,13 +27,13 @@ bool CApplication::Initilize(HINSTANCE hInstance,
         delete m_prenderer;
         return false;
     }
+    CResourceManager::CreateInstance();
 
     m_pObjectManager = new CObjectManager();
     m_pObjectManager->Initilize();
     m_pObjectManager->CreateGameObject();
     //m_pObjectManager->CreateGameObject();
 
-    CResourceManager::CreateInstance();
 
     m_pScene = new CScene();
 
