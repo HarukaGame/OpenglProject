@@ -65,6 +65,8 @@ T* CResourceManager::SearchResourceObject(const hash _hash) {
 	return nullptr;
 }
 
+
+
 template<>
 CMesh* CResourceManager::SearchResourceObject(const hash _hash) {
 	CList<CMesh*>::iterator iter = s_instance->m_meshList.Begin();
@@ -114,7 +116,45 @@ CShader* CResourceManager::CreateResourceObject(const hash _hash) {
 	ret->SetHash(_hash);
 	return ret;
 }
+//---------------------------------------------------------------------------------------
+//ReleaseResource
+//---------------------------------------------------------------------------------------
+template<class T>
+bool CResourceManager::ReleaseResource(const hash _hash) {
+	PRINT("CResourceManager::ReleaseResource(const T* _resource) T not Supported\n");
+	return nullptr;
+}
 
+template<>
+bool CResourceManager::ReleaseResource<CMesh>(const hash _hash) {
+	CList<CMesh*>::iterator iter = s_instance->m_meshList.Begin();
+	CList<CMesh*>::iterator end = s_instance->m_meshList.End();
+	for (; iter != end; iter++) {
+		if ((*iter)->GetHash() == _hash) {
+			s_instance->m_meshList.Pop(iter);
+			return true;
+		}
+	}
+	return false;
+}
+template<>
+bool CResourceManager::ReleaseResource<CShader>(const hash _hash) {
+	CList<CShader*>::iterator iter = s_instance->m_shaderList.Begin();
+	CList<CShader*>::iterator end = s_instance->m_shaderList.End();
+	for (; iter != end; iter++) {
+		if ((*iter)->GetHash() == _hash) {
+			s_instance->m_shaderList.Pop(iter);
+			return true;
+		}
+	}
+	return false;
+}
+
+//template<>
+//bool CResourceManager::DeleteResource(CMesh* _resource) {
+//
+//	return false;
+//}
 
 CShader* CResourceManager::CreateShader()
 {

@@ -16,6 +16,7 @@ public:
 	template<class T>static T* SearchOrCreateResourceObject(const hash _hash);
 	template<class T>static T* CreateResourceObject(const hash _hash);
 	template<class T>static T* SearchResourceObject(const hash _hash);
+	template<class T>static bool ReleaseResource(const hash _hash);
 private:
 	static CShader* CreateShader();
 	static CMesh* CreateMesh();
