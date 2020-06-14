@@ -54,8 +54,10 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 CGameObject* CObjectManager::CreateGameObject()
 {
 	CGameObject* tempObject = new CGameObject();
-	CMesh* mesh = CResourceManager::CreateMesh();
-	CShader* shader = CResourceManager::CreateShader();
+	CMesh* mesh = CResourceManager::CreateResourceObject<CMesh>();
+	CShader* shader = CResourceManager::CreateResourceObject<CShader>();
+	//CMesh* mesh = CResourceManager::CreateMesh();
+	//CShader* shader = CResourceManager::CreateShader();
 	tempObject->SetMesh(mesh);
 	tempObject->SetShader(shader);
 	m_gameObjectList.PushBack(tempObject);

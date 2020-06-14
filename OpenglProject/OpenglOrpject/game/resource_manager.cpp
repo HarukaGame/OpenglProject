@@ -5,8 +5,11 @@
 #include "shader_loader.h"
 #include "mesh.h"
 #include "buffer.h"
+#include "debug_print.h"
 
 CResourceManager* CResourceManager::s_instance = nullptr;
+//template CMesh* CResourceManager::CreateResourceObject();
+//template CShader* CResourceManager::CreateResourceObject();
 
 bool CResourceManager::CreateInstance()
 {
@@ -25,6 +28,23 @@ void CResourceManager::Destroy()
 		delete s_instance;
 	}
 }
+
+template<class T>
+T* CResourceManager::CreateResourceObject() {
+	PRINT("CResourceManager::CreateResourceObject() T not Supported\n");
+	return T();
+}
+
+template<>
+CMesh* CResourceManager::CreateResourceObject() {
+	return CResourceManager::CreateMesh();
+}
+
+template<>
+CShader* CResourceManager::CreateResourceObject() {
+	return CResourceManager::CreateShader();
+}
+
 
 CShader* CResourceManager::CreateShader()
 {
