@@ -34,6 +34,7 @@
     <ClCompile Include="game\opengl_device.cpp" />
     <ClCompile Include="game\ray_cast.cpp" />
     <ClCompile Include="game\renderer.cpp" />
+    <ClCompile Include="game\resource_base.cpp" />
     <ClCompile Include="game\resource_manager.cpp" />
     <ClCompile Include="game\scene.cpp" />
     <ClCompile Include="game\shader.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="game\opengl_device.h" />
     <ClInclude Include="game\ray_cast.h" />
     <ClInclude Include="game\renderer.h" />
+    <ClInclude Include="game\resource_base.h" />
     <ClInclude Include="game\resource_manager.h" />
     <ClInclude Include="game\scene.h" />
     <ClInclude Include="game\shader.h" />

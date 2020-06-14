@@ -76,6 +76,9 @@
     <ClCompile Include="game\light.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\resource_base.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -139,6 +142,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\light.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\resource_base.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
