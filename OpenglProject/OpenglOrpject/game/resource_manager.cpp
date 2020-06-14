@@ -29,6 +29,34 @@ void CResourceManager::Destroy()
 	}
 }
 //---------------------------------------------------------------------------------------
+//SearchOrCreateResourceObject
+//---------------------------------------------------------------------------------------
+template CMesh* CResourceManager::SearchOrCreateResourceObject(const hash _hash);
+template CShader* CResourceManager::SearchOrCreateResourceObject(const hash _hash);
+template<class T>
+T* CResourceManager::SearchOrCreateResourceObject(const hash _hash) {
+	T* ret = SearchResourceObject<T>(_hash);
+	if (ret != nullptr) {
+		return ret;
+	}
+
+	ret = CreateResourceObject<T>(_hash);
+	if (ret != nullptr) {
+		return ret;
+	}
+	PRINT("CResourceManager::SearchOrCreateResourceObject object create error\n");
+	return nullptr;
+}
+
+//template<>
+//CMesh* CResourceManager::SearchOrCreateResourceObject(const hash _hash) {
+//	CMesh* ret = SearchResourceObject<CMesh>(_hash);
+//	if (ret != nullptr) {
+//		return ret;
+//	}
+//}
+
+//---------------------------------------------------------------------------------------
 //SearchResourceObject
 //---------------------------------------------------------------------------------------
 template<class T>
