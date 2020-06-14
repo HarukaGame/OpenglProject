@@ -56,5 +56,9 @@ void CScene::Update()
 		int a = 0;
 
 	}
-	int a = 0;
+	if (Input::GetKeyDown('O')) {
+		m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+		int a = 0;
+
+	}
 }

@@ -33,5 +33,5 @@ hash CGameObject::GetHash() const
 
 void CGameObject::Finalize()
 {
-	m_pMesh->Finalize();
+
 }

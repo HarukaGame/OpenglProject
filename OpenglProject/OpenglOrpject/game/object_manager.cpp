@@ -97,6 +97,7 @@ void CObjectManager::DeleteObject(const hash _hash)
 	if (temp == nullptr) {
 		return;
 	}
+	CResourceManager::ReleaseResource<CMesh>(temp->GetMesh()->GetHash());
 	temp->Finalize();
 	delete temp;
 	m_gameObjectList.Pop(iter);
