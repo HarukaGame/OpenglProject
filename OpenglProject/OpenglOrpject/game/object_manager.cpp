@@ -63,3 +63,41 @@ CGameObject* CObjectManager::CreateGameObject()
 	m_gameObjectList.PushBack(tempObject);
 	return tempObject;
 }
+
+CGameObject* CObjectManager::CreateGameObject(const hash _hash)
+{
+	CGameObject* temp = CreateGameObject();
+	temp->SetHash(_hash);
+	return temp;
+}
+
+CGameObject* CObjectManager::SearchGameObject(const hash _hash)
+{
+	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();
+	return SearchGameObject(_hash, iter);
+}
+
+CGameObject* CObjectManager::SearchGameObject(const hash _hash, CList<CGameObject*>::iterator& _iter)
+{
+	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();
+	CList<CGameObject*>::iterator end = m_gameObjectList.End();
+	for (; iter != end; iter++) {
+		if ((*iter)->GetHash() == _hash) {
+			_iter = iter;
+			return (*iter);
+		}
+	}
+	return nullptr;
+}
+
+void CObjectManager::DeleteObject(const hash _hash)
+{
+	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();
+	CGameObject* temp = SearchGameObject(_hash, iter);
+	if (temp == nullptr) {
+		return;
+	}
+	temp->Finalize();
+	delete temp;
+	m_gameObjectList.Pop(iter);
+}

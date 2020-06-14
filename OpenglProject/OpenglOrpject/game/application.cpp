@@ -7,6 +7,7 @@
 #include "scene.h"
 #include "input.h"
 #include "mesh.h"
+#include "hash.h"
 
 bool CApplication::Initilize(HINSTANCE hInstance,
     HINSTANCE hPrevInstance,
@@ -31,11 +32,12 @@ bool CApplication::Initilize(HINSTANCE hInstance,
 
     m_pObjectManager = new CObjectManager();
     m_pObjectManager->Initilize();
-    m_pObjectManager->CreateGameObject();
+    m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
     //m_pObjectManager->CreateGameObject();
 
 
     m_pScene = new CScene();
+    m_pScene->Initilize(m_pObjectManager);
 
     //testMesh = new CMesh();
     //testMesh->InitVertex();

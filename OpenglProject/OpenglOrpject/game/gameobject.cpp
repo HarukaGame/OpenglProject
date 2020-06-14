@@ -21,6 +21,16 @@ CMesh* CGameObject::GetMesh() const
 	return m_pMesh;
 }
 
+void CGameObject::SetHash(const hash _hash)
+{
+	m_hash = _hash;
+}
+
+hash CGameObject::GetHash() const
+{
+	return m_hash;
+}
+
 void CGameObject::Finalize()
 {
 	m_pMesh->Finalize();
