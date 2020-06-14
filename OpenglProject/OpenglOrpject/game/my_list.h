@@ -26,9 +26,12 @@ struct Node {
 		m_pNext = next;
 	}
 };
+
+
 template<class T>
 class CList {
 public:
+class CListIterator;
 
 	///@brief	コンストラクタ
 	CList();
@@ -65,6 +68,8 @@ public:
 	///@return	T
 	void PopBack();
 
+	void Pop(CListIterator _iter);
+
 	///@brief	すべての要素を削除する
 	void Clear();
 
@@ -88,6 +93,7 @@ private:
 public:
 	///@brief	イテレータークラス
 	class CListIterator {
+	friend class CList;
 	public:
 		///@brief	コンストラクタ
 		///@param[in]	_list	リストクラス	
@@ -299,6 +305,14 @@ void CList<T>::PopFront() {
 template<class T>
 void CList<T>::PopBack() {
 	Remove(m_root->m_pPrev);
+}
+
+template<class T>
+void CList<T>::Pop(CListIterator _iter) {
+	if (_iter == End()) {
+		return;
+	}
+	Remove(_iter.m_pNode);
 }
 
 template<class T>
