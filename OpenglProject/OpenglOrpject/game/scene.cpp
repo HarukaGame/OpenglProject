@@ -2,6 +2,8 @@
 #include "camera.h"
 #include "light.h"
 #include "input.h"
+#include "debug_print.h"
+
 void CScene::Update()
 {
 	if (Input::GetKey('A')) {
@@ -29,4 +31,6 @@ void CScene::Update()
 	if (Input::GetKey(VK_LEFT)) {
 		CLight::GetInstance()->Rotate(0,-2.0f);
 	}
+
+
 }

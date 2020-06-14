@@ -11,3 +11,13 @@ void CResourceBase::RefCountDown() {
 bool CResourceBase::RefCountZero()const {
 	return m_resourceCounter == 0;
 }
+
+void CResourceBase::SetHash(const hash _hash)
+{
+	m_hash = _hash;
+}
+
+hash CResourceBase::GetHash() const
+{
+	return m_hash;
+}
