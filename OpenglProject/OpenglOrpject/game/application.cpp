@@ -63,10 +63,15 @@ void CApplication::Quit() {
 
     m_pOpenglDevice->Finalize();
     m_pObjectManager->Finalize();
+    m_prenderer->Release();
     delete m_pOpenglDevice;
     delete m_pScene;
-    delete m_pwindow;
     delete m_pObjectManager;
-
+    delete m_prenderer;
+    CResourceManager::Finalize();
     CResourceManager::Destroy();
+    Input::DestroyInstance();
+    m_pwindow->Finalize();
+    delete m_pwindow;
+    int a = 0;
 }

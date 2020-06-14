@@ -32,9 +32,7 @@ void CObjectManager::Finalize()
 {
 	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();
 	while (m_gameObjectList.Empty() == false) {
-		(*iter)->Finalize();
-		delete (*iter);
-		m_gameObjectList.PopFront();
+		DeleteObject((*iter)->GetHash());
 		iter = m_gameObjectList.Begin();
 	}
 
@@ -97,7 +95,9 @@ void CObjectManager::DeleteObject(const hash _hash)
 	if (temp == nullptr) {
 		return;
 	}
+	
 	CResourceManager::ReleaseResource<CMesh>(temp->GetMesh()->GetHash());
+	CResourceManager::ReleaseResource<CShader>(temp->GetShader()->GetHash());
 	temp->Finalize();
 	delete temp;
 	m_gameObjectList.Pop(iter);

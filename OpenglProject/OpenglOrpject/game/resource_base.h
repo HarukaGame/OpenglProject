@@ -13,6 +13,7 @@ public:
 
 	void SetHash(const hash _hash);
 	hash GetHash()const;
+	virtual void Finalize(){}
 protected:
 	hash m_hash = 0;
 	int m_resourceCounter = 0;

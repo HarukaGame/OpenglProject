@@ -26,7 +26,7 @@ public:
 	GLuint GetVertexNum()const { return vertexNum; }
 	GLuint GetElementNum()const { return elementNum; }
 	glm::mat4 GetModelMatrix()const;
-	void Finalize();
+	void Finalize()override;
 
 	const float* myvertices;
 	glm::vec3 m_pos = glm::vec3(0, 0, 0);

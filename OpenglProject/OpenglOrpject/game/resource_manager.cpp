@@ -37,11 +37,15 @@ template<class T>
 T* CResourceManager::SearchOrCreateResourceObject(const hash _hash) {
 	T* ret = SearchResourceObject<T>(_hash);
 	if (ret != nullptr) {
+		CResourceBase* resourceBase = dynamic_cast<CResourceBase*>(ret);
+		resourceBase->RefCountUp();
 		return ret;
 	}
 
 	ret = CreateResourceObject<T>(_hash);
 	if (ret != nullptr) {
+		CResourceBase* resourceBase = dynamic_cast<CResourceBase*>(ret);
+		resourceBase->RefCountUp();
 		return ret;
 	}
 	PRINT("CResourceManager::SearchOrCreateResourceObject object create error\n");
@@ -131,7 +135,13 @@ bool CResourceManager::ReleaseResource<CMesh>(const hash _hash) {
 	CList<CMesh*>::iterator end = s_instance->m_meshList.End();
 	for (; iter != end; iter++) {
 		if ((*iter)->GetHash() == _hash) {
-			s_instance->m_meshList.Pop(iter);
+			(*iter)->RefCountDown();
+
+			if ((*iter)->RefCountZero() == true) {
+				(*iter)->Finalize();
+				delete(*iter);
+				s_instance->m_meshList.Pop(iter);
+			}
 			return true;
 		}
 	}
@@ -143,27 +153,46 @@ bool CResourceManager::ReleaseResource<CShader>(const hash _hash) {
 	CList<CShader*>::iterator end = s_instance->m_shaderList.End();
 	for (; iter != end; iter++) {
 		if ((*iter)->GetHash() == _hash) {
-			s_instance->m_shaderList.Pop(iter);
+			(*iter)->RefCountDown();
+			if ((*iter)->RefCountZero() == true) {
+				(*iter)->Finalize();
+				delete(*iter);
+				s_instance->m_shaderList.Pop(iter);
+			}
+
 			return true;
 		}
 	}
 	return false;
 }
 
+void CResourceManager::DeleteResource(CResourceBase* _resource) {
+}
 //template<>
 //bool CResourceManager::DeleteResource(CMesh* _resource) {
 //
 //	return false;
 //}
 
+void CResourceManager::Finalize()
+{
+	if (s_instance->m_meshList.Empty() == false) {
+		PRINT("CResourceManager::Finalize() m_meshList is not Empty\n");
+	}
+	if (s_instance->m_shaderList.Empty() == false) {
+		PRINT("CResourceManager::Finalize() m_shaderList is not Empty\n");
+	}
+}
+
 CShader* CResourceManager::CreateShader()
 {
-	CFileLoader* vertFile = new CFileLoader();
-	CFileLoader* fragFile = new CFileLoader();
-	vertFile->LoadFile("game/ShaderFiles/basic.vs");
-	fragFile->LoadFile("game/ShaderFiles/basic.fs");
-	int programID = CShaderLoader::CreateShaderProgram(vertFile->GetBuffer(), vertFile->GetLength(), fragFile->GetBuffer(), fragFile->GetLength());
-
+	CFileLoader vertFile = CFileLoader();
+	CFileLoader fragFile = CFileLoader();
+	vertFile.LoadFile("game/ShaderFiles/basic.vs");
+	fragFile.LoadFile("game/ShaderFiles/basic.fs");
+	int programID = CShaderLoader::CreateShaderProgram(vertFile.GetBuffer(), vertFile.GetLength(), fragFile.GetBuffer(), fragFile.GetLength());
+	vertFile.Release();
+	fragFile.Release();
 
 	CShader* ret = new CShader();
 	ret->SetUpUniform(programID);

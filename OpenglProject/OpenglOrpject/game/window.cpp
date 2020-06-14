@@ -61,8 +61,6 @@ bool CWindow::WinInitilize(HINSTANCE hInstance,
     ShowWindow(m_hwnd, nCmdShow);
 
     UpdateWindow(m_hwnd);
-    testMesh = new CMesh();
-    testMesh->InitVertex();
 
     Input::CreateInstance();
     Input::SetWnd(m_hwnd);
@@ -76,6 +74,11 @@ bool CWindow::WinInitilize(HINSTANCE hInstance,
 
 void CWindow::DispUpdate() {
 
+}
+
+void CWindow::Finalize()
+{
+    FreeConsole();
 }
 
 

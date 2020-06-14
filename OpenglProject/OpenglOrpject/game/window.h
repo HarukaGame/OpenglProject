@@ -21,6 +21,7 @@ public:
     HWND GetHWND();
 
     void DispUpdate();
+    void Finalize();
     //void ObjectDisp(float add);
     //GLint CreateVAO(GLuint verticesCount, const GLfloat* position , GLint program);
 private:
