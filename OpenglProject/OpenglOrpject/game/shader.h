@@ -2,6 +2,8 @@
 #ifndef __SHADER_H__
 #define __SHADER_H__
 
+#include "resource_base.h"
+
 typedef unsigned int GLuint;
 enum SHADER_UNIFORM {
 	SHADER_UNIFORM_COLOR,
@@ -16,7 +18,7 @@ enum SHADER_ATTRIBUTE {
 	SHADER_ATTRIBUTE_NUM
 };
 
-class CShader {
+class CShader:public CResourceBase {
 public:
 	bool SetUpUniform(int _programID);
 	int GetProgramID()const;

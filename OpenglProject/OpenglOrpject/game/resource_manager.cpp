@@ -30,19 +30,23 @@ void CResourceManager::Destroy()
 }
 
 template<class T>
-T* CResourceManager::CreateResourceObject() {
+T* CResourceManager::CreateResourceObject(const hash _hash) {
 	PRINT("CResourceManager::CreateResourceObject() T not Supported\n");
 	return T();
 }
 
 template<>
-CMesh* CResourceManager::CreateResourceObject() {
-	return CResourceManager::CreateMesh();
+CMesh* CResourceManager::CreateResourceObject(const hash _hash) {
+	CMesh* ret = CResourceManager::CreateMesh();
+	ret->SetHash(_hash);
+	return ret;
 }
 
 template<>
-CShader* CResourceManager::CreateResourceObject() {
-	return CResourceManager::CreateShader();
+CShader* CResourceManager::CreateResourceObject(const hash _hash) {
+	CShader* ret = CResourceManager::CreateShader();
+	ret->SetHash(_hash);
+	return ret;
 }
 
 

@@ -10,6 +10,8 @@
 #include "camera.h"
 #include "light.h"
 
+#include "hash.h"
+
 bool CObjectManager::Initilize()
 {
 	if (CCamera::CreateInstance(800,600) == false) {
@@ -54,10 +56,8 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 CGameObject* CObjectManager::CreateGameObject()
 {
 	CGameObject* tempObject = new CGameObject();
-	CMesh* mesh = CResourceManager::CreateResourceObject<CMesh>();
-	CShader* shader = CResourceManager::CreateResourceObject<CShader>();
-	//CMesh* mesh = CResourceManager::CreateMesh();
-	//CShader* shader = CResourceManager::CreateShader();
+	CMesh* mesh = CResourceManager::CreateResourceObject<CMesh>(CHash::CRC32("TestMesh"));
+	CShader* shader = CResourceManager::CreateResourceObject<CShader>(CHash::CRC32("TestMesh"));
 	tempObject->SetMesh(mesh);
 	tempObject->SetShader(shader);
 	m_gameObjectList.PushBack(tempObject);

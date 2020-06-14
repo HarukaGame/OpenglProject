@@ -6,11 +6,12 @@ typedef int GLint;
 typedef float GLfloat;
 
 #include "glm/glm.hpp"
+#include "resource_base.h"
 
 
 class CRenderer;
 class CBuffer;
-class CMesh {
+class CMesh:public CResourceBase {
 	friend class CRenderer;
 public:
 	//GLuint CreateShaderProgram(GLuint programID);

@@ -6,14 +6,18 @@ class CMesh;
 class CShader;
 class CResourceBase;
 
+#include "hash.h"
+
+
 class CResourceManager {
 public:
 	static bool CreateInstance();
 	static void Destroy();
+	template<class T>static T* CreateResourceObject(const hash _hash);
+private:
 	static CShader* CreateShader();
 	static CMesh* CreateMesh();
-	template<class T>static T* CreateResourceObject();
-private:
+
 	static CResourceManager* s_instance;
 	CList<CMesh*> m_meshList = CList<CMesh*>();
 	CList<CShader*>m_shaderList = CList<CShader*>();
