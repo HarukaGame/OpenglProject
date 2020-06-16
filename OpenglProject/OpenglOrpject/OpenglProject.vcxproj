@@ -28,6 +28,7 @@
     <ClCompile Include="game\gameobject.cpp" />
     <ClCompile Include="game\hash.cpp" />
     <ClCompile Include="game\input.cpp" />
+    <ClCompile Include="game\input_device.cpp" />
     <ClCompile Include="game\light.cpp" />
     <ClCompile Include="game\main.cpp" />
     <ClCompile Include="game\mesh.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="game\gameobject.h" />
     <ClInclude Include="game\hash.h" />
     <ClInclude Include="game\input.h" />
+    <ClInclude Include="game\input_device.h" />
     <ClInclude Include="game\light.h" />
     <ClInclude Include="game\mesh.h" />
     <ClInclude Include="game\my_list.h" />

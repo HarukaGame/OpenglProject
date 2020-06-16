@@ -82,6 +82,9 @@
     <ClCompile Include="game\hash.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\input_device.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -151,6 +154,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\hash.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\input_device.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
