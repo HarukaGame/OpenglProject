@@ -9,6 +9,8 @@
 #include "resource_manager.h"
 #include "object_manager.h"
 
+#include <random>
+
 bool CScene::Initilize(CObjectManager* _objectManager)
 {
 	m_pObjectManager = _objectManager;
@@ -51,13 +53,25 @@ void CScene::Update()
 		CGameObject* temp = m_pObjectManager->SearchGameObject(CHash::CRC32("TestCube"));
 		int a = 0;
 	}
-	if (Input::GetKeyDown('I')) {
+	if (Input::GetKey('2')) {
 		m_pObjectManager->DeleteObject(CHash::CRC32("TestCube"));
 		int a = 0;
 
 	}
-	if (Input::GetKeyDown('O')) {
-		m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+	if (Input::GetKey('1')) {
+		//float x = 0.0f;
+		//float y = 0.0f;
+		//float z = -1.0f;
+		float range = 10.0f;
+		float x = fmod(rand() / 100.0f, range) - range / 2.0f;
+		float y = fmod(rand() / 100.0f, range) - range / 2.0f;
+		float z = fmod(rand() / 100.0f, range) - range / 2.0f;
+		CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+		CMesh* mesh = CResourceManager::SearchOrCreateResourceObject<CMesh>(CHash::CRC32("TestMesh"));
+		CShader* shader = CResourceManager::SearchOrCreateResourceObject<CShader>(CHash::CRC32("TestShader"));
+		tempObject->SetMesh(mesh);
+		tempObject->SetShader(shader);
+		tempObject->SetPosition(x, y, z);
 		int a = 0;
 
 	}

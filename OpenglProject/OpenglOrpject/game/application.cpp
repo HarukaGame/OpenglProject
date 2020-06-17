@@ -32,7 +32,7 @@ bool CApplication::Initilize(HINSTANCE hInstance,
 
     m_pObjectManager = new CObjectManager();
     m_pObjectManager->Initilize();
-    m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+    //m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
     //m_pObjectManager->CreateGameObject();
 
 

@@ -81,10 +81,10 @@
 
 void CMesh::InitVertex()
 {
-    myvertices = CUBE::verticex;
-    m_normals = CUBE::normals;
-    vertexNum = CUBE::vertexNum;
-    elementNum = CUBE::elementNum;
+    myvertices = PolygonCube::verticex;
+    m_normals = PolygonCube::normals;
+    vertexNum = PolygonCube::vertexNum;
+    elementNum = PolygonCube::elementNum;
 }
 
 //void CMesh::SetColor(float r, float g, float b, float a) {

@@ -12,6 +12,8 @@
 
 #include "hash.h"
 
+#include "debug_print.h"
+
 bool CObjectManager::Initilize()
 {
 	if (CCamera::CreateInstance(800,600) == false) {
@@ -45,8 +47,12 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();
 	for (; iter != m_gameObjectList.End(); iter++) {
 		CShader* shader = (*iter)->GetShader();
+		if ((*iter)->GetMesh() == nullptr) {
+			PRINT("CObjectManager::AllObjectDraw GetMesh() is nullptr\n");
+			continue;
+		}
 		CBuffer* buffer = (*iter)->GetMesh()->GetBuffer();
-		glm::mat4 model = (*iter)->GetMesh()->GetModelMatrix();
+		glm::mat4 model = (*iter)->GetTransMat();
 		_renderer->MeshDraw(buffer,shader,model);
 	}
 }
@@ -54,10 +60,10 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 CGameObject* CObjectManager::CreateGameObject()
 {
 	CGameObject* tempObject = new CGameObject();
-	CMesh* mesh = CResourceManager::SearchOrCreateResourceObject<CMesh>(CHash::CRC32("TestMesh"));
-	CShader* shader = CResourceManager::SearchOrCreateResourceObject<CShader>(CHash::CRC32("TestShader"));
-	tempObject->SetMesh(mesh);
-	tempObject->SetShader(shader);
+	//CMesh* mesh = CResourceManager::SearchOrCreateResourceObject<CMesh>(CHash::CRC32("TestMesh"));
+	//CShader* shader = CResourceManager::SearchOrCreateResourceObject<CShader>(CHash::CRC32("TestShader"));
+	//tempObject->SetMesh(mesh);
+	//tempObject->SetShader(shader);
 	m_gameObjectList.PushBack(tempObject);
 	return tempObject;
 }

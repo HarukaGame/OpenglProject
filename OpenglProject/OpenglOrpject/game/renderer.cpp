@@ -82,7 +82,14 @@ void CRenderer::StartDisplay() {
 }
 
 void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat) {
-
+    if (_buffer == nullptr) {
+        PRINT("CRenderer::MeshDraw _buffer is nullptr\n");
+        return;
+    }
+    if (_shader == nullptr) {
+        PRINT("CRenderer::MeshDraw _shader is nullptr\n");
+        return;
+    }
 
     glUseProgram(_shader->GetProgramID());
     //glUseProgram(_buffer->GetProgramID());
