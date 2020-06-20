@@ -8,6 +8,7 @@
 #include "input.h"
 #include "mesh.h"
 #include "hash.h"
+#include "camera.h"
 
 bool CApplication::Initilize(HINSTANCE hInstance,
     HINSTANCE hPrevInstance,
@@ -52,6 +53,8 @@ void CApplication::Update(MSG* msg) {
     m_pScene->Update();
 
     m_prenderer->StartDisplay();
+
+    m_pObjectManager->ZSort(CCamera::GetInstance()->GetPosition());
     m_pObjectManager->AllObjectDraw(m_prenderer);
     //m_prenderer->MeshDraw(testMesh);
 

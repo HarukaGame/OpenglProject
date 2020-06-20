@@ -16,11 +16,13 @@ public:
 	void SetPosition(const float _x,const float _y,const float _z);
 	void SetRotate(const float _x, const float _y, const float _z);
 	void SetScale(const float _x, const float _y, const float _z);
+	glm::vec3 GetPosition()const;
 	glm::mat4 GetTransMat();
 
 	void SetHash(const hash _hash);
 	hash GetHash()const;
 	void Finalize();
+	float distance = 0;
 private:
 	void ReCalculateTrans();
 

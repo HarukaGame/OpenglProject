@@ -16,7 +16,7 @@
 
 bool CObjectManager::Initilize()
 {
-	if (CCamera::CreateInstance(800,600) == false) {
+	if (CCamera::CreateInstance(800, 600) == false) {
 		return false;
 	}
 
@@ -53,7 +53,7 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 		}
 		CBuffer* buffer = (*iter)->GetMesh()->GetBuffer();
 		glm::mat4 model = (*iter)->GetTransMat();
-		_renderer->MeshDraw(buffer,shader,model);
+		_renderer->MeshDraw(buffer, shader, model);
 	}
 }
 
@@ -92,6 +92,54 @@ CGameObject* CObjectManager::SearchGameObject(const hash _hash, CList<CGameObjec
 		}
 	}
 	return nullptr;
+}
+
+void CObjectManager::ZSort(const glm::vec3& _cameraPos)
+{
+	//リストサイズが2以上のときのみ実行
+	if (m_gameObjectList.Length() < 2) {
+		return;
+	}
+
+	//基本となるイテレーター
+	CList<CGameObject*>::iterator baseIter = m_gameObjectList.Begin();
+	//Endイテレーター
+	CList<CGameObject*>::iterator end = m_gameObjectList.End();
+
+	//オブジェクトそれぞれにカメラとの距離を登録
+	for (; baseIter != end; baseIter++) {
+		(*baseIter)->distance = glm::length((*baseIter)->GetPosition() - _cameraPos);
+	}
+
+	//スタートのイテレーター
+	CList<CGameObject*>::iterator begin = m_gameObjectList.Begin();
+
+	//2番目の項目から　調べる
+	baseIter = begin + 1;
+	//挿入ソートで挿入場所を決めるイテレータ
+	CList<CGameObject*>::iterator insert = begin + 1;
+	for (; baseIter != end; baseIter++) {
+		//[i-1]番目 >= [i]番目ならループを続ける
+		if ((*(baseIter-1))->distance > (*baseIter)->distance){
+			continue;
+		}
+
+		//[i - 1]番目 < [i]番目となっていたら
+		//挿入場所を探索する、このときbaseIterは移動させるべき項目となる
+		insert = baseIter-1;
+		for (;insert != begin-1 &&(*insert)->distance < (*baseIter)->distance; insert--);
+
+		//探索した挿入場所にbaseIterを入れる
+		m_gameObjectList.Insert((*baseIter),insert);
+
+		//baseIterの項目をPopするとbaseIterのnextが参照できなくなるので、
+		//baseIter--で下げてから、baseIter+1をPopし、baseIterのnextを参照できるように保つ
+		baseIter--;
+		m_gameObjectList.Pop(baseIter+1);
+
+		//リストの一番初めが入れ替わっている可能性があるので、更新する
+		begin = m_gameObjectList.Begin();
+	}
 }
 
 void CObjectManager::DeleteObject(const hash _hash)

@@ -4,6 +4,7 @@
 
 #include "my_list.h"
 #include "hash.h"
+#include "glm/vec3.hpp"
 
 class CGameObject;
 class CRenderer;
@@ -19,6 +20,7 @@ public:
 	CGameObject* CreateGameObject(const hash _hash);
 	CGameObject* SearchGameObject(const hash _hash);
 	CGameObject* SearchGameObject(const hash _hash,CList<CGameObject*>::iterator& _iter);
+	void ZSort(const glm::vec3& _cameraPos);
 	void DeleteObject(const hash _hash);
 private:
 	CList<CGameObject*> m_gameObjectList = CList<CGameObject*>();

@@ -71,9 +71,11 @@ bool CRenderer::Initialize(HWND _hwnd) {
 
 void CRenderer::StartDisplay() {
 
-    glClearColor(0.0f, 0.5f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glDepthRange(-1.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
     //glClearDepth(0.0f);
 
 
@@ -97,7 +99,7 @@ void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat)
     //_mesh->SetColor(0, 1, 1, 1);
     glm::vec3 lightDir = CLight::GetInstance()->GetDirection();
     SetLight(_shader, lightDir.x, lightDir.y, lightDir.z);
-    SetColor(_shader,0, 1, 1, 1);
+    SetColor(_shader,0, 1, 1, 0.5);
     //_mesh->SetLight(1, 2, 3);
 
     test += 0.1f;

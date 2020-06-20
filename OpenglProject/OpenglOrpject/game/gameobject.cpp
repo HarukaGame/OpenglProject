@@ -42,6 +42,11 @@ void CGameObject::SetScale(const float _x, const float _y, const float _z)
 	m_moved = true;
 }
 
+glm::vec3 CGameObject::GetPosition() const
+{
+	return m_position;;
+}
+
 glm::mat4 CGameObject::GetTransMat()
 {
 	if (m_moved == true) {

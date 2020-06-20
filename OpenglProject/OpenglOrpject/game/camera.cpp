@@ -79,6 +79,11 @@ glm::mat4 CCamera::GetProjectionMatrix() const
 	return GlmMath::ProjectionMatrix(deg_to_rad(60.0f),m_width/m_height,-1,1);
 }
 
+glm::vec3 CCamera::GetPosition() const
+{
+	return m_position;
+}
+
 
 void CCamera::ReCalcTransform()
 {

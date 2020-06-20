@@ -58,21 +58,24 @@ void CScene::Update()
 		int a = 0;
 
 	}
-	if (Input::GetKey('1')) {
+	if (Input::GetKeyDown('1')) {
 		//float x = 0.0f;
 		//float y = 0.0f;
 		//float z = -1.0f;
-		float range = 10.0f;
-		float x = fmod(rand() / 100.0f, range) - range / 2.0f;
-		float y = fmod(rand() / 100.0f, range) - range / 2.0f;
-		float z = fmod(rand() / 100.0f, range) - range / 2.0f;
-		CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-		CMesh* mesh = CResourceManager::SearchOrCreateResourceObject<CMesh>(CHash::CRC32("TestMesh"));
-		CShader* shader = CResourceManager::SearchOrCreateResourceObject<CShader>(CHash::CRC32("TestShader"));
-		tempObject->SetMesh(mesh);
-		tempObject->SetShader(shader);
-		tempObject->SetPosition(x, y, z);
-		int a = 0;
+		for (int i = 0; i < 10; i++) {
+			float range = 10.0f;
+			float x = fmod(rand() / 100.0f, range) - range / 2.0f;
+			float y = fmod(rand() / 100.0f, range) - range / 2.0f;
+			float z = fmod(rand() / 100.0f, range) - range / 2.0f;
+			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+			CMesh* mesh = CResourceManager::SearchOrCreateResourceObject<CMesh>(CHash::CRC32("TestMesh"));
+			CShader* shader = CResourceManager::SearchOrCreateResourceObject<CShader>(CHash::CRC32("TestShader"));
+			tempObject->SetMesh(mesh);
+			tempObject->SetShader(shader);
+			tempObject->SetPosition(x, y, z);
+
+		}
+
 
 	}
 }

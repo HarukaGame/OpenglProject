@@ -60,6 +60,8 @@ class CListIterator;
 	///@param[in]	_value
 	void PushBack(T _value);
 
+	void Insert(T _value, CListIterator _iter);
+
 	///@brief	ˆê”Ô‘O‚Ì—v‘f‚ğæ‚èo‚·
 	///@return	T
 	void PopFront();
@@ -294,6 +296,12 @@ template<class T>
 void CList<T>::PushBack(T _value)
 {
 	Add(_value, m_root->m_pPrev);
+}
+
+template<class T>
+inline void CList<T>::Insert(T _value, CListIterator _iter)
+{
+	Add(_value, _iter.m_pNode);
 }
 
 template<class T>
