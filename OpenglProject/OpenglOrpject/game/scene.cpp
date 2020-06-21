@@ -38,6 +38,12 @@ void CScene::Update()
 	if (Input::GetKey('S')) {
 		CCamera::GetInstance()->Rotate(-3.0f, 0);
 	}
+	if (Input::GetKey('Q')) {
+		CCamera::GetInstance()->Zoom(0.1f);
+	}
+	if (Input::GetKey('E')) {
+		CCamera::GetInstance()->Zoom(-0.1f);
+	}
 
 	if (Input::GetKey(VK_UP)) {
 		CLight::GetInstance()->Rotate(2.0f,0);
