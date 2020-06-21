@@ -16,6 +16,7 @@ public:
 	void SetTargetPosition(const glm::vec3& _position);
 	void Move(const glm::vec3& _move);
 	void Rotate(const float _x, const float _y);
+	void Zoom(const float _add);
 
 	glm::mat4 GetViewMatrix()const;
 	glm::mat4 GetProjectionMatrix()const;

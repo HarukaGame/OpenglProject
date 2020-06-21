@@ -69,6 +69,12 @@ void CCamera::Rotate(const float _x, const float _y)
 	ReCalcTransform();
 }
 
+void CCamera::Zoom(const float _add)
+{
+	m_targetDistance += _add;
+	ReCalcTransform();
+}
+
 glm::mat4 CCamera::GetViewMatrix() const
 {
 	return GlmMath::LookAt(m_position,m_targetPosition,glm::vec3(0,1,0) );
