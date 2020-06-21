@@ -62,11 +62,9 @@ void CScene::Update()
 		CGameObject* temp = m_pObjectManager->SearchGameObject(CHash::CRC32("TestCube"));
 		int a = 0;
 	}
-	//if (Input::GetKey('2')) {
-	//	m_pObjectManager->DeleteObject(CHash::CRC32("TestCube"));
-	//	int a = 0;
-
-	//}
+	if (Input::GetKey('3')) {
+		m_pObjectManager->DeleteObject(CHash::CRC32("TestCube"));
+	}
 	if (Input::GetKeyDown('1')) {
 		for (int i = 0; i < 10; i++) {
 			float range = 10.0f;
