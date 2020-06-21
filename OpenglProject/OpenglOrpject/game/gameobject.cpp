@@ -4,22 +4,22 @@
 using namespace GLM_MATH_NAMESPACE;
 
 
-void CGameObject::SetShader(CShader* _shader)
+void CGameObject::SetShader(const CShader* _shader)
 {
 	m_pShader = _shader;
 }
 
-void CGameObject::SetMesh(CMesh* _mesh)
+void CGameObject::SetMesh(const CMesh* _mesh)
 {
 	m_pMesh = _mesh;
 }
 
-CShader* CGameObject::GetShader() const
+const CShader* CGameObject::GetShader() const
 {
 	return m_pShader;
 }
 
-CMesh* CGameObject::GetMesh() const
+const CMesh* CGameObject::GetMesh() const
 {
 	return m_pMesh;
 }

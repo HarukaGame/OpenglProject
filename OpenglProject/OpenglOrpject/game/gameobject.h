@@ -9,10 +9,10 @@ class CMesh;
 
 class CGameObject {
 public:
-	void SetShader(CShader* _shader);
-	void SetMesh(CMesh* _mesh);
-	CShader* GetShader()const;
-	CMesh* GetMesh()const;
+	void SetShader(const CShader* _shader);
+	void SetMesh(const CMesh* _mesh);
+	const CShader* GetShader()const;
+	const CMesh* GetMesh()const;
 	void SetPosition(const float _x,const float _y,const float _z);
 	void SetRotate(const float _x, const float _y, const float _z);
 	void SetScale(const float _x, const float _y, const float _z);
@@ -26,8 +26,8 @@ public:
 private:
 	void ReCalculateTrans();
 
-	CMesh* m_pMesh = nullptr;
-	CShader* m_pShader = nullptr;
+	const CMesh* m_pMesh = nullptr;
+	const CShader* m_pShader = nullptr;
 	hash m_hash = 0;
 
 	glm::vec3 m_position = glm::vec3(0, 0, 0);

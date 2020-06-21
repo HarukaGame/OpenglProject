@@ -171,5 +171,11 @@
     <None Include="game\ShaderFiles\basic.vs">
       <Filter>game\res\shaderfiles</Filter>
     </None>
+    <None Include="game\ShaderFiles\transparent.fs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+    <None Include="game\ShaderFiles\transparent.vs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
   </ItemGroup>
 </Project>

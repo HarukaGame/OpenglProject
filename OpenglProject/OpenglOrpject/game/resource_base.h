@@ -7,8 +7,8 @@
 
 class CResourceBase {
 public:
-	void RefCountUp();
-	void RefCountDown();
+	void RefCountUp()const;
+	void RefCountDown()const;
 	bool RefCountZero()const;
 
 	void SetHash(const hash _hash);
@@ -16,7 +16,7 @@ public:
 	virtual void Finalize(){}
 protected:
 	hash m_hash = 0;
-	int m_resourceCounter = 0;
+	mutable int m_resourceCounter = 0;
 };
 
 #endif // !__RESOURCE_BASE_H__

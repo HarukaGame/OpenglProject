@@ -71,19 +71,19 @@ bool CRenderer::Initialize(HWND _hwnd) {
 
 void CRenderer::StartDisplay() {
 
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glDepthRange(-1.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
     //glClearDepth(0.0f);
+    glEnable(GL_CULL_FACE);
 
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearDepth(1.0f);
 }
 
-void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat) {
+void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,glm::mat4& modelMat) {
     if (_buffer == nullptr) {
         PRINT("CRenderer::MeshDraw _buffer is nullptr\n");
         return;
@@ -99,7 +99,13 @@ void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat)
     //_mesh->SetColor(0, 1, 1, 1);
     glm::vec3 lightDir = CLight::GetInstance()->GetDirection();
     SetLight(_shader, lightDir.x, lightDir.y, lightDir.z);
-    SetColor(_shader,0, 1, 1, 0.5);
+    if (_shader->GetTransparent() == true) {
+        glEnable(GL_BLEND);
+        SetColor(_shader, 0, 1, 1, 0.5);
+    }
+    else {
+        SetColor(_shader, 1, 0, 0, 1);
+    }
     //_mesh->SetLight(1, 2, 3);
 
     test += 0.1f;
@@ -136,6 +142,8 @@ void CRenderer::MeshDraw(CBuffer* _buffer, CShader* _shader,glm::mat4& modelMat)
     glDrawArrays(GL_TRIANGLES, 0, _buffer->GetVertexNum());
 
     glUseProgram(0);
+
+    glDisable(GL_BLEND);
 }
 
 
@@ -146,13 +154,13 @@ void CRenderer::Release() {
 }
 
 
-void CRenderer::SetLight(CShader* _shader,const float _x, const float _y, const float _z)
+void CRenderer::SetLight(const CShader* _shader,const float _x, const float _y, const float _z)
 {
     float length = sqrtf(_x * _x + _y * _y + _z * _z);
     glUniform3f(_shader->GetUniform(SHADER_UNIFORM_LIGHT), _x / length, _y / length, _z / length);
 }
 
-void CRenderer::SetColor(CShader* _shader, const float _r, const float _g, const float _b, const float _a)
+void CRenderer::SetColor(const CShader* _shader, const float _r, const float _g, const float _b, const float _a)
 {
     glUniform4f(_shader->GetUniform(SHADER_UNIFORM_COLOR), _r, _g, _b, _a);
 }

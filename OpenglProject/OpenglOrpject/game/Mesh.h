@@ -29,6 +29,11 @@ public:
 	void Finalize()override;
 
 	const float* myvertices;
+	const float* m_normals;
+
+	GLuint vertexNum = 0;
+	GLuint elementNum = 0;
+
 	glm::vec3 m_pos = glm::vec3(0, 0, 0);
 	glm::vec3 m_rot = glm::vec3(0, 0, 0);
 	glm::vec3 m_scale = glm::vec3(1, 1, 1);
@@ -48,10 +53,6 @@ private:
 	//-0.5f , -0.5f, 0.0f, // Bottom left corner
 	// 0.5f ,  0.5f, 0.0f, // Top Right corner 
 	//};
-	const float* m_normals;
-
-	GLuint vertexNum = 0;
-	GLuint elementNum = 0;
 
 	//GLuint m_programID = 0;
 

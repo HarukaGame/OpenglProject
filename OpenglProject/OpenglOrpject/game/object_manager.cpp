@@ -46,7 +46,7 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 {
 	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();
 	for (; iter != m_gameObjectList.End(); iter++) {
-		CShader* shader = (*iter)->GetShader();
+		const CShader* shader = (*iter)->GetShader();
 		if ((*iter)->GetMesh() == nullptr) {
 			PRINT("CObjectManager::AllObjectDraw GetMesh() is nullptr\n");
 			continue;

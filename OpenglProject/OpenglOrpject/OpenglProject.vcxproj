@@ -74,6 +74,8 @@
     <None Include="game\ShaderFiles\basic.fs" />
     <None Include="game\ShaderFiles\Basic.shader" />
     <None Include="game\ShaderFiles\basic.vs" />
+    <None Include="game\ShaderFiles\transparent.fs" />
+    <None Include="game\ShaderFiles\transparent.vs" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

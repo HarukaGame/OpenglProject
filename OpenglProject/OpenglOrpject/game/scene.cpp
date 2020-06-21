@@ -6,7 +6,10 @@
 #include "gameobject.h"
 
 #include "mesh.h"
+#include "shader.h"
 #include "resource_manager.h"
+#include "vertexfiles/cube.h"
+#include "fileloader.h"
 #include "object_manager.h"
 
 #include <random>
@@ -53,23 +56,21 @@ void CScene::Update()
 		CGameObject* temp = m_pObjectManager->SearchGameObject(CHash::CRC32("TestCube"));
 		int a = 0;
 	}
-	if (Input::GetKey('2')) {
-		m_pObjectManager->DeleteObject(CHash::CRC32("TestCube"));
-		int a = 0;
+	//if (Input::GetKey('2')) {
+	//	m_pObjectManager->DeleteObject(CHash::CRC32("TestCube"));
+	//	int a = 0;
 
-	}
+	//}
 	if (Input::GetKeyDown('1')) {
-		//float x = 0.0f;
-		//float y = 0.0f;
-		//float z = -1.0f;
 		for (int i = 0; i < 10; i++) {
 			float range = 10.0f;
 			float x = fmod(rand() / 100.0f, range) - range / 2.0f;
 			float y = fmod(rand() / 100.0f, range) - range / 2.0f;
 			float z = fmod(rand() / 100.0f, range) - range / 2.0f;
 			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-			CMesh* mesh = CResourceManager::SearchOrCreateResourceObject<CMesh>(CHash::CRC32("TestMesh"));
-			CShader* shader = CResourceManager::SearchOrCreateResourceObject<CShader>(CHash::CRC32("TestShader"));
+			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
+			const CShader* shader = SearchOrCreateShader(CHash::CRC32("TransparentShader"));
+			//const CShader* shader = SearchOrCreateShader(CHash::CRC32("BasicShader"));
 			tempObject->SetMesh(mesh);
 			tempObject->SetShader(shader);
 			tempObject->SetPosition(x, y, z);
@@ -78,4 +79,93 @@ void CScene::Update()
 
 
 	}
+	if (Input::GetKeyDown('2')) {
+		for (int i = 0; i < 10; i++) {
+			float range = 10.0f;
+			float x = fmod(rand() / 100.0f, range) - range / 2.0f;
+			float y = fmod(rand() / 100.0f, range) - range / 2.0f;
+			float z = fmod(rand() / 100.0f, range) - range / 2.0f;
+			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
+			const CShader* shader = SearchOrCreateShader(CHash::CRC32("BasicShader"));
+			//const CShader* shader = SearchOrCreateShader(CHash::CRC32("BasicShader"));
+			tempObject->SetMesh(mesh);
+			tempObject->SetShader(shader);
+			tempObject->SetPosition(x, y, z);
+
+		}
+
+
+	}
+}
+
+
+
+
+
+const CMesh* CScene::SearchOrCreateMesh(const hash _hash)
+{
+	const CMesh* cMesh = CResourceManager::SearchResourceObject<CMesh>(_hash);
+	if (cMesh != nullptr) {
+		cMesh->RefCountUp();
+		return cMesh;
+	}
+
+	CMesh* mesh = CResourceManager::CreateResourceObject<CMesh>(_hash);
+	if (mesh == nullptr) {
+		return nullptr;
+	}
+	mesh->RefCountUp();
+	if (_hash == CHash::CRC32("CubeMesh")) {
+		mesh->myvertices = PolygonCube::verticex;
+		mesh->m_normals = PolygonCube::normals;
+		mesh->vertexNum = PolygonCube::vertexNum;
+		mesh->elementNum = PolygonCube::elementNum;
+	}
+	else {
+		return nullptr;
+	}
+
+	mesh->CreateBuffer();
+	return mesh;
+}
+
+const CShader* CScene::SearchOrCreateShader(const hash _hash)
+{
+	const CShader* cShader = CResourceManager::SearchResourceObject<CShader>(_hash);
+	if (cShader != nullptr) {
+		cShader->RefCountUp();
+		return cShader;
+	}
+
+	CShader* shader = CResourceManager::CreateResourceObject<CShader>(_hash);
+	if (shader == nullptr) {
+		return nullptr;
+	}
+	shader->RefCountUp();
+	
+	const char* vertFilePath = "";
+	const char* fragFilePath = "";
+	if (_hash == CHash::CRC32("BasicShader")) {
+		vertFilePath = "game/ShaderFiles/basic.vs";
+		fragFilePath = "game/ShaderFiles/basic.fs";
+	}
+	else if (_hash == CHash::CRC32("TransparentShader")) {
+		vertFilePath = "game/ShaderFiles/Transparent.vs";
+		fragFilePath = "game/ShaderFiles/Transparent.fs";
+		shader->SetTransparent(true);
+	}
+	else {
+		return nullptr;
+	}
+
+	CFileLoader vertFile = CFileLoader();
+	CFileLoader fragFile = CFileLoader();
+	vertFile.LoadFile(vertFilePath);
+	fragFile.LoadFile(fragFilePath);
+	shader->CreateShaderProgram(vertFile.GetBuffer(), vertFile.GetLength(), fragFile.GetBuffer(), fragFile.GetLength());
+	vertFile.Release();
+	fragFile.Release();
+
+	return shader;
 }

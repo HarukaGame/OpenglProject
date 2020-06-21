@@ -21,10 +21,16 @@ enum SHADER_ATTRIBUTE {
 class CShader:public CResourceBase {
 public:
 	bool SetUpUniform(int _programID);
+	bool SetUpUniform();
 	int GetProgramID()const;
 	int GetUniform(SHADER_UNIFORM _uniform)const;
 	int GetAttribute(SHADER_ATTRIBUTE _attribute)const;
+	void CreateShaderProgram(const char* _vertSource,int _vertLength, const char* _fragSource, int _fragLength);
+
+	void SetTransparent(const bool _value);
+	bool GetTransparent()const;
 private:
+	bool m_transparent = false;
 	GLuint m_programID = 0;
 	int m_uniformList[SHADER_UNIFORM_NUM] = { -1 };
 	int m_attributeList[SHADER_ATTRIBUTE_NUM] = { -1 };

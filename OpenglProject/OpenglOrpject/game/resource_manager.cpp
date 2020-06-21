@@ -188,8 +188,10 @@ CShader* CResourceManager::CreateShader()
 {
 	CFileLoader vertFile = CFileLoader();
 	CFileLoader fragFile = CFileLoader();
-	vertFile.LoadFile("game/ShaderFiles/basic.vs");
-	fragFile.LoadFile("game/ShaderFiles/basic.fs");
+	vertFile.LoadFile("game/ShaderFiles/transparent.vs");
+	fragFile.LoadFile("game/ShaderFiles/transparent.fs");
+	//vertFile.LoadFile("game/ShaderFiles/basic.vs");
+	//fragFile.LoadFile("game/ShaderFiles/basic.fs");
 	int programID = CShaderLoader::CreateShaderProgram(vertFile.GetBuffer(), vertFile.GetLength(), fragFile.GetBuffer(), fragFile.GetLength());
 	vertFile.Release();
 	fragFile.Release();
