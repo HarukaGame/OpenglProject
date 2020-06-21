@@ -22,6 +22,10 @@ public:
 	CGameObject* SearchGameObject(const hash _hash,CList<CGameObject*>::iterator& _iter);
 	void ZSort(const glm::vec3& _cameraPos);
 	void DeleteObject(const hash _hash);
+#ifdef _DEBUG
+	void DebugShow();
+#endif // _DEBUG
+
 private:
 	CList<CGameObject*> m_gameObjectList = CList<CGameObject*>();
 };

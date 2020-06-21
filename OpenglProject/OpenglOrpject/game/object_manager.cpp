@@ -155,21 +155,6 @@ void CObjectManager::ZSort(const glm::vec3& _cameraPos)
 		end = m_gameObjectList.End();
 		begin = m_gameObjectList.Begin();
 	}
-
-	PRINT("----------------------------------------------------\n");
-	CList<CGameObject*>::iterator printIter = m_gameObjectList.Begin();
-	CList<CGameObject*>::iterator printEnd = m_gameObjectList.End();
-	for (; printIter != printEnd; printIter++) {
-		PRINT2("gameobject[%f]		", (*printIter)->distance);
-		if ((*printIter)->GetShader()->GetTransparent() == true) {
-			PRINT("true\n");
-		}
-		else {
-			PRINT("false\n");
-		}
-	}
-	PRINT("----------------------------------------------------\n");
-
 }
 
 void CObjectManager::DeleteObject(const hash _hash)
@@ -185,4 +170,21 @@ void CObjectManager::DeleteObject(const hash _hash)
 	temp->Finalize();
 	delete temp;
 	m_gameObjectList.Pop(iter);
+}
+
+void CObjectManager::DebugShow()
+{
+	PRINT("----------------------------------------------------\n");
+	CList<CGameObject*>::iterator printIter = m_gameObjectList.Begin();
+	CList<CGameObject*>::iterator printEnd = m_gameObjectList.End();
+	for (; printIter != printEnd; printIter++) {
+		PRINT2("gameobject[%f]		", (*printIter)->distance);
+		if ((*printIter)->GetShader()->GetTransparent() == true) {
+			PRINT("true\n");
+		}
+		else {
+			PRINT("false\n");
+		}
+	}
+	PRINT("----------------------------------------------------\n");
 }

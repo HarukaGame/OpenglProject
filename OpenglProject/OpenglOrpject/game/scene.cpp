@@ -101,6 +101,14 @@ void CScene::Update()
 
 
 	}
+
+#ifdef _DEBUG
+	if (Input::GetKeyDown('4')) {
+		m_pObjectManager->DebugShow();
+	}
+
+#endif // _DEBUG
+
 }
 
 
