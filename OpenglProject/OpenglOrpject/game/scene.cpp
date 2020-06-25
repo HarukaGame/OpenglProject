@@ -13,6 +13,7 @@
 #include "object_manager.h"
 
 #include <random>
+#include "bmp_analyzer.h"
 
 bool CScene::Initilize(CObjectManager* _objectManager)
 {
@@ -21,6 +22,14 @@ bool CScene::Initilize(CObjectManager* _objectManager)
 		PRINT("CScene::Initilize _objectManager is nullptr\n");
 		return false;
 	}
+
+	BITMAP_FORMAT bitmap;
+	CFileLoader fileloader = CFileLoader();
+	fileloader.LoadFile("game/res/bmpfiles/test.bmp");
+	CBmpAnalyzer::AnalyzeBitMap(fileloader.GetVoidBuffer(), fileloader.GetLength(), bitmap);
+	CBmpAnalyzer::ShowBitMapInfo(bitmap);
+	fileloader.Release();
+
 	return true;
 }
 

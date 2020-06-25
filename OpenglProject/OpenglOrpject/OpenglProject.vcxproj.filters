@@ -85,6 +85,10 @@
     <ClCompile Include="game\input_device.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\bmp_analyzer.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\texture_converter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -157,6 +161,18 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\input_device.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\bmp_analyzer.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\bitmap_format.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\texture_converter.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\texture_format.h">
       <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>

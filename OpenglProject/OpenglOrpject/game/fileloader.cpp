@@ -38,6 +38,11 @@ const char* CFileLoader::GetBuffer()
     return (const char*)m_pBuffer;
 }
 
+const void* CFileLoader::GetVoidBuffer()
+{
+    return m_pBuffer;
+}
+
 int CFileLoader::GetLength()
 {
     return m_length;

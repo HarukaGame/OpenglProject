@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game\application.cpp" />
+    <ClCompile Include="game\bmp_analyzer.cpp" />
     <ClCompile Include="game\buffer.cpp" />
     <ClCompile Include="game\camera.cpp" />
     <ClCompile Include="game\common_math.cpp" />
@@ -41,11 +42,14 @@
     <ClCompile Include="game\scene.cpp" />
     <ClCompile Include="game\shader.cpp" />
     <ClCompile Include="game\shader_loader.cpp" />
+    <ClCompile Include="game\texture_converter.cpp" />
     <ClCompile Include="game\vertexfiles\cube.cpp" />
     <ClCompile Include="game\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h" />
+    <ClInclude Include="game\bitmap_format.h" />
+    <ClInclude Include="game\bmp_analyzer.h" />
     <ClInclude Include="game\buffer.h" />
     <ClInclude Include="game\camera.h" />
     <ClInclude Include="game\debug_print.h" />
@@ -66,6 +70,8 @@
     <ClInclude Include="game\scene.h" />
     <ClInclude Include="game\shader.h" />
     <ClInclude Include="game\shader_loader.h" />
+    <ClInclude Include="game\texture_converter.h" />
+    <ClInclude Include="game\texture_format.h" />
     <ClInclude Include="game\vertexfiles\cube.h" />
     <ClInclude Include="game\window.h" />
     <ClInclude Include="game\common_math.h" />
