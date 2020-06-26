@@ -13,6 +13,9 @@
     <Filter Include="game\res\vertexfiles">
       <UniqueIdentifier>{b6ef5c6a-b74c-4a00-9917-f98a149d9a45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game\res\bmpfiles">
+      <UniqueIdentifier>{561cd884-993c-44d6-85e8-0ae90d35ded1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game\main.cpp">
@@ -88,7 +91,15 @@
     <ClCompile Include="game\bmp_analyzer.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="game\texture_converter.cpp" />
+    <ClCompile Include="game\vertexfiles\quad.cpp">
+      <Filter>game\res\vertexfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="game\texture_converter.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="game\texture.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -175,6 +186,12 @@
     <ClInclude Include="game\texture_format.h">
       <Filter>game</Filter>
     </ClInclude>
+    <ClInclude Include="game\texture.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\vertexfiles\quad.h">
+      <Filter>game\res\vertexfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -193,5 +210,16 @@
     <None Include="game\ShaderFiles\transparent.vs">
       <Filter>game\res\shaderfiles</Filter>
     </None>
+    <None Include="game\ShaderFiles\texture.fs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+    <None Include="game\ShaderFiles\texture.vs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="game\res\bmpfiles\test.bmp">
+      <Filter>game\res\bmpfiles</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -6,13 +6,15 @@
 
 class CShader;
 class CMesh;
-
+class CTexture;
 class CGameObject {
 public:
 	void SetShader(const CShader* _shader);
 	void SetMesh(const CMesh* _mesh);
+	void SetTexture(const CTexture* _texture);
 	const CShader* GetShader()const;
 	const CMesh* GetMesh()const;
+	const CTexture* GetTexture()const;
 	void SetPosition(const float _x,const float _y,const float _z);
 	void SetRotate(const float _x, const float _y, const float _z);
 	void SetScale(const float _x, const float _y, const float _z);
@@ -28,6 +30,7 @@ private:
 
 	const CMesh* m_pMesh = nullptr;
 	const CShader* m_pShader = nullptr;
+	const CTexture* m_pTexture = nullptr;
 	hash m_hash = 0;
 
 	glm::vec3 m_position = glm::vec3(0, 0, 0);

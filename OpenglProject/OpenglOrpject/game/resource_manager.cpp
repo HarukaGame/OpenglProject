@@ -1,6 +1,7 @@
 #include "resource_manager.h"
 #include "Mesh.h"
 #include "shader.h"
+#include "texture.h"
 #include "fileloader.h"
 #include "shader_loader.h"
 #include "mesh.h"
@@ -33,6 +34,7 @@ void CResourceManager::Destroy()
 //---------------------------------------------------------------------------------------
 template CMesh* CResourceManager::SearchOrCreateResourceObject(const hash _hash);
 template CShader* CResourceManager::SearchOrCreateResourceObject(const hash _hash);
+template CTexture* CResourceManager::SearchOrCreateResourceObject(const hash _hash);
 template<class T>
 T* CResourceManager::SearchOrCreateResourceObject(const hash _hash) {
 	T* ret = SearchResourceObject<T>(_hash);
@@ -94,6 +96,17 @@ CShader* CResourceManager::SearchResourceObject(const hash _hash) {
 	}
 	return nullptr;
 }
+template<>
+CTexture* CResourceManager::SearchResourceObject(const hash _hash) {
+	CList<CTexture*>::iterator iter = s_instance->m_textureList.Begin();
+	CList<CTexture*>::iterator end = s_instance->m_textureList.End();
+	for (; iter != end; iter++) {
+		if ((*iter)->GetHash() == _hash) {
+			return (*iter);
+		}
+	}
+	return nullptr;
+}
 
 //---------------------------------------------------------------------------------------
 //CreateResourceObject
@@ -117,6 +130,14 @@ template<>
 CShader* CResourceManager::CreateResourceObject(const hash _hash) {
 	CShader* ret = CResourceManager::CreateShader();
 	s_instance->m_shaderList.PushBack(ret);
+	ret->SetHash(_hash);
+	return ret;
+}
+
+template<>
+CTexture* CResourceManager::CreateResourceObject(const hash _hash) {
+	CTexture* ret = CResourceManager::CreateTexture();
+	s_instance->m_textureList.PushBack(ret);
 	ret->SetHash(_hash);
 	return ret;
 }
@@ -158,6 +179,24 @@ bool CResourceManager::ReleaseResource<CShader>(const hash _hash) {
 				(*iter)->Finalize();
 				delete(*iter);
 				s_instance->m_shaderList.Pop(iter);
+			}
+
+			return true;
+		}
+	}
+	return false;
+}
+template<>
+bool CResourceManager::ReleaseResource<CTexture>(const hash _hash) {
+	CList<CTexture*>::iterator iter = s_instance->m_textureList.Begin();
+	CList<CTexture*>::iterator end = s_instance->m_textureList.End();
+	for (; iter != end; iter++) {
+		if ((*iter)->GetHash() == _hash) {
+			(*iter)->RefCountDown();
+			if ((*iter)->RefCountZero() == true) {
+				(*iter)->Finalize();
+				delete(*iter);
+				s_instance->m_textureList.Pop(iter);
 			}
 
 			return true;
@@ -223,4 +262,10 @@ CMesh* CResourceManager::CreateMesh()
 {
 	CMesh* mesh = new CMesh();
 	return mesh;
+}
+
+CTexture* CResourceManager::CreateTexture()
+{
+	CTexture* texture = new CTexture();
+	return texture;
 }

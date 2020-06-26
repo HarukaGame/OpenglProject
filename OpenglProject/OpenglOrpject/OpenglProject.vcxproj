@@ -42,8 +42,10 @@
     <ClCompile Include="game\scene.cpp" />
     <ClCompile Include="game\shader.cpp" />
     <ClCompile Include="game\shader_loader.cpp" />
+    <ClCompile Include="game\texture.cpp" />
     <ClCompile Include="game\texture_converter.cpp" />
     <ClCompile Include="game\vertexfiles\cube.cpp" />
+    <ClCompile Include="game\vertexfiles\quad.cpp" />
     <ClCompile Include="game\window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -70,9 +72,11 @@
     <ClInclude Include="game\scene.h" />
     <ClInclude Include="game\shader.h" />
     <ClInclude Include="game\shader_loader.h" />
+    <ClInclude Include="game\texture.h" />
     <ClInclude Include="game\texture_converter.h" />
     <ClInclude Include="game\texture_format.h" />
     <ClInclude Include="game\vertexfiles\cube.h" />
+    <ClInclude Include="game\vertexfiles\quad.h" />
     <ClInclude Include="game\window.h" />
     <ClInclude Include="game\common_math.h" />
   </ItemGroup>
@@ -80,9 +84,14 @@
     <None Include="game\ShaderFiles\basic.fs" />
     <None Include="game\ShaderFiles\Basic.shader" />
     <None Include="game\ShaderFiles\basic.vs" />
+    <None Include="game\ShaderFiles\texture.fs" />
+    <None Include="game\ShaderFiles\texture.vs" />
     <None Include="game\ShaderFiles\transparent.fs" />
     <None Include="game\ShaderFiles\transparent.vs" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="game\res\bmpfiles\test.bmp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -17,17 +17,19 @@ typedef unsigned int GLuint;
 class CMesh;
 class CShader;
 class CBuffer;
+class CTexture;
 
 class CRenderer {
 public:
 	bool Initialize(HWND _hwnd);
 	void StartDisplay();
-	void MeshDraw(CBuffer* _buffer,const CShader* _shader, glm::mat4& modelMat);
+	void MeshDraw(CBuffer* _buffer, const CShader* _shader, const CTexture* _texture, glm::mat4& modelMat);
 	void Release();
 
 
 	void SetLight(const CShader* _shader, const float _x, const float _y, const float _z);
 	void SetColor(const CShader* _shader, const float _r, const float _g, const float _b, const float _a);
+	void SetTexture(const CShader* _shader, const CTexture* _texture);
 
 	//const char* ReadShaderCode(const char* filename, const char* code);
 	

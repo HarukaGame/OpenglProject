@@ -2,54 +2,6 @@
 #include "GL/glew.h"
 #include "debug_print.h"
 
-bool CShader::SetUpUniform(int _programID)
-{
-    m_programID = _programID;
-    glUseProgram(m_programID);
-
-    //----------------------------------------------------------
-    //uniformİ’è
-    //----------------------------------------------------------
-
-    m_uniformList[SHADER_UNIFORM_COLOR] = -1;
-    m_uniformList[SHADER_UNIFORM_COLOR] = glGetUniformLocation(m_programID, "color");
-    if (m_uniformList[SHADER_UNIFORM_COLOR] == -1) {
-        PRINT("color uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½");
-
-    }
-
-    m_uniformList[SHADER_UNIFORM_LIGHT] = -1;
-
-    m_uniformList[SHADER_UNIFORM_LIGHT] = glGetUniformLocation(m_programID, "light");
-    if (m_uniformList[SHADER_UNIFORM_LIGHT] == -1) {
-        printf("light uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½");
-
-    }
-
-    m_uniformList[SHADER_UNIFORM_MVP] = -1;
-
-    m_uniformList[SHADER_UNIFORM_MVP] = glGetUniformLocation(m_programID, "MVP");
-    if (m_uniformList[SHADER_UNIFORM_MVP] == -1) {
-        printf("MVP uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½");
-
-    }
-
-    //----------------------------------------------------------
-    //attributeİ’è
-    //----------------------------------------------------------
-
-    m_attributeList[SHADER_ATTRIBUTE_POSITION] = glGetAttribLocation(m_programID, "position");
-    if (m_attributeList[SHADER_ATTRIBUTE_POSITION] == -1) {
-        PRINT("position attribute‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
-    }
-    m_attributeList[SHADER_ATTRIBUTE_NORMAL] = glGetAttribLocation(m_programID, "normals");
-    if (m_attributeList[SHADER_ATTRIBUTE_NORMAL] == -1) {
-        PRINT("normal attribute‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
-    }
-
-
-    return true;
-}
 
 bool CShader::SetUpUniform()
 {
@@ -62,7 +14,7 @@ bool CShader::SetUpUniform()
     m_uniformList[SHADER_UNIFORM_COLOR] = -1;
     m_uniformList[SHADER_UNIFORM_COLOR] = glGetUniformLocation(m_programID, "color");
     if (m_uniformList[SHADER_UNIFORM_COLOR] == -1) {
-        PRINT("color uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½");
+        PRINT("color uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
 
     }
 
@@ -70,7 +22,7 @@ bool CShader::SetUpUniform()
 
     m_uniformList[SHADER_UNIFORM_LIGHT] = glGetUniformLocation(m_programID, "light");
     if (m_uniformList[SHADER_UNIFORM_LIGHT] == -1) {
-        printf("light uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½");
+        PRINT("light uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
 
     }
 
@@ -78,9 +30,16 @@ bool CShader::SetUpUniform()
 
     m_uniformList[SHADER_UNIFORM_MVP] = glGetUniformLocation(m_programID, "MVP");
     if (m_uniformList[SHADER_UNIFORM_MVP] == -1) {
-        printf("MVP uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½");
+        PRINT("MVP uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
 
     }
+
+    m_uniformList[SHADER_UNIFORM_TEXTURE] = -1;
+    m_uniformList[SHADER_UNIFORM_TEXTURE] = glGetUniformLocation(m_programID, "texture");
+    if (m_uniformList[SHADER_UNIFORM_TEXTURE] == -1) {
+        PRINT("texture uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
+    }
+
 
     //----------------------------------------------------------
     //attributeİ’è
@@ -92,9 +51,13 @@ bool CShader::SetUpUniform()
     }
     m_attributeList[SHADER_ATTRIBUTE_NORMAL] = glGetAttribLocation(m_programID, "normals");
     if (m_attributeList[SHADER_ATTRIBUTE_NORMAL] == -1) {
-        PRINT("normal attribute‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
+        PRINT("normals attribute‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
     }
 
+    m_attributeList[SHADER_ATTRIBUTE_UV] = glGetAttribLocation(m_programID, "texture_uv");
+    if (m_attributeList[SHADER_ATTRIBUTE_UV] == -1) {
+        PRINT("texture_uv attribute‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
+    }
 
     return true;
 }

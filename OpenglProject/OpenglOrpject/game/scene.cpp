@@ -7,8 +7,10 @@
 
 #include "mesh.h"
 #include "shader.h"
+#include "texture.h"
 #include "resource_manager.h"
 #include "vertexfiles/cube.h"
+#include "vertexfiles/quad.h"
 #include "fileloader.h"
 #include "object_manager.h"
 
@@ -23,12 +25,12 @@ bool CScene::Initilize(CObjectManager* _objectManager)
 		return false;
 	}
 
-	BITMAP_FORMAT bitmap;
-	CFileLoader fileloader = CFileLoader();
-	fileloader.LoadFile("game/res/bmpfiles/test.bmp");
-	CBmpAnalyzer::AnalyzeBitMap(fileloader.GetVoidBuffer(), fileloader.GetLength(), bitmap);
-	CBmpAnalyzer::ShowBitMapInfo(bitmap);
-	fileloader.Release();
+	//BITMAP_FORMAT bitmap;
+	//CFileLoader fileloader = CFileLoader();
+	//fileloader.LoadFile("game/res/bmpfiles/test.bmp");
+	//CBmpAnalyzer::AnalyzeBitMap(fileloader.GetVoidBuffer(), fileloader.GetLength(), bitmap);
+	//CBmpAnalyzer::ShowBitMapInfo(bitmap);
+	//fileloader.Release();
 
 	return true;
 }
@@ -74,23 +76,23 @@ void CScene::Update()
 	if (Input::GetKey('3')) {
 		m_pObjectManager->DeleteObject(CHash::CRC32("TestCube"));
 	}
-	if (Input::GetKeyDown('1')) {
-		for (int i = 0; i < 10; i++) {
-			float range = 10.0f;
-			float x = fmod(rand() / 100.0f, range) - range / 2.0f;
-			float y = fmod(rand() / 100.0f, range) - range / 2.0f;
-			float z = fmod(rand() / 100.0f, range) - range / 2.0f;
-			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
-			const CShader* shader = SearchOrCreateShader(CHash::CRC32("TransparentShader"));
-			tempObject->SetMesh(mesh);
-			tempObject->SetShader(shader);
-			tempObject->SetPosition(x, y, z);
+	//if (Input::GetKeyDown('1')) {
+	//	for (int i = 0; i < 10; i++) {
+	//		float range = 10.0f;
+	//		float x = fmod(rand() / 100.0f, range) - range / 2.0f;
+	//		float y = fmod(rand() / 100.0f, range) - range / 2.0f;
+	//		float z = fmod(rand() / 100.0f, range) - range / 2.0f;
+	//		CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+	//		const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
+	//		const CShader* shader = SearchOrCreateShader(CHash::CRC32("TransparentShader"));
+	//		tempObject->SetMesh(mesh);
+	//		tempObject->SetShader(shader);
+	//		tempObject->SetPosition(x, y, z);
 
-		}
+	//	}
 
 
-	}
+	//}
 	if (Input::GetKeyDown('2')) {
 		for (int i = 0; i < 10; i++) {
 			float range = 10.0f;
@@ -98,11 +100,13 @@ void CScene::Update()
 			float y = fmod(rand() / 100.0f, range) - range / 2.0f;
 			float z = fmod(rand() / 100.0f, range) - range / 2.0f;
 			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
-			const CShader* shader = SearchOrCreateShader(CHash::CRC32("BasicShader"));
+			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("QuadMesh"));
+			const CShader* shader = SearchOrCreateShader(CHash::CRC32("TextureShader"));
+			const CTexture* texture = SearchOrCreateTexture(CHash::CRC32("TestTexture"));
 			//const CShader* shader = SearchOrCreateShader(CHash::CRC32("BasicShader"));
 			tempObject->SetMesh(mesh);
 			tempObject->SetShader(shader);
+			tempObject->SetTexture(texture);
 			tempObject->SetPosition(x, y, z);
 
 		}
@@ -142,6 +146,12 @@ const CMesh* CScene::SearchOrCreateMesh(const hash _hash)
 		mesh->vertexNum = PolygonCube::vertexNum;
 		mesh->elementNum = PolygonCube::elementNum;
 	}
+	else if (_hash == CHash::CRC32("QuadMesh")) {
+		mesh->myvertices = PolygonQuad::verticex;
+		mesh->m_normals = PolygonQuad::normals;
+		mesh->vertexNum = PolygonQuad::vertexNum;
+		mesh->elementNum = PolygonQuad::elementNum;
+	}
 	else {
 		return nullptr;
 	}
@@ -175,6 +185,10 @@ const CShader* CScene::SearchOrCreateShader(const hash _hash)
 		fragFilePath = "game/ShaderFiles/Transparent.fs";
 		shader->SetTransparent(true);
 	}
+	else if (_hash == CHash::CRC32("TextureShader")) {
+		vertFilePath = "game/ShaderFiles/texture.vs";
+		fragFilePath = "game/ShaderFiles/texture.fs";
+	}
 	else {
 		return nullptr;
 	}
@@ -188,4 +202,23 @@ const CShader* CScene::SearchOrCreateShader(const hash _hash)
 	fragFile.Release();
 
 	return shader;
+}
+
+const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
+{
+	const CTexture* cTexture = CResourceManager::SearchResourceObject<CTexture>(_hash);
+	if (cTexture != nullptr) {
+		cTexture->RefCountUp();
+		return cTexture;
+	}
+
+	CTexture* texture = CResourceManager::CreateResourceObject<CTexture>(_hash);
+	if (texture == nullptr) {
+		return nullptr;
+	}
+	texture->RefCountUp();
+
+	texture->CreateBuffer();
+
+	return texture;
 }

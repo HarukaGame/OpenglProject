@@ -4,6 +4,7 @@
 #include "my_list.h"
 class CMesh;
 class CShader;
+class CTexture;
 class CResourceBase;
 
 #include "hash.h"
@@ -23,11 +24,13 @@ public:
 private:
 	static CShader* CreateShader();
 	static CMesh* CreateMesh();
+	static CTexture* CreateTexture();
 	static void DeleteResource(CResourceBase* resource);
 
 	static CResourceManager* s_instance;
 	CList<CMesh*> m_meshList = CList<CMesh*>();
 	CList<CShader*>m_shaderList = CList<CShader*>();
+	CList<CTexture*> m_textureList = CList<CTexture*>();
 };
 #endif // !__RESOURCE_MANAGER_H__
 

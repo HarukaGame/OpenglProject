@@ -1,6 +1,7 @@
 ﻿#include "renderer.h"
 #include "Mesh.h"
 #include "shader.h"
+#include "texture.h"
 #include "buffer.h"
 #include "camera.h"
 #include "light.h"
@@ -71,7 +72,7 @@ bool CRenderer::Initialize(HWND _hwnd) {
 
 void CRenderer::StartDisplay() {
 
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glDepthRange(-1.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -83,7 +84,7 @@ void CRenderer::StartDisplay() {
     glClearDepth(1.0f);
 }
 
-void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,glm::mat4& modelMat) {
+void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture* _texture,glm::mat4& modelMat) {
     if (_buffer == nullptr) {
         PRINT("CRenderer::MeshDraw _buffer is nullptr\n");
         return;
@@ -105,6 +106,10 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,glm::mat4& mode
     }
     else {
         SetColor(_shader, 1, 0, 0, 1);
+    }
+
+    if (_texture != nullptr) {
+        SetTexture(_shader, _texture);
     }
     //_mesh->SetLight(1, 2, 3);
 
@@ -133,11 +138,15 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,glm::mat4& mode
     //PRINT("%d\n",a);
     //Attribure設定
     glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION));
-    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, 0);
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, 0);
     glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL));
-    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 6, (void*)(sizeof(GLfloat)*3));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat)*3));
+    glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_UV));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_UV), 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 6));
 
-
+    if (_texture != nullptr) {
+        glBindTexture(GL_TEXTURE_2D, _texture->m_buffer);
+    }
 
     glDrawArrays(GL_TRIANGLES, 0, _buffer->GetVertexNum());
 
@@ -163,6 +172,11 @@ void CRenderer::SetLight(const CShader* _shader,const float _x, const float _y, 
 void CRenderer::SetColor(const CShader* _shader, const float _r, const float _g, const float _b, const float _a)
 {
     glUniform4f(_shader->GetUniform(SHADER_UNIFORM_COLOR), _r, _g, _b, _a);
+}
+
+void CRenderer::SetTexture(const CShader* _shader, const CTexture* _texture)
+{
+    glUniform1i(_shader->GetUniform(SHADER_UNIFORM_TEXTURE), 0);
 }
 
 

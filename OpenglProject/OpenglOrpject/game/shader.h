@@ -9,18 +9,19 @@ enum SHADER_UNIFORM {
 	SHADER_UNIFORM_COLOR,
 	SHADER_UNIFORM_LIGHT,
 	SHADER_UNIFORM_MVP,
+	SHADER_UNIFORM_TEXTURE,
 	SHADER_UNIFORM_NUM
 };
 
 enum SHADER_ATTRIBUTE {
 	SHADER_ATTRIBUTE_POSITION,
 	SHADER_ATTRIBUTE_NORMAL,
+	SHADER_ATTRIBUTE_UV,
 	SHADER_ATTRIBUTE_NUM
 };
 
 class CShader:public CResourceBase {
 public:
-	bool SetUpUniform(int _programID);
 	bool SetUpUniform();
 	int GetProgramID()const;
 	int GetUniform(SHADER_UNIFORM _uniform)const;

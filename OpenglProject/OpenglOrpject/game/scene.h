@@ -5,6 +5,7 @@
 class CObjectManager;
 class CShader;
 class CMesh;
+class CTexture;
 
 #include "hash.h"
 class CScene {
@@ -14,6 +15,7 @@ public:
 
 	const CMesh* SearchOrCreateMesh(const hash _hash);
 	const CShader* SearchOrCreateShader(const hash _hash);
+	const CTexture* SearchOrCreateTexture(const hash _hash);
 private:
 	CObjectManager* m_pObjectManager = nullptr;
 };

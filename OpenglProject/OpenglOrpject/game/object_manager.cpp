@@ -52,8 +52,9 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 			continue;
 		}
 		CBuffer* buffer = (*iter)->GetMesh()->GetBuffer();
+		const CTexture* texture = (*iter)->GetTexture();
 		glm::mat4 model = (*iter)->GetTransMat();
-		_renderer->MeshDraw(buffer, shader, model);
+		_renderer->MeshDraw(buffer, shader, texture,model);
 	}
 }
 
