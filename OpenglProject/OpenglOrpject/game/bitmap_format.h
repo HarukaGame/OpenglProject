@@ -32,7 +32,7 @@ typedef struct {
 typedef struct {
 	BITMAP_HEADER_FILE m_headerFile;
 	BITMAP_INFORMATION_FILE m_infoFile;
-	c8* date = nullptr;
+	u8* date = nullptr;
 }BITMAP_FORMAT;
 
 #endif // !__BITMAP_FORMAT_H__

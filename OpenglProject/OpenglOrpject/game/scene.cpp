@@ -8,6 +8,7 @@
 #include "mesh.h"
 #include "shader.h"
 #include "texture.h"
+#include "texture_loader.h"
 #include "resource_manager.h"
 #include "vertexfiles/cube.h"
 #include "vertexfiles/quad.h"
@@ -25,12 +26,6 @@ bool CScene::Initilize(CObjectManager* _objectManager)
 		return false;
 	}
 
-	//BITMAP_FORMAT bitmap;
-	//CFileLoader fileloader = CFileLoader();
-	//fileloader.LoadFile("game/res/bmpfiles/test.bmp");
-	//CBmpAnalyzer::AnalyzeBitMap(fileloader.GetVoidBuffer(), fileloader.GetLength(), bitmap);
-	//CBmpAnalyzer::ShowBitMapInfo(bitmap);
-	//fileloader.Release();
 
 	return true;
 }
@@ -102,7 +97,14 @@ void CScene::Update()
 			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
 			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("QuadMesh"));
 			const CShader* shader = SearchOrCreateShader(CHash::CRC32("TextureShader"));
+
+			//-----------------------------------------------------
+
 			const CTexture* texture = SearchOrCreateTexture(CHash::CRC32("TestTexture"));
+			
+
+			//-----------------------------------------------------
+
 			//const CShader* shader = SearchOrCreateShader(CHash::CRC32("BasicShader"));
 			tempObject->SetMesh(mesh);
 			tempObject->SetShader(shader);
@@ -212,13 +214,16 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 		return cTexture;
 	}
 
+	CTextureLoader textureLoader = CTextureLoader();
+	textureLoader.LoadTexture("game/res/bmpfiles/test.bmp");
 	CTexture* texture = CResourceManager::CreateResourceObject<CTexture>(_hash);
+	texture->SetTextureBuffer(textureLoader.GetBuffer(),textureLoader.GetWidth(),textureLoader.GetHeight(),textureLoader.GetElementNum());
+	texture->CreateBuffer();
+	textureLoader.Release();
+
 	if (texture == nullptr) {
 		return nullptr;
 	}
 	texture->RefCountUp();
-
-	texture->CreateBuffer();
-
 	return texture;
 }

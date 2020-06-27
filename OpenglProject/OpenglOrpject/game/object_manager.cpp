@@ -177,7 +177,7 @@ void CObjectManager::DebugShow()
 	CList<CGameObject*>::iterator printIter = m_gameObjectList.Begin();
 	CList<CGameObject*>::iterator printEnd = m_gameObjectList.End();
 	for (; printIter != printEnd; printIter++) {
-		PRINT2("gameobject[%f]		", (*printIter)->distance);
+		PRINT("gameobject[%f]		", (*printIter)->distance);
 		if ((*printIter)->GetShader()->GetTransparent() == true) {
 			PRINT("true\n");
 		}

@@ -3,12 +3,12 @@
 
 void CResourceBase::RefCountUp()const {
 	m_resourceCounter++;
-	PRINT3("hash:%x refCounter is [%d]\n", m_hash, m_resourceCounter);
+	PRINT("hash:%x refCounter is [%d]\n", m_hash, m_resourceCounter);
 }
 
 void CResourceBase::RefCountDown()const {
 	m_resourceCounter--;
-	PRINT3("hash:%x refCounter is [%d]\n", m_hash, m_resourceCounter);
+	PRINT("hash:%x refCounter is [%d]\n", m_hash, m_resourceCounter);
 }
 
 bool CResourceBase::RefCountZero()const {

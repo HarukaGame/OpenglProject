@@ -94,10 +94,10 @@
     <ClCompile Include="game\vertexfiles\quad.cpp">
       <Filter>game\res\vertexfiles</Filter>
     </ClCompile>
-    <ClCompile Include="game\texture_converter.cpp">
+    <ClCompile Include="game\texture.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="game\texture.cpp">
+    <ClCompile Include="game\texture_loader.cpp">
       <Filter>game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -180,17 +180,14 @@
     <ClInclude Include="game\bitmap_format.h">
       <Filter>game</Filter>
     </ClInclude>
-    <ClInclude Include="game\texture_converter.h">
-      <Filter>game</Filter>
-    </ClInclude>
-    <ClInclude Include="game\texture_format.h">
-      <Filter>game</Filter>
-    </ClInclude>
     <ClInclude Include="game\texture.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="game\vertexfiles\quad.h">
       <Filter>game\res\vertexfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="game\texture_loader.h">
+      <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
