@@ -40,7 +40,11 @@ bool CTextureConverter::ConvertTexture(const void* _buffer,const unsigned int _l
 {
 	BITMAP_FORMAT bitmap;
 	bool success = CBmpAnalyzer::AnalyzeBitMap(_buffer, _length, bitmap);
+	CBmpAnalyzer::ShowBitMapInfo(bitmap);
+
 	if (success == true) {
+
+
 		m_width = bitmap.m_infoFile.m_biWidth;
 		m_height = bitmap.m_infoFile.m_biHeight;
 		m_elementNum = 3;
@@ -49,12 +53,11 @@ bool CTextureConverter::ConvertTexture(const void* _buffer,const unsigned int _l
 			for (int x = 0; x < m_width; x++) {
 				//ã‰º”½“]—p•Ï”
 				int valueIndex = (y * m_width + x) * 3;
-				int bufferIndex = ((m_height - y - 1) * m_width + x) * 3;
 
 				//BGR‚©‚çRGB‚É•ÏŠ·
-				m_pBuffer[valueIndex + 0] = bitmap.date[bufferIndex + 2];
-				m_pBuffer[valueIndex + 1] = bitmap.date[bufferIndex + 1];
-				m_pBuffer[valueIndex + 2] = bitmap.date[bufferIndex + 0];
+				m_pBuffer[valueIndex + 0] = bitmap.date[valueIndex + 0];
+				m_pBuffer[valueIndex + 1] = bitmap.date[valueIndex + 1];
+				m_pBuffer[valueIndex + 2] = bitmap.date[valueIndex + 2];
 			}
 		}
 	}
@@ -62,6 +65,7 @@ bool CTextureConverter::ConvertTexture(const void* _buffer,const unsigned int _l
 	if (success == true) {
 		return true;
 	}
+	return false;
 }
 
 int CTextureConverter::GetHeight() const

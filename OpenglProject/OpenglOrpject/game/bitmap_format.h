@@ -30,8 +30,16 @@ typedef struct {
 }BITMAP_INFORMATION_FILE;
 
 typedef struct {
+	u8 m_rgbBlue;
+	u8 m_rgbGreen;
+	u8 m_rgbRed;
+	u8 m_rgbReserved;
+}RGB_QUAD_COLOR_PALETTE;
+
+typedef struct {
 	BITMAP_HEADER_FILE m_headerFile;
 	BITMAP_INFORMATION_FILE m_infoFile;
+	RGB_QUAD_COLOR_PALETTE m_colorPalette[256];
 	u8* date = nullptr;
 }BITMAP_FORMAT;
 

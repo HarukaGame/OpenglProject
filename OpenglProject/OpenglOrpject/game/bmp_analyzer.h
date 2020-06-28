@@ -15,7 +15,8 @@ public:
 private:
 	static bool SetUpValue16(const u8* _buffer, u32& sride, const u32 _length, u16& value);
 	static bool SetUpValue32(const u8* _buffer, u32& sride, const u32 _length, u32& value);
-	static bool SetUpColorDate(const u8* _buffer, u32& sride, const u32 size, const u32 _length,u8* value);
-	static bool SetUpColorDate(const u8* _buffer, u32& sride, const u32 _length, const u32 _width, const u32 _height, u8* _value);
+	static void SerUpColorPalette(const u8* _buffer, u32& _sride, const u32 _length, BITMAP_FORMAT& _bitmapFormat);
+	static bool SetUpColorData24(const u8* _buffer, u32& _sride, const BITMAP_FORMAT _bitmap);
+	static bool SetUpColorData8(const u8* _buffer, u32& _sride, const BITMAP_FORMAT _bitmap);
 };
 #endif // !__BMP_ANALYZER_H__

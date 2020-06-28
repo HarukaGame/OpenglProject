@@ -36,27 +36,36 @@ bool CBmpAnalyzer::AnalyzeBitMap(const void* _buffer, const u32 _length, BITMAP_
 	}
 	PRINT("File is BitMap Format\n");
 
-	if (_bitmapFormat.m_infoFile.m_biBitCount != 24) {
-		PRINT("BitMapCount is not 24\n");
-		return false;
+	if (_bitmapFormat.m_infoFile.m_biBitCount == 8) {
+		SerUpColorPalette(buffer, sride, _length, _bitmapFormat);
 	}
-	PRINT("BitMapCount is 24\n");
+
 	u32 size = _bitmapFormat.m_infoFile.m_biWidth * _bitmapFormat.m_infoFile.m_biHeight * 3;
 	_bitmapFormat.date = (u8*)malloc(size);
 	if (_bitmapFormat.date == nullptr) {
 		PRINT("memory error\n");
 	}
 
-	for (u32 i = 0; i < 100; i++) {
-		//PRINT("%u\n",*BUFFER(u16, buffer[i]));
-	}
 	PRINT("-----------------------------------------------------------------------\n");
+	success = false;
 	//success = SetUpColorDate(buffer, sride, size, _length, _bitmapFormat.date);
-	success = SetUpColorDate(buffer, sride, _length,_bitmapFormat.m_infoFile.m_biWidth,_bitmapFormat.m_infoFile.m_biHeight, _bitmapFormat.date);
-	if (success == false) {
-		PRINT("color data buffer memory over\n");
-		return false;
+	if (_bitmapFormat.m_infoFile.m_biBitCount == 24) {
+		success = SetUpColorData24(buffer, sride, _bitmapFormat);
+		if (success == false) {
+			PRINT("24bit color data buffer memory over\n");
+			return false;
+		}
+
 	}
+	else if (_bitmapFormat.m_infoFile.m_biBitCount == 8) {
+		success = SetUpColorData8(buffer, sride, _bitmapFormat);
+		if (success == false) {
+			PRINT("8bit color data buffer memory over\n");
+			return false;
+		}
+
+	}
+
 	////BGR¨RGB•ÏŠ·
 	//char temp;
 	//for (int i = 0; i < size; i+=3) {
@@ -130,34 +139,68 @@ bool CBmpAnalyzer::SetUpValue32(const u8* _buffer, u32& sride, const u32 _length
 	return true;
 }
 
-bool CBmpAnalyzer::SetUpColorDate(const u8* _buffer, u32& sride,const u32 size, const u32 _length,u8* value)
+void CBmpAnalyzer::SerUpColorPalette(const u8* _buffer, u32& _sride, const u32 _length, BITMAP_FORMAT& _bitmapFormat)
 {
-	u32 index = sride;
-	sride += size;
-	if (sride > _length) {
+	u32 start = _sride;
+	for (u32 i = 0; i < 256; i++) {
+		_bitmapFormat.m_colorPalette[i].m_rgbBlue = BUFFER(u8, _buffer[_sride]);
+		_bitmapFormat.m_colorPalette[i].m_rgbGreen = BUFFER(u8, _buffer[_sride + 1]);
+		_bitmapFormat.m_colorPalette[i].m_rgbRed = BUFFER(u8, _buffer[_sride + 2]);
+		_bitmapFormat.m_colorPalette[i].m_rgbReserved = BUFFER(u8, _buffer[_sride + 3]);
+		_sride += 4;
+	}
+#ifdef _DEBUG
+	for (u32 j = 0; j < 256; j++) {
+		PRINT("%d:  ", j);
+		PRINT("R:%d    ", _bitmapFormat.m_colorPalette[j].m_rgbRed);
+		PRINT("G:%d    ", _bitmapFormat.m_colorPalette[j].m_rgbGreen);
+		PRINT("B:%d    ", _bitmapFormat.m_colorPalette[j].m_rgbBlue);
+		PRINT("\n");
+	}
+
+#endif // _DEBUG
+
+
+}
+
+
+bool CBmpAnalyzer::SetUpColorData24(const u8* _buffer, u32& _sride, const BITMAP_FORMAT _bitmap)
+{
+	u32 index = _sride;
+	u32 height = _bitmap.m_infoFile.m_biHeight;
+	u32 width = _bitmap.m_infoFile.m_biWidth;
+	u32 size = width * height * 3;
+	if (_sride + size > _bitmap.m_headerFile.m_bfSize) {
 		return false;
 	}
-	for (int i = 0; i + index < _length; i++) {
-		value[i] = _buffer[_length - i];
-		//value[i] =BUFFER(u8, _buffer[i + index]) ;
+	for (u32 y = 0; y < height; y++) {
+		for (u32 x = 0; x < width; x++) {
+			int valueIndex = (y * width + x) * 3;
+			//ã‰º”½“]—p•Ï”
+			int bufferIndex = _sride+ ((height - y - 1) * width + x) * 3;
+			//BGR‚©‚çRGB‚É•ÏŠ·
+			_bitmap.date[valueIndex + 0] = _buffer[bufferIndex + 2];
+			_bitmap.date[valueIndex + 1] = _buffer[bufferIndex + 1];
+			_bitmap.date[valueIndex + 2] = _buffer[bufferIndex + 0];
+		}
 	}
 	return true;
 }
 
-bool CBmpAnalyzer::SetUpColorDate(const u8* _buffer, u32& sride, const u32 _length, const u32 _width, const u32 _height, u8* _value)
+bool CBmpAnalyzer::SetUpColorData8(const u8* _buffer, u32& _sride, const BITMAP_FORMAT _bitmap)
 {
-	u32 index = sride;
-	u32 size = _width * _height * 3;
-	if (sride + size > _length) {
-		return false;
-	}
-	for (u32 y = 0; y < _height; y++) {
-		for (u32 x = 0; x < _width; x++) {
-			int valueIndex = (y * _width + x) * 3;
+	u32 height = _bitmap.m_infoFile.m_biHeight;
+	u32 width = _bitmap.m_infoFile.m_biWidth;
 
-			_value[valueIndex + 0] = _buffer[sride + valueIndex + 0];
-			_value[valueIndex + 1] = _buffer[sride + valueIndex + 1];
-			_value[valueIndex + 2] = _buffer[sride + valueIndex + 2];
+	for (u32 y = 0; y < height; y++) {
+		for (u32 x = 0; x < width; x++) {
+			u32 valueIndex = (y * width + x) * 3;
+			//ã‰º”½“]—p•Ï”
+			u32 bufferIndex = _sride + ((height - y - 1) * width + x);
+
+			_bitmap.date[valueIndex + 0] = _bitmap.m_colorPalette[_buffer[bufferIndex]].m_rgbRed;
+			_bitmap.date[valueIndex + 1] = _bitmap.m_colorPalette[_buffer[bufferIndex]].m_rgbGreen;
+			_bitmap.date[valueIndex + 2] = _bitmap.m_colorPalette[_buffer[bufferIndex]].m_rgbBlue;
 		}
 	}
 	return true;
