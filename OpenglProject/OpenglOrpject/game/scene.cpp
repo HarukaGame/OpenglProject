@@ -214,12 +214,16 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 		return cTexture;
 	}
 
-	CTextureLoader textureLoader = CTextureLoader();
-	textureLoader.LoadTexture("game/res/bmpfiles/test.bmp");
+
+	CFileLoader fileloader = CFileLoader();
+	fileloader.LoadFile("game/res/bmpfiles/test24.bmp");
+	CTextureConverter textureConverter = CTextureConverter();
+	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());
 	CTexture* texture = CResourceManager::CreateResourceObject<CTexture>(_hash);
-	texture->SetTextureBuffer(textureLoader.GetBuffer(),textureLoader.GetWidth(),textureLoader.GetHeight(),textureLoader.GetElementNum());
+	texture->SetTextureBuffer(textureConverter.GetBuffer(),textureConverter.GetWidth(),textureConverter.GetHeight(),textureConverter.GetElementNum());
 	texture->CreateBuffer();
-	textureLoader.Release();
+	textureConverter.Release();
+	fileloader.Release();
 
 	if (texture == nullptr) {
 		return nullptr;

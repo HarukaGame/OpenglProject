@@ -8,9 +8,10 @@ enum TEXTURE_FORMAT {
 };
 
 
-class CTextureLoader {
+class CTextureConverter {
 public:
 	bool LoadTexture(const char* _filePath);
+	bool ConvertTexture(const void* _buffer, const unsigned int _length);
 	unsigned char* GetBuffer()const;
 	int GetHeight()const;
 	int GetWidth()const;
