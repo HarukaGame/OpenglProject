@@ -95,7 +95,7 @@ void CScene::Update()
 			float y = fmod(rand() / 100.0f, range) - range / 2.0f;
 			float z = fmod(rand() / 100.0f, range) - range / 2.0f;
 			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("QuadMesh"));
+			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
 			const CShader* shader = SearchOrCreateShader(CHash::CRC32("TextureShader"));
 
 			//-----------------------------------------------------
@@ -232,16 +232,16 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 
 	CFileLoader fileloader = CFileLoader();
 	if (_hash == CHash::CRC32("Test24Texture")) {
-		fileloader.LoadFile("game/res/bmpfiles/test24.bmp");
+		fileloader.LoadFile("game/res/bmpfiles/rainbow24.bmp");
 	}
 	else if (_hash == CHash::CRC32("Test8Texture")) {
-		fileloader.LoadFile("game/res/bmpfiles/test8.bmp");
+		fileloader.LoadFile("game/res/bmpfiles/rainbow8.bmp");
 	}
 	else if (_hash == CHash::CRC32("Test4Texture")) {
-		fileloader.LoadFile("game/res/bmpfiles/test4.bmp");
+		fileloader.LoadFile("game/res/bmpfiles/rainbow4.bmp");
 	}
 	else if (_hash == CHash::CRC32("Test2Texture")) {
-		fileloader.LoadFile("game/res/bmpfiles/test2.bmp");
+		fileloader.LoadFile("game/res/bmpfiles/rainbow2.bmp");
 	}
 	CTextureConverter textureConverter = CTextureConverter();
 	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());
