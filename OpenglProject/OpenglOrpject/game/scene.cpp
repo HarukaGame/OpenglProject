@@ -101,11 +101,20 @@ void CScene::Update()
 			//-----------------------------------------------------
 			const CTexture* texture = nullptr;
 			if (x > 0) {
-				texture = SearchOrCreateTexture(CHash::CRC32("Test24Texture"));
-
+				if (y > 0) {
+					texture = SearchOrCreateTexture(CHash::CRC32("Test4Texture"));
+				}
+				else {
+					texture = SearchOrCreateTexture(CHash::CRC32("Test24Texture"));
+				}
 			}
 			else {
-				texture = SearchOrCreateTexture(CHash::CRC32("Test8Texture"));
+				if (y > 0) {
+					texture = SearchOrCreateTexture(CHash::CRC32("Test2Texture"));
+				}
+				else {
+					texture = SearchOrCreateTexture(CHash::CRC32("Test8Texture"));
+				}
 			}
 			
 
@@ -227,6 +236,12 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 	}
 	else if (_hash == CHash::CRC32("Test8Texture")) {
 		fileloader.LoadFile("game/res/bmpfiles/test8.bmp");
+	}
+	else if (_hash == CHash::CRC32("Test4Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/test4.bmp");
+	}
+	else if (_hash == CHash::CRC32("Test2Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/test2.bmp");
 	}
 	CTextureConverter textureConverter = CTextureConverter();
 	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());

@@ -1,6 +1,9 @@
 #include "bmp_analyzer.h"
 
 #define BUFFER(i,j) ((i*)(&j))[0]
+#define BIT_COUNT_PER_BYTE (8)
+#define BYTE_FILL (0xff)
+#define IS_BITMAP (0x4d42)
 
 bool CBmpAnalyzer::AnalyzeBitMap(const void* _buffer, const u32 _length, BITMAP_FORMAT& _bitmapFormat)
 {
@@ -30,13 +33,15 @@ bool CBmpAnalyzer::AnalyzeBitMap(const void* _buffer, const u32 _length, BITMAP_
 	}
 
 
-	if (_bitmapFormat.m_headerFile.m_bfType != 0x4d42) {
+	if (_bitmapFormat.m_headerFile.m_bfType != IS_BITMAP) {
 		PRINT("Is not BitMap Format\n");
 		return false;
 	}
 	PRINT("File is BitMap Format\n");
 
-	if (_bitmapFormat.m_infoFile.m_biBitCount == 8) {
+	if (_bitmapFormat.m_infoFile.m_biBitCount == 8 ||
+		_bitmapFormat.m_infoFile.m_biBitCount == 4 ||
+		_bitmapFormat.m_infoFile.m_biBitCount == 1) {
 		SerUpColorPalette(buffer, sride, _length, _bitmapFormat);
 	}
 
@@ -46,7 +51,6 @@ bool CBmpAnalyzer::AnalyzeBitMap(const void* _buffer, const u32 _length, BITMAP_
 		PRINT("memory error\n");
 	}
 
-	PRINT("-----------------------------------------------------------------------\n");
 	success = false;
 	//success = SetUpColorDate(buffer, sride, size, _length, _bitmapFormat.date);
 	if (_bitmapFormat.m_infoFile.m_biBitCount == 24) {
@@ -57,14 +61,24 @@ bool CBmpAnalyzer::AnalyzeBitMap(const void* _buffer, const u32 _length, BITMAP_
 		}
 
 	}
-	else if (_bitmapFormat.m_infoFile.m_biBitCount == 8) {
-		success = SetUpColorData8(buffer, sride, _bitmapFormat);
+	else if (_bitmapFormat.m_infoFile.m_biBitCount == 8 ||
+			 _bitmapFormat.m_infoFile.m_biBitCount == 4 || 
+			 _bitmapFormat.m_infoFile.m_biBitCount == 1)
+	{
+		success = SetUpColorDataByColorPalette(buffer, sride, _bitmapFormat);
 		if (success == false) {
-			PRINT("8bit color data buffer memory over\n");
+			PRINT("%d bit color data buffer memory over\n",_bitmapFormat.m_infoFile.m_biBitCount);
 			return false;
 		}
 
 	}
+	//else if (_bitmapFormat.m_infoFile.m_biBitCount == 4) {
+	//	success = SetUpColorDate4(buffer, sride, _bitmapFormat);
+	//	if (success == false) {
+	//		PRINT("4bit color data buffer memory over\n");
+	//		return false;
+	//	}
+	//}
 
 	////BGR→RGB変換
 	//char temp;
@@ -81,7 +95,9 @@ bool CBmpAnalyzer::AnalyzeBitMap(const void* _buffer, const u32 _length, BITMAP_
 
 void CBmpAnalyzer::ShowBitMapInfo(const BITMAP_FORMAT& _bitmap)
 {
-	PRINT("\n\nBitMap Information\n");
+	PRINT("\n\n\n");
+	PRINT("--------------------------------------------\n");
+	PRINT("BitMap Information start\n");
 	PRINT("--------------------------------------------\n");
 	PRINT("Type            %04x\n", _bitmap.m_headerFile.m_bfType);
 	PRINT("FileSize        %d\n", _bitmap.m_headerFile.m_bfSize);
@@ -100,6 +116,8 @@ void CBmpAnalyzer::ShowBitMapInfo(const BITMAP_FORMAT& _bitmap)
 	PRINT("YPixelPerMeter  %d\n", _bitmap.m_infoFile.m_biYPelsPerMeter);
 	PRINT("ColorUsed       %d\n", _bitmap.m_infoFile.m_biClrUsed);
 	PRINT("ColorImportant  %d\n", _bitmap.m_infoFile.m_biClrImportant);
+	PRINT("--------------------------------------------\n");
+	PRINT("BitMap Information end\n");
 	PRINT("--------------------------------------------\n");
 }
 
@@ -142,25 +160,15 @@ bool CBmpAnalyzer::SetUpValue32(const u8* _buffer, u32& sride, const u32 _length
 void CBmpAnalyzer::SerUpColorPalette(const u8* _buffer, u32& _sride, const u32 _length, BITMAP_FORMAT& _bitmapFormat)
 {
 	u32 start = _sride;
-	for (u32 i = 0; i < 256; i++) {
+	u32 colorPaletteSize = pow(2, _bitmapFormat.m_infoFile.m_biBitCount);
+
+	for (u32 i = 0; i < colorPaletteSize; i++) {
 		_bitmapFormat.m_colorPalette[i].m_rgbBlue = BUFFER(u8, _buffer[_sride]);
 		_bitmapFormat.m_colorPalette[i].m_rgbGreen = BUFFER(u8, _buffer[_sride + 1]);
 		_bitmapFormat.m_colorPalette[i].m_rgbRed = BUFFER(u8, _buffer[_sride + 2]);
 		_bitmapFormat.m_colorPalette[i].m_rgbReserved = BUFFER(u8, _buffer[_sride + 3]);
 		_sride += 4;
 	}
-#ifdef _DEBUG
-	for (u32 j = 0; j < 256; j++) {
-		PRINT("%d:  ", j);
-		PRINT("R:%d    ", _bitmapFormat.m_colorPalette[j].m_rgbRed);
-		PRINT("G:%d    ", _bitmapFormat.m_colorPalette[j].m_rgbGreen);
-		PRINT("B:%d    ", _bitmapFormat.m_colorPalette[j].m_rgbBlue);
-		PRINT("\n");
-	}
-
-#endif // _DEBUG
-
-
 }
 
 
@@ -187,21 +195,41 @@ bool CBmpAnalyzer::SetUpColorData24(const u8* _buffer, u32& _sride, const BITMAP
 	return true;
 }
 
-bool CBmpAnalyzer::SetUpColorData8(const u8* _buffer, u32& _sride, const BITMAP_FORMAT _bitmap)
+
+bool CBmpAnalyzer::SetUpColorDataByColorPalette(const u8* _buffer, u32& _sride, const BITMAP_FORMAT _bitmap)
 {
 	u32 height = _bitmap.m_infoFile.m_biHeight;
 	u32 width = _bitmap.m_infoFile.m_biWidth;
+	u32 bitCount = _bitmap.m_infoFile.m_biBitCount;
+	u32 colorPerByte = BIT_COUNT_PER_BYTE / bitCount;
+	u8 bitMask = BYTE_FILL >> (BIT_COUNT_PER_BYTE - bitCount);
+
+	u32 size = height * width / colorPerByte;
+
+	//バッファサイズ内に収まっているかチェック
+	if (_sride + size > _bitmap.m_headerFile.m_bfSize) {
+		return false;
+	}
+
 
 	for (u32 y = 0; y < height; y++) {
 		for (u32 x = 0; x < width; x++) {
+			//値を入れるインデックス
 			u32 valueIndex = (y * width + x) * 3;
-			//上下反転用変数
-			u32 bufferIndex = _sride + ((height - y - 1) * width + x);
+			//上下反転してバッファのインデックスを登録
+			u32 bufferIndex = (height - y - 1) * width + x;
+			bufferIndex /= colorPerByte;
+			bufferIndex += _sride;
+			//ビットシフトの数
+			u32 shiftNum = ((colorPerByte - 1) - (y * width + x) % colorPerByte) * bitCount;
+			//カラーパレットのインデックスを取得
+			u32 colorIndex = (_buffer[bufferIndex] & (bitMask << shiftNum)) >> shiftNum;
 
-			_bitmap.date[valueIndex + 0] = _bitmap.m_colorPalette[_buffer[bufferIndex]].m_rgbRed;
-			_bitmap.date[valueIndex + 1] = _bitmap.m_colorPalette[_buffer[bufferIndex]].m_rgbGreen;
-			_bitmap.date[valueIndex + 2] = _bitmap.m_colorPalette[_buffer[bufferIndex]].m_rgbBlue;
+			_bitmap.date[valueIndex + 0] = _bitmap.m_colorPalette[colorIndex].m_rgbRed;
+			_bitmap.date[valueIndex + 1] = _bitmap.m_colorPalette[colorIndex].m_rgbGreen;
+			_bitmap.date[valueIndex + 2] = _bitmap.m_colorPalette[colorIndex].m_rgbBlue;
 		}
 	}
+	_sride += size;
 	return true;
 }
