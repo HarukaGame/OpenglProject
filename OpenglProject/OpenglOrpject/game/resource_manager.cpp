@@ -241,6 +241,20 @@ void CResourceManager::DeleteShaderResource(const CShader* _shader)
 	s_instance->m_shaderList.Pop(iter);
 }
 
+void CResourceManager::DeleteTextureResource(const CTexture* _texture)
+{
+	hash hash = _texture->GetHash();
+	CList<CTexture*>::iterator iter = s_instance->m_textureList.Begin();
+	CList<CTexture*>::iterator end = s_instance->m_textureList.End();
+	for (; iter != end && hash != (*iter)->GetHash(); iter++);
+	if (iter == end) {
+		return;
+	}
+	(*iter)->Finalize();
+	delete (*iter);
+	s_instance->m_textureList.Pop(iter);
+}
+
 
 void CResourceManager::Finalize()
 {

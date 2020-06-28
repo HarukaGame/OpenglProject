@@ -20,6 +20,7 @@ public:
 	template<class T>static bool ReleaseResource(const hash _hash);
 	static void DeleteMeshResource(const CMesh* _mesh);
 	static void DeleteShaderResource(const CShader* _shader);
+	static void DeleteTextureResource(const CTexture* _texture);
 	static void Finalize();
 private:
 	static CShader* CreateShader();

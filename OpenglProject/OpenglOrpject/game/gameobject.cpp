@@ -1,6 +1,7 @@
 #include "gameobject.h"
 #include "mesh.h"
 #include "shader.h"
+#include "texture.h"
 #include "common_math.h"
 #include "resource_manager.h"
 using namespace GLM_MATH_NAMESPACE;
@@ -90,6 +91,12 @@ void CGameObject::Finalize()
 		m_pShader->RefCountDown();
 		if (m_pShader->RefCountZero()) {
 			CResourceManager::DeleteShaderResource(m_pShader);
+		}
+	}
+	if (m_pTexture != nullptr) {
+		m_pTexture->RefCountDown();
+		if (m_pTexture->RefCountZero()) {
+			CResourceManager::DeleteTextureResource(m_pTexture);
 		}
 	}
 }
