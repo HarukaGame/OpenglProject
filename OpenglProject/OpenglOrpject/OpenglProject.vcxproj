@@ -47,6 +47,7 @@
     <ClCompile Include="game\texture_loader.cpp" />
     <ClCompile Include="game\vertexfiles\cube.cpp" />
     <ClCompile Include="game\vertexfiles\quad.cpp" />
+    <ClCompile Include="game\vertexfiles\ui.cpp" />
     <ClCompile Include="game\window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +79,7 @@
     <ClInclude Include="game\texture_loader.h" />
     <ClInclude Include="game\vertexfiles\cube.h" />
     <ClInclude Include="game\vertexfiles\quad.h" />
+    <ClInclude Include="game\vertexfiles\ui.h" />
     <ClInclude Include="game\window.h" />
     <ClInclude Include="game\common_math.h" />
   </ItemGroup>
@@ -89,6 +91,8 @@
     <None Include="game\ShaderFiles\texture.vs" />
     <None Include="game\ShaderFiles\transparent.fs" />
     <None Include="game\ShaderFiles\transparent.vs" />
+    <None Include="game\ShaderFiles\UIShader.fs" />
+    <None Include="game\ShaderFiles\UIShader.vs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

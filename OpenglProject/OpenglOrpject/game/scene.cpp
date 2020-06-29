@@ -12,6 +12,7 @@
 #include "resource_manager.h"
 #include "vertexfiles/cube.h"
 #include "vertexfiles/quad.h"
+#include "vertexfiles/ui.h"
 #include "fileloader.h"
 #include "object_manager.h"
 
@@ -133,7 +134,15 @@ void CScene::Update()
 
 #ifdef _DEBUG
 	if (Input::GetKeyDown('4')) {
-		m_pObjectManager->DebugShow();
+		CGameObject* tempObject = m_pObjectManager->CreateGameObject(CHash::CRC32("UIObject"));
+		const CShader* shader = SearchOrCreateShader(CHash::CRC32("UIShader"));
+		const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("UIMesh"));
+
+		const CTexture* texture = SearchOrCreateTexture(CHash::CRC32("Test24Texture"));
+		tempObject->SetMesh(mesh);
+		tempObject->SetShader(shader);
+		tempObject->SetTexture(texture);
+		tempObject->SetPosition(0.5, 0.5, 0);
 	}
 
 #endif // _DEBUG
@@ -168,6 +177,12 @@ const CMesh* CScene::SearchOrCreateMesh(const hash _hash)
 		mesh->m_normals = PolygonQuad::normals;
 		mesh->vertexNum = PolygonQuad::vertexNum;
 		mesh->elementNum = PolygonQuad::elementNum;
+	}
+	else if (_hash == CHash::CRC32("UIMesh")) {
+		mesh->myvertices = PolygonUI::verticex;
+		mesh->m_normals = PolygonUI::normals;
+		mesh->vertexNum = PolygonUI::vertexNum;
+		mesh->elementNum = PolygonUI::elementNum;
 	}
 	else {
 		return nullptr;
@@ -205,6 +220,10 @@ const CShader* CScene::SearchOrCreateShader(const hash _hash)
 	else if (_hash == CHash::CRC32("TextureShader")) {
 		vertFilePath = "game/ShaderFiles/texture.vs";
 		fragFilePath = "game/ShaderFiles/texture.fs";
+	}
+	else if (_hash == CHash::CRC32("UIShader")) {
+		vertFilePath = "game/ShaderFiles/UIShader.vs";
+		fragFilePath = "game/ShaderFiles/UIShader.fs";
 	}
 	else {
 		return nullptr;

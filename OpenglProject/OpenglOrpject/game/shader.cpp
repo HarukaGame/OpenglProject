@@ -40,6 +40,12 @@ bool CShader::SetUpUniform()
         PRINT("texture uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
     }
 
+    m_uniformList[SHADER_UNIFORM_ADD_POSITION] = -1;
+    m_uniformList[SHADER_UNIFORM_ADD_POSITION] = glGetUniformLocation(m_programID, "add");
+    if (m_uniformList[SHADER_UNIFORM_ADD_POSITION] == -1) {
+        PRINT("texture uniform‚Ìæ“¾‚É¸”s‚µ‚Ü‚µ‚½\n");
+    }
+
 
     //----------------------------------------------------------
     //attributeİ’è

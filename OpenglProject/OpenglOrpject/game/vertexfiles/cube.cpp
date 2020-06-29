@@ -1,7 +1,7 @@
 ﻿#include "cube.h"
 const int PolygonCube::vertexNum = 36;
 const int PolygonCube::elementNum = 8;
-const int PolygonCube::dateNum = 216;
+const int PolygonCube::dateNum = 288;
 const float PolygonCube::verticex[] = {
 	-0.5f,	0.5f,	-0.5f,	0.0f,1.0f,0.0f,	 0.0f,0.0f,
 	-0.5f,	0.5f,	0.5f,	0.0f,1.0f,0.0f,	 0.0f,1.0f,

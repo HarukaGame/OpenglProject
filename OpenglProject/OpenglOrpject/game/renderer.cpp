@@ -89,6 +89,8 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
         PRINT("CRenderer::MeshDraw _buffer is nullptr\n");
         return;
     }
+    glBindBuffer(GL_ARRAY_BUFFER, _buffer->GetProgramID());
+
     if (_shader == nullptr) {
         PRINT("CRenderer::MeshDraw _shader is nullptr\n");
         return;
@@ -129,7 +131,7 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     glm::mat4 mvp = pro * view * modelMat;
 
 
-
+    glUniform3f(_shader->GetUniform(SHADER_UNIFORM_ADD_POSITION), modelMat[3][0], modelMat[3][1], -1);
     //行列のUniform設定
     glUniformMatrix4fv(_shader->GetUniform(SHADER_UNIFORM_MVP), 1, GL_FALSE, &mvp[0][0]);
 
@@ -149,6 +151,10 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     }
 
     glDrawArrays(GL_TRIANGLES, 0, _buffer->GetVertexNum());
+
+    glDisableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION));
+    glDisableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL));
+    glDisableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_UV));
 
     glUseProgram(0);
 

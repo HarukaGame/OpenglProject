@@ -103,6 +103,9 @@
     <ClCompile Include="game\scene_base.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\vertexfiles\ui.cpp">
+      <Filter>game\res\vertexfiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -195,6 +198,9 @@
     <ClInclude Include="game\scene_base.h">
       <Filter>game</Filter>
     </ClInclude>
+    <ClInclude Include="game\vertexfiles\ui.h">
+      <Filter>game\res\vertexfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -217,6 +223,12 @@
       <Filter>game\res\shaderfiles</Filter>
     </None>
     <None Include="game\ShaderFiles\texture.vs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+    <None Include="game\ShaderFiles\UIShader.fs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+    <None Include="game\ShaderFiles\UIShader.vs">
       <Filter>game\res\shaderfiles</Filter>
     </None>
   </ItemGroup>
