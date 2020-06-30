@@ -178,14 +178,18 @@ bool CBmpAnalyzer::SetUpColorData24(const u8* _buffer, u32& _sride, const BITMAP
 	u32 height = _bitmap.m_infoFile.m_biHeight;
 	u32 width = _bitmap.m_infoFile.m_biWidth;
 	u32 size = width * height * 3;
+	u32 padding = width % 4;
+	u32 sumPadding = padding * height;
 	if (_sride + size > _bitmap.m_headerFile.m_bfSize) {
 		return false;
 	}
 	for (u32 y = 0; y < height; y++) {
+		sumPadding -= padding;
+
 		for (u32 x = 0; x < width; x++) {
 			int valueIndex = (y * width + x) * 3;
 			//ã‰º”½“]—p•Ï”
-			int bufferIndex = _sride+ ((height - y - 1) * width + x) * 3;
+			int bufferIndex = _sride+ sumPadding +((height - y - 1) * width + x) * 3;
 			//BGR‚©‚çRGB‚É•ÏŠ·
 			_bitmap.date[valueIndex + 0] = _buffer[bufferIndex + 2];
 			_bitmap.date[valueIndex + 1] = _buffer[bufferIndex + 1];

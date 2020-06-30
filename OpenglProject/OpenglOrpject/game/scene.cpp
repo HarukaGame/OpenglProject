@@ -251,7 +251,7 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 
 	CFileLoader fileloader = CFileLoader();
 	if (_hash == CHash::CRC32("Test24Texture")) {
-		fileloader.LoadFile("game/res/bmpfiles/rainbow24.bmp");
+		fileloader.LoadFile("game/res/bmpfiles/rainbow24_511.bmp");
 	}
 	else if (_hash == CHash::CRC32("Test8Texture")) {
 		fileloader.LoadFile("game/res/bmpfiles/rainbow8.bmp");
