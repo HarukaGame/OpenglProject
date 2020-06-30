@@ -214,18 +214,28 @@ bool CBmpAnalyzer::SetUpColorDataByColorPalette(const u8* _buffer, u32& _sride, 
 	if (_sride + size > _bitmap.m_headerFile.m_bfSize) {
 		return false;
 	}
+	u32 colorNumPer4Byte = colorPerByte * 4;
+	u32 padding = (colorNumPer4Byte - width % colorNumPer4Byte) % colorNumPer4Byte;
+	//u32 padding = width % (colorPerByte * 4);
+	//padding = (colorPerByte * 4) - padding;
+	//padding = padding % (colorPerByte * 4);
+	u32 sumPadding = padding * height;
 
-
+	u32 bufferIndex;
+	u32 shiftNum;
 	for (u32 y = 0; y < height; y++) {
+		sumPadding -= padding;
 		for (u32 x = 0; x < width; x++) {
 			//値を入れるインデックス
 			u32 valueIndex = (y * width + x) * 3;
 			//上下反転してバッファのインデックスを登録
-			u32 bufferIndex = (height - y - 1) * width + x;
+			bufferIndex = (height - y - 1) * width + x;
+			bufferIndex += sumPadding;
 			bufferIndex /= colorPerByte;
-			bufferIndex += _sride;
+			bufferIndex += _bitmap.m_headerFile.m_bfOffBits;
 			//ビットシフトの数
-			u32 shiftNum = ((colorPerByte - 1) - (y * width + x) % colorPerByte) * bitCount;
+			shiftNum = ((colorPerByte - 1) -  x % colorPerByte) * bitCount;
+			//u32 shiftNum = ((colorPerByte - 1) - (y * width + x) % colorPerByte) * bitCount;
 			//カラーパレットのインデックスを取得
 			u32 colorIndex = (_buffer[bufferIndex] & (bitMask << shiftNum)) >> shiftNum;
 
@@ -233,6 +243,7 @@ bool CBmpAnalyzer::SetUpColorDataByColorPalette(const u8* _buffer, u32& _sride, 
 			_bitmap.date[valueIndex + 1] = _bitmap.m_colorPalette[colorIndex].m_rgbGreen;
 			_bitmap.date[valueIndex + 2] = _bitmap.m_colorPalette[colorIndex].m_rgbBlue;
 		}
+		int a = 0;
 	}
 	_sride += size;
 	return true;

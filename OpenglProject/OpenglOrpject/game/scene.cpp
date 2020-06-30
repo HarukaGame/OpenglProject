@@ -260,7 +260,7 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 		fileloader.LoadFile("game/res/bmpfiles/rainbow4.bmp");
 	}
 	else if (_hash == CHash::CRC32("Test2Texture")) {
-		fileloader.LoadFile("game/res/bmpfiles/rainbow2.bmp");
+		fileloader.LoadFile("game/res/bmpfiles/rainbow2_513.bmp");
 	}
 	CTextureConverter textureConverter = CTextureConverter();
 	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());
