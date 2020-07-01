@@ -37,3 +37,8 @@ void CTexture::SetTextureBuffer(const unsigned char* _textureBuffer, const int _
     m_height = _height;
     m_elementNum = _elementNum;
 }
+
+void CTexture::Finalize()
+{
+    glDeleteTextures(1, &m_buffer);
+}

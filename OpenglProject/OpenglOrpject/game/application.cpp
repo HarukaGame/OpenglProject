@@ -4,6 +4,7 @@
 #include "renderer.h"
 #include "object_manager.h"
 #include "resource_manager.h"
+#include "scene_manager.h"
 #include "scene.h"
 #include "input.h"
 #include "mesh.h"
@@ -33,16 +34,14 @@ bool CApplication::Initilize(HINSTANCE hInstance,
 
     m_pObjectManager = new CObjectManager();
     m_pObjectManager->Initilize();
-    //m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-    //m_pObjectManager->CreateGameObject();
 
 
-    m_pScene = new CScene();
-    m_pScene->Initilize(m_pObjectManager);
+    //m_pScene = new CScene();
+    //m_pScene->SetObjectManager(m_pObjectManager);
 
-    //testMesh = new CMesh();
-    //testMesh->InitVertex();
 
+    CSceneManager::GetInstance().Initilize(m_pObjectManager);
+    CSceneManager::GetInstance().LoadScene(CHash::CRC32("MainScene"));
     return true;
 }
 
@@ -50,7 +49,8 @@ void CApplication::Update(MSG* msg) {
     //m_prenderer->SetShaderMesh(testMesh, "shader.vert", "shader.frag");
     Input::StackInput();
 
-    m_pScene->Update();
+    //m_pScene->Update();
+    CSceneManager::GetInstance().Update();
 
     m_prenderer->StartDisplay();
 
@@ -63,12 +63,13 @@ void CApplication::Update(MSG* msg) {
 }
 
 void CApplication::Quit() {
+    CSceneManager::GetInstance().Finalize();
 
     m_pOpenglDevice->Finalize();
     m_pObjectManager->Finalize();
     m_prenderer->Release();
     delete m_pOpenglDevice;
-    delete m_pScene;
+    //delete m_pScene;
     delete m_pObjectManager;
     delete m_prenderer;
     CResourceManager::Finalize();

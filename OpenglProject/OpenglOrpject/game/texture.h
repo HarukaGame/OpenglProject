@@ -13,6 +13,7 @@ class CTexture:public CResourceBase {
 public:
 	void CreateBuffer();
 	void SetTextureBuffer(const unsigned char* _textureBuffer,const int _width,const int _height,const int _elementNum);
+	void Finalize()override;
 	unsigned int m_buffer = 0;
 	unsigned char* m_pData = nullptr;
 	IMAGE_FORMAT m_imageFormat = IMAGE_FORMAT_NONE;

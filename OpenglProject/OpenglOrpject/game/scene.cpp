@@ -19,16 +19,13 @@
 #include <random>
 #include "bmp_analyzer.h"
 
-bool CScene::Initilize(CObjectManager* _objectManager)
+
+#include "scene_manager.h"
+
+
+void CScene::Finalize()
 {
-	m_pObjectManager = _objectManager;
-	if (m_pObjectManager == nullptr) {
-		PRINT("CScene::Initilize _objectManager is nullptr\n");
-		return false;
-	}
-
-
-	return true;
+	m_pObjectManager->AllObjectDelete();
 }
 
 void CScene::Update()
@@ -143,6 +140,10 @@ void CScene::Update()
 		tempObject->SetShader(shader);
 		tempObject->SetTexture(texture);
 		tempObject->SetPosition(0.5, 0.5, 0);
+	}
+
+	if (Input::GetKeyDown('5')) {
+		CSceneManager::GetInstance().LoadScene(CHash::CRC32("MainScene"));
 	}
 
 #endif // _DEBUG

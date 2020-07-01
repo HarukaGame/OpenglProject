@@ -41,6 +41,7 @@
     <ClCompile Include="game\resource_manager.cpp" />
     <ClCompile Include="game\scene.cpp" />
     <ClCompile Include="game\scene_base.cpp" />
+    <ClCompile Include="game\scene_manager.cpp" />
     <ClCompile Include="game\shader.cpp" />
     <ClCompile Include="game\shader_loader.cpp" />
     <ClCompile Include="game\texture.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="game\resource_manager.h" />
     <ClInclude Include="game\scene.h" />
     <ClInclude Include="game\scene_base.h" />
+    <ClInclude Include="game\scene_manager.h" />
     <ClInclude Include="game\shader.h" />
     <ClInclude Include="game\shader_loader.h" />
     <ClInclude Include="game\texture.h" />

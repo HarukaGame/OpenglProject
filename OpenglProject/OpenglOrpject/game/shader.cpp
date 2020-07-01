@@ -144,3 +144,8 @@ bool CShader::GetTransparent() const
 {
     return m_transparent;
 }
+
+void CShader::Finalize()
+{
+    glDeleteShader(m_programID);
+}

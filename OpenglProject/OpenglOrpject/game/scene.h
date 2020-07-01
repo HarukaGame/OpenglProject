@@ -2,15 +2,20 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
+#include "scene_base.h"
+
 class CObjectManager;
 class CShader;
 class CMesh;
 class CTexture;
 
 #include "hash.h"
-class CScene {
+class CScene :public CSceneBase{
 public:
-	bool Initilize(CObjectManager* _objectManager);
+	bool Initilize()override { return true; };
+	void Finalize()override;
+
+	void SetObjectManager(CObjectManager* _objectManager) { m_pObjectManager = _objectManager; };
 	void Update();
 
 	const CMesh* SearchOrCreateMesh(const hash _hash);

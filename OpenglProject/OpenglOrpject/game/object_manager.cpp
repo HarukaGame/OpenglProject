@@ -171,6 +171,17 @@ void CObjectManager::DeleteObject(const hash _hash)
 	m_gameObjectList.Pop(iter);
 }
 
+void CObjectManager::AllObjectDelete()
+{
+	CList<CGameObject*>::iterator iter = m_gameObjectList.Begin();
+	CList<CGameObject*>::iterator end = m_gameObjectList.End();
+	for (; iter != end; iter++) {
+		(*iter)->Finalize();
+		delete (*iter);
+	}
+	m_gameObjectList.Clear();
+}
+
 void CObjectManager::DebugShow()
 {
 	PRINT("----------------------------------------------------\n");

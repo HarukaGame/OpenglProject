@@ -9,6 +9,7 @@ class CWindow;
 class COpenglDevice;
 class CRenderer;
 class CObjectManager;
+class CSceneManager;
 class CMesh;
 class CScene;
 //class MSG;
@@ -28,6 +29,7 @@ private:
     COpenglDevice* m_pOpenglDevice  = nullptr;
     CRenderer* m_prenderer = nullptr;
     CObjectManager* m_pObjectManager = nullptr;
+    CSceneManager* m_pSceneManager = nullptr;
     CMesh* testMesh = nullptr;
     CScene* m_pScene = nullptr;
 };

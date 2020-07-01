@@ -31,6 +31,7 @@ public:
 
 	void SetTransparent(const bool _value);
 	bool GetTransparent()const;
+	void Finalize()override;
 private:
 	bool m_transparent = false;
 	GLuint m_programID = 0;
