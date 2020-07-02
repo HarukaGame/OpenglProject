@@ -3,6 +3,7 @@
 #define __SHADER_H__
 
 #include "resource_base.h"
+#include "glm/vec3.hpp"
 
 typedef unsigned int GLuint;
 enum SHADER_UNIFORM {
@@ -11,6 +12,9 @@ enum SHADER_UNIFORM {
 	SHADER_UNIFORM_MVP,
 	SHADER_UNIFORM_TEXTURE,
 	SHADER_UNIFORM_ADD_POSITION,
+	SHADER_UNIFORM_SCALE,
+	SHADER_UNIFORM_RATIO,
+	SHADER_UNIFORM_TRANS_SLOPE,
 	SHADER_UNIFORM_NUM
 };
 
@@ -29,11 +33,15 @@ public:
 	int GetAttribute(SHADER_ATTRIBUTE _attribute)const;
 	void CreateShaderProgram(const char* _vertSource,int _vertLength, const char* _fragSource, int _fragLength);
 
-	void SetTransparent(const bool _value);
+	void SetTransparent(const bool _value)const;
 	bool GetTransparent()const;
 	void Finalize()override;
+	void SetRatio(float _ratio)const;
+	void SetColor(const glm::vec3 _color)const;
+	void SetScale(const glm::vec3 _scale)const;
+	void SetSlope(const float _slope)const;
 private:
-	bool m_transparent = false;
+	mutable bool m_transparent = false;
 	GLuint m_programID = 0;
 	int m_uniformList[SHADER_UNIFORM_NUM] = { -1 };
 	int m_attributeList[SHADER_ATTRIBUTE_NUM] = { -1 };

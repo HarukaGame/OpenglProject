@@ -22,6 +22,8 @@
 
 #include "scene_manager.h"
 
+#include <math.h>
+
 
 void CScene::Finalize()
 {
@@ -132,20 +134,41 @@ void CScene::Update()
 #ifdef _DEBUG
 	if (Input::GetKeyDown('4')) {
 		CGameObject* tempObject = m_pObjectManager->CreateGameObject(CHash::CRC32("UIObject"));
-		const CShader* shader = SearchOrCreateShader(CHash::CRC32("UIShader"));
+		const CShader* shader = SearchOrCreateShader(CHash::CRC32("TransShader"));
+		shader->SetRatio(m_trans);
+		shader->SetColor(glm::vec3(1, 1, 1));
+		shader->SetScale(glm::vec3(2, 2, 2));
+		shader->SetSlope(-2.0f);
+		shader->SetTransparent(true);
 		const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("UIMesh"));
 
-		const CTexture* texture = SearchOrCreateTexture(CHash::CRC32("Test24Texture"));
+		const CTexture* texture = SearchOrCreateTexture(CHash::CRC32("TransTexture"));
 		tempObject->SetMesh(mesh);
 		tempObject->SetShader(shader);
 		tempObject->SetTexture(texture);
-		tempObject->SetPosition(0.5, 0.5, 0);
+		tempObject->SetPosition(0.0, 0.0, 0);
 	}
 
-	if (Input::GetKeyDown('5')) {
-		CSceneManager::GetInstance().LoadScene(CHash::CRC32("MainScene"));
+	//if (Input::GetKeyDown('5')) {
+	//	CSceneManager::GetInstance().LoadScene(CHash::CRC32("MainScene"));
+	//}
+
+	if (Input::GetKey('6')) {
+		m_trans -= 0.01f;
+		if (m_trans < 0.0) { m_trans = 0.0f; }
+		else if (m_trans > 1.0f) { m_trans = 1.0f; }
+	}
+	if (Input::GetKey('7')) {
+		m_trans += 0.01f;
+		if (m_trans < 0.0) { m_trans = 0.0f; }
+		else if (m_trans > 1.0f) { m_trans = 1.0f; }
+
 	}
 
+	const CShader* shader= CResourceManager::SearchResourceObject<CShader>(CHash::CRC32("TransShader"));
+	if (shader != nullptr) {
+		shader->SetRatio(m_trans);
+	}
 #endif // _DEBUG
 
 }
@@ -226,6 +249,10 @@ const CShader* CScene::SearchOrCreateShader(const hash _hash)
 		vertFilePath = "game/ShaderFiles/UIShader.vs";
 		fragFilePath = "game/ShaderFiles/UIShader.fs";
 	}
+	else if (_hash == CHash::CRC32("TransShader")) {
+		vertFilePath = "game/ShaderFiles/transition.vs";
+		fragFilePath = "game/ShaderFiles/transition.fs";
+	}
 	else {
 		return nullptr;
 	}
@@ -262,6 +289,9 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 	}
 	else if (_hash == CHash::CRC32("Test2Texture")) {
 		fileloader.LoadFile("game/res/bmpfiles/rainbow2_513.bmp");
+	}
+	else if (_hash == CHash::CRC32("TransTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rule1080p/114.bmp");
 	}
 	CTextureConverter textureConverter = CTextureConverter();
 	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());

@@ -72,7 +72,7 @@ bool CRenderer::Initialize(HWND _hwnd) {
 
 void CRenderer::StartDisplay() {
 
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glDepthRange(-1.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -104,10 +104,10 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     SetLight(_shader, lightDir.x, lightDir.y, lightDir.z);
     if (_shader->GetTransparent() == true) {
         glEnable(GL_BLEND);
-        SetColor(_shader, 0, 1, 1, 0.5);
+        //SetColor(_shader, 0, 1, 1, 0.5);
     }
     else {
-        SetColor(_shader, 1, 0, 0, 1);
+        //SetColor(_shader, 1, 0, 0, 1);
     }
 
     if (_texture != nullptr) {

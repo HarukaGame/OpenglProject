@@ -23,6 +23,7 @@ public:
 	const CTexture* SearchOrCreateTexture(const hash _hash);
 private:
 	CObjectManager* m_pObjectManager = nullptr;
+	float m_trans = 1.0f;
 };
 
 #endif // !__SCENE_H__

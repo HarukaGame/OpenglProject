@@ -237,6 +237,12 @@
     <None Include="game\ShaderFiles\UIShader.vs">
       <Filter>game\res\shaderfiles</Filter>
     </None>
+    <None Include="game\ShaderFiles\transition.fs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+    <None Include="game\ShaderFiles\transition.vs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="game\res\bmpfiles\test.bmp">

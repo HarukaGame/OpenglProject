@@ -46,6 +46,24 @@ bool CShader::SetUpUniform()
         PRINT("texture uniformÇÃéÊìæÇ…é∏îsÇµÇ‹ÇµÇΩ\n");
     }
 
+    m_uniformList[SHADER_UNIFORM_SCALE] = -1;
+    m_uniformList[SHADER_UNIFORM_SCALE] = glGetUniformLocation(m_programID, "scale");
+    if (m_uniformList[SHADER_UNIFORM_SCALE] == -1) {
+        PRINT("scale uniformÇÃéÊìæÇ…é∏îsÇµÇ‹ÇµÇΩ\n");
+    }
+
+    m_uniformList[SHADER_UNIFORM_RATIO] = -1;
+    m_uniformList[SHADER_UNIFORM_RATIO] = glGetUniformLocation(m_programID, "ratio");
+    if (m_uniformList[SHADER_UNIFORM_RATIO] == -1) {
+        PRINT("ratio uniformÇÃéÊìæÇ…é∏îsÇµÇ‹ÇµÇΩ\n");
+    }
+
+    m_uniformList[SHADER_UNIFORM_TRANS_SLOPE] = -1;
+    m_uniformList[SHADER_UNIFORM_TRANS_SLOPE] = glGetUniformLocation(m_programID, "slope");
+    if (m_uniformList[SHADER_UNIFORM_TRANS_SLOPE] == -1) {
+        PRINT("slope uniformÇÃéÊìæÇ…é∏îsÇµÇ‹ÇµÇΩ\n");
+    }
+
 
     //----------------------------------------------------------
     //attributeê›íË
@@ -135,7 +153,7 @@ void CShader::CreateShaderProgram(const char* _vertSource, int _vertLength, cons
     }
 }
 
-void CShader::SetTransparent(const bool _value)
+void CShader::SetTransparent(const bool _value)const
 {
     m_transparent = _value;
 }
@@ -148,4 +166,41 @@ bool CShader::GetTransparent() const
 void CShader::Finalize()
 {
     glDeleteShader(m_programID);
+}
+
+void CShader::SetRatio(float _ratio) const
+{
+    if (m_uniformList[SHADER_UNIFORM_RATIO] != -1) {
+        glUseProgram(m_programID);
+        glUniform1f(m_uniformList[SHADER_UNIFORM_RATIO], _ratio);
+        glUseProgram(0);
+    }
+}
+
+void CShader::SetColor(const glm::vec3 _color)const {
+    if (m_uniformList[SHADER_UNIFORM_COLOR] != -1) {
+        glUseProgram(m_programID);
+        glUniform4f(m_uniformList[SHADER_UNIFORM_COLOR], _color.r, _color.g, _color.b, 1.0f);
+        glUseProgram(0);
+
+    }
+}
+
+void CShader::SetScale(const glm::vec3 _scale) const
+{
+    if (m_uniformList[SHADER_UNIFORM_SCALE] != -1) {
+        glUseProgram(m_programID);
+        glUniform3f(m_uniformList[SHADER_UNIFORM_SCALE], _scale.x,_scale.y,_scale.z);
+        glUseProgram(0);
+    }
+}
+
+void CShader::SetSlope(const float _slope) const
+{
+    if (m_uniformList[SHADER_UNIFORM_TRANS_SLOPE] != -1) {
+        glUseProgram(m_programID);
+        glUniform1f(m_uniformList[SHADER_UNIFORM_TRANS_SLOPE],_slope);
+        glUseProgram(0);
+    }
+
 }

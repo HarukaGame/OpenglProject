@@ -91,6 +91,8 @@
     <None Include="game\ShaderFiles\basic.vs" />
     <None Include="game\ShaderFiles\texture.fs" />
     <None Include="game\ShaderFiles\texture.vs" />
+    <None Include="game\ShaderFiles\transition.fs" />
+    <None Include="game\ShaderFiles\transition.vs" />
     <None Include="game\ShaderFiles\transparent.fs" />
     <None Include="game\ShaderFiles\transparent.vs" />
     <None Include="game\ShaderFiles\UIShader.fs" />
