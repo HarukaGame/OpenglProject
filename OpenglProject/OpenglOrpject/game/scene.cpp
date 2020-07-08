@@ -136,9 +136,9 @@ void CScene::Update()
 		CGameObject* tempObject = m_pObjectManager->CreateGameObject(CHash::CRC32("UIObject"));
 		const CShader* shader = SearchOrCreateShader(CHash::CRC32("TransShader"));
 		shader->SetRatio(m_trans);
-		shader->SetColor(glm::vec3(1, 1, 1));
+		shader->SetColor(glm::vec3(1, 0.8, 0.8));
 		shader->SetScale(glm::vec3(2, 2, 2));
-		shader->SetSlope(-2.0f);
+		shader->SetSlope(-1.0f);
 		shader->SetTransparent(true);
 		const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("UIMesh"));
 
