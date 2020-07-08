@@ -30,6 +30,7 @@ public:
 
 	const float* myvertices;
 	const float* m_normals;
+	const unsigned int* indeces;
 
 	GLuint vertexNum = 0;
 	GLuint elementNum = 0;
@@ -37,6 +38,9 @@ public:
 	glm::vec3 m_pos = glm::vec3(0, 0, 0);
 	glm::vec3 m_rot = glm::vec3(0, 0, 0);
 	glm::vec3 m_scale = glm::vec3(1, 1, 1);
+
+	bool m_isIndex = false;
+
 private:
 
 	glm::mat4 GetTransMatrix(glm::vec3 trans)const;

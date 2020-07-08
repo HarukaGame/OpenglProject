@@ -13,6 +13,7 @@
 #include "vertexfiles/cube.h"
 #include "vertexfiles/quad.h"
 #include "vertexfiles/ui.h"
+#include "vertexfiles/quad_index.h"
 #include "fileloader.h"
 #include "object_manager.h"
 
@@ -95,7 +96,7 @@ void CScene::Update()
 			float y = fmod(rand() / 100.0f, range) - range / 2.0f;
 			float z = fmod(rand() / 100.0f, range) - range / 2.0f;
 			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
+			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("IndexMesh"));
 			const CShader* shader = SearchOrCreateShader(CHash::CRC32("TextureShader"));
 
 			//-----------------------------------------------------
@@ -207,6 +208,11 @@ const CMesh* CScene::SearchOrCreateMesh(const hash _hash)
 		mesh->m_normals = PolygonUI::normals;
 		mesh->vertexNum = PolygonUI::vertexNum;
 		mesh->elementNum = PolygonUI::elementNum;
+	}
+	else if (_hash == CHash::CRC32("IndexMesh")) {
+		mesh->myvertices = PolygonQuadIndex::vertices;
+		mesh->indeces = PolygonQuadIndex::indeces;
+		mesh->m_isIndex = true;
 	}
 	else {
 		return nullptr;

@@ -15,6 +15,13 @@ void CBuffer::CreateBuffer(const CMesh* _mesh)
 	m_vertexNum = _mesh->GetVertexNum();
 }
 
+void CBuffer::CreateBufferIndex(const CMesh* _mesh)
+{
+	glGenBuffers(1, &m_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+	glBufferData(GL_ARRAY_BUFFER, 32 * 4 * sizeof(GLfloat), _mesh->myvertices, GL_STATIC_DRAW);
+}
+
 int CBuffer::GetVertexNum() const
 {
 	return m_vertexNum;

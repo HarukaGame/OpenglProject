@@ -9,6 +9,7 @@ class CBuffer {
 public:
 	int GetProgramID()const;
 	void CreateBuffer(const CMesh* _mesh);
+	void CreateBufferIndex(const CMesh* _mesh);
 	int GetVertexNum()const;
 	void DeleteBuffer();
 private:

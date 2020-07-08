@@ -109,6 +109,9 @@
     <ClCompile Include="game\scene_manager.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="game\vertexfiles\quad_index.cpp">
+      <Filter>game\res\vertexfiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="game\scene_manager.h">
       <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="game\vertexfiles\quad_index.h">
+      <Filter>game\res\vertexfiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -161,6 +161,85 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     glDisable(GL_BLEND);
 }
 
+void CRenderer::MeshDrawIndex(CBuffer* _buffer, const CShader* _shader, const CTexture* _texture, glm::mat4& modelMat, const unsigned int _indexCount,const unsigned int* indeces)
+{
+    if (_buffer == nullptr) {
+        PRINT("CRenderer::MeshDraw _buffer is nullptr\n");
+        return;
+    }
+    glBindBuffer(GL_ARRAY_BUFFER, _buffer->GetProgramID());
+
+    if (_shader == nullptr) {
+        PRINT("CRenderer::MeshDraw _shader is nullptr\n");
+        return;
+    }
+
+    glUseProgram(_shader->GetProgramID());
+    //glUseProgram(_buffer->GetProgramID());
+
+    //_mesh->SetColor(0, 1, 1, 1);
+    glm::vec3 lightDir = CLight::GetInstance()->GetDirection();
+    SetLight(_shader, lightDir.x, lightDir.y, lightDir.z);
+    if (_shader->GetTransparent() == true) {
+        glEnable(GL_BLEND);
+        //SetColor(_shader, 0, 1, 1, 0.5);
+    }
+    else {
+        //SetColor(_shader, 1, 0, 0, 1);
+    }
+
+    if (_texture != nullptr) {
+        SetTexture(_shader, _texture);
+    }
+    //_mesh->SetLight(1, 2, 3);
+
+    test += 0.1f;
+
+    //ビュー行列の取得
+    glm::mat4 view = CCamera::GetInstance()->GetViewMatrix();
+    //プロジェクション行列の取得
+    glm::mat4 pro = CCamera::GetInstance()->GetProjectionMatrix();
+
+    //ビューポート行列の取得
+    glm::mat4 viewportMat = GetViewPortMatrix((float)WINDOW_WIDTH, (float)WINDOW_HEIGHT);
+
+
+
+    //MVP行列の計算
+    glm::mat4 mvp = pro * view * modelMat;
+
+
+    glUniform3f(_shader->GetUniform(SHADER_UNIFORM_ADD_POSITION), modelMat[3][0], modelMat[3][1], -1);
+    //行列のUniform設定
+    glUniformMatrix4fv(_shader->GetUniform(SHADER_UNIFORM_MVP), 1, GL_FALSE, &mvp[0][0]);
+
+
+    int a = sizeof(GLfloat) * 6;
+    //PRINT("%d\n",a);
+    //Attribure設定
+    glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, 0);
+    glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 3));
+    glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_UV));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_UV), 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 6));
+
+    if (_texture != nullptr) {
+        glBindTexture(GL_TEXTURE_2D, _texture->m_buffer);
+    }
+
+    glDrawElements(GL_TRIANGLE_STRIP, _indexCount, GL_UNSIGNED_INT, indeces);
+
+    glDisableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION));
+    glDisableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL));
+    glDisableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_UV));
+
+    glUseProgram(0);
+
+    glDisable(GL_BLEND);
+
+}
+
 
 
 void CRenderer::Release() {

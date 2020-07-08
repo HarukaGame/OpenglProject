@@ -51,10 +51,12 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 			PRINT("CObjectManager::AllObjectDraw GetMesh() is nullptr\n");
 			continue;
 		}
+		const CMesh* mesh = (*iter)->GetMesh();
 		CBuffer* buffer = (*iter)->GetMesh()->GetBuffer();
 		const CTexture* texture = (*iter)->GetTexture();
 		glm::mat4 model = (*iter)->GetTransMat();
-		_renderer->MeshDraw(buffer, shader, texture,model);
+		_renderer->MeshDrawIndex(buffer, shader, texture,model,4,mesh->indeces);
+		//_renderer->MeshDraw(buffer, shader, texture,model);
 	}
 }
 

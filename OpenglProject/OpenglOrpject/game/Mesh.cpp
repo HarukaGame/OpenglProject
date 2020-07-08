@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "vertexfiles/cube.h"
+#include "vertexfiles/quad_index.h"
 
 #include "common_math.h"
 //GLuint CMesh::CreateShaderProgram(GLuint programID) {
@@ -81,10 +82,12 @@
 
 void CMesh::InitVertex()
 {
-    myvertices = PolygonCube::verticex;
-    m_normals = PolygonCube::normals;
-    vertexNum = PolygonCube::vertexNum;
-    elementNum = PolygonCube::elementNum;
+    myvertices = PolygonQuadIndex::vertices;
+    indeces = PolygonQuadIndex::indeces;
+    //myvertices = PolygonCube::verticex;
+    //m_normals = PolygonCube::normals;
+    //vertexNum = PolygonCube::vertexNum;
+    //elementNum = PolygonCube::elementNum;
 }
 
 //void CMesh::SetColor(float r, float g, float b, float a) {
@@ -105,7 +108,12 @@ bool CMesh::CreateBuffer()
     if (m_pBuffer == nullptr) {
         return false;
     }
-    m_pBuffer->CreateBuffer(this);
+    if (m_isIndex == true) {
+        m_pBuffer->CreateBufferIndex(this);
+    }
+    else {
+        m_pBuffer->CreateBuffer(this);
+    }
     return false;
 }
 
