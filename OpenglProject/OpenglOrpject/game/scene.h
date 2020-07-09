@@ -21,6 +21,7 @@ public:
 	const CMesh* SearchOrCreateMesh(const hash _hash);
 	const CShader* SearchOrCreateShader(const hash _hash);
 	const CTexture* SearchOrCreateTexture(const hash _hash);
+	const CTexture* SearchOrCreateTexture(const hash _textureHash, const hash _normalHashs);;
 private:
 	CObjectManager* m_pObjectManager = nullptr;
 	float m_trans = 1.0f;

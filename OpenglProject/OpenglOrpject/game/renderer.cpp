@@ -147,7 +147,7 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_UV), 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 6));
 
     if (_texture != nullptr) {
-        glBindTexture(GL_TEXTURE_2D, _texture->m_buffer);
+        glBindTexture(GL_TEXTURE_2D, _texture->m_textureID);
     }
 
     glDrawArrays(GL_TRIANGLES, 0, _buffer->GetVertexNum());
@@ -190,6 +190,7 @@ void CRenderer::MeshDrawIndex(CBuffer* _buffer, const CShader* _shader, const CT
 
     if (_texture != nullptr) {
         SetTexture(_shader, _texture);
+        SetNormalTexture(_shader, _texture);
     }
     //_mesh->SetLight(1, 2, 3);
 
@@ -225,7 +226,12 @@ void CRenderer::MeshDrawIndex(CBuffer* _buffer, const CShader* _shader, const CT
     glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_UV), 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 6));
 
     if (_texture != nullptr) {
-        glBindTexture(GL_TEXTURE_2D, _texture->m_buffer);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _texture->m_textureID);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, _texture->m_normalID);
+        glActiveTexture(GL_TEXTURE0);
+
     }
 
     glDrawElements(GL_TRIANGLE_STRIP, _indexCount, GL_UNSIGNED_INT, indeces);
@@ -262,6 +268,12 @@ void CRenderer::SetColor(const CShader* _shader, const float _r, const float _g,
 void CRenderer::SetTexture(const CShader* _shader, const CTexture* _texture)
 {
     glUniform1i(_shader->GetUniform(SHADER_UNIFORM_TEXTURE), 0);
+}
+
+void CRenderer::SetNormalTexture(const CShader* _shader, const CTexture* _normal)
+{
+    glUniform1i(_shader->GetUniform(SHADER_UNIFORM_NORMAL_MAP), 1);
+
 }
 
 

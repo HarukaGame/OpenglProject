@@ -22,6 +22,11 @@ void CGameObject::SetTexture(const CTexture* _texture)
 	m_pTexture = _texture;
 }
 
+void CGameObject::SetNormalTexture(const CTexture* _normalTexture)
+{
+	m_pNormal = _normalTexture;
+}
+
 const CShader* CGameObject::GetShader() const
 {
 	return m_pShader;
@@ -35,6 +40,11 @@ const CMesh* CGameObject::GetMesh() const
 const CTexture* CGameObject::GetTexture() const
 {
 	return m_pTexture;
+}
+
+const CTexture* CGameObject::GetNormalTexture() const
+{
+	return m_pNormal;
 }
 
 void CGameObject::SetPosition(const float _x, const float _y, const float _z)

@@ -31,6 +31,7 @@ public:
 	void SetLight(const CShader* _shader, const float _x, const float _y, const float _z);
 	void SetColor(const CShader* _shader, const float _r, const float _g, const float _b, const float _a);
 	void SetTexture(const CShader* _shader, const CTexture* _texture);
+	void SetNormalTexture(const CShader* _shader, const CTexture* _normal);
 
 	//const char* ReadShaderCode(const char* filename, const char* code);
 	

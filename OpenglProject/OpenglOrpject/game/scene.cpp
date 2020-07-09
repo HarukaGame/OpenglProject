@@ -98,25 +98,18 @@ void CScene::Update()
 			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
 			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("IndexMesh"));
 			const CShader* shader = SearchOrCreateShader(CHash::CRC32("TextureShader"));
+			//const CTexture*	texture = SearchOrCreateTexture(CHash::CRC32("BlockTexture"));
 
 			//-----------------------------------------------------
 			const CTexture* texture = nullptr;
-			if (x > 0) {
-				if (y > 0) {
-					texture = SearchOrCreateTexture(CHash::CRC32("Test4Texture"));
-				}
-				else {
-					texture = SearchOrCreateTexture(CHash::CRC32("Test24Texture"));
-				}
-			}
-			else {
-				if (y > 0) {
-					texture = SearchOrCreateTexture(CHash::CRC32("Test2Texture"));
-				}
-				else {
-					texture = SearchOrCreateTexture(CHash::CRC32("Test8Texture"));
-				}
-			}
+			//if (x > 0) {
+			//	texture = SearchOrCreateTexture(CHash::CRC32("BlockTexture"));
+
+			//}
+			//else {
+				texture = SearchOrCreateTexture(CHash::CRC32("BlockTexture"), CHash::CRC32("BlockNormalTexture"));
+
+			//}
 			
 
 			//-----------------------------------------------------
@@ -282,7 +275,6 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 		return cTexture;
 	}
 
-
 	CFileLoader fileloader = CFileLoader();
 	if (_hash == CHash::CRC32("Test24Texture")) {
 		fileloader.LoadFile("game/res/bmpfiles/rainbow24_511.bmp");
@@ -299,11 +291,90 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 	else if (_hash == CHash::CRC32("TransTexture")) {
 		fileloader.LoadFile("game/res/bmpfiles/rule1080p/114.bmp");
 	}
+	else if (_hash == CHash::CRC32("BlockTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/block.bmp");
+	}
+	else if (_hash == CHash::CRC32("BlockNormalTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/block_normal.bmp");
+	}
 	CTextureConverter textureConverter = CTextureConverter();
 	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());
 	CTexture* texture = CResourceManager::CreateResourceObject<CTexture>(_hash);
-	texture->SetTextureBuffer(textureConverter.GetBuffer(),textureConverter.GetWidth(),textureConverter.GetHeight(),textureConverter.GetElementNum());
+	texture->SetTextureBuffer(textureConverter.GetBuffer(), textureConverter.GetWidth(), textureConverter.GetHeight(), textureConverter.GetElementNum());
 	texture->CreateBuffer();
+	textureConverter.Release();
+	fileloader.Release();
+
+	if (texture == nullptr) {
+		return nullptr;
+	}
+	texture->RefCountUp();
+	return texture;
+}
+
+const CTexture* CScene::SearchOrCreateTexture(const hash _textureHash, const hash _normalHashs)
+{
+	const CTexture* cTexture = CResourceManager::SearchResourceObject<CTexture>(_textureHash);
+	if (cTexture != nullptr) {
+		cTexture->RefCountUp();
+		return cTexture;
+	}
+
+	CFileLoader fileloader = CFileLoader();
+	if (_textureHash == CHash::CRC32("Test24Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rainbow24_511.bmp");
+	}
+	else if (_textureHash == CHash::CRC32("Test8Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rainbow8.bmp");
+	}
+	else if (_textureHash == CHash::CRC32("Test4Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rainbow4.bmp");
+	}
+	else if (_textureHash == CHash::CRC32("Test2Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rainbow2_513.bmp");
+	}
+	else if (_textureHash == CHash::CRC32("TransTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rule1080p/114.bmp");
+	}
+	else if (_textureHash == CHash::CRC32("BlockTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/block.bmp");
+	}
+	else if (_textureHash == CHash::CRC32("BlockNormalTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/block_normal.bmp");
+	}
+	CTextureConverter textureConverter = CTextureConverter();
+	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());
+	CTexture* texture = CResourceManager::CreateResourceObject<CTexture>(_textureHash);
+	texture->SetTextureBuffer(textureConverter.GetBuffer(), textureConverter.GetWidth(), textureConverter.GetHeight(), textureConverter.GetElementNum());
+	texture->CreateBuffer();
+	textureConverter.Release();
+	fileloader.Release();
+
+
+	if (_normalHashs == CHash::CRC32("Test24Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rainbow24_511.bmp");
+	}
+	else if (_normalHashs == CHash::CRC32("Test8Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rainbow8.bmp");
+	}
+	else if (_normalHashs == CHash::CRC32("Test4Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rainbow4.bmp");
+	}
+	else if (_normalHashs == CHash::CRC32("Test2Texture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rainbow2_513.bmp");
+	}
+	else if (_normalHashs == CHash::CRC32("TransTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/rule1080p/114.bmp");
+	}
+	else if (_normalHashs == CHash::CRC32("BlockTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/block.bmp");
+	}
+	else if (_normalHashs == CHash::CRC32("BlockNormalTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/block_normal.bmp");
+	}
+	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());
+	texture->SetNormalBuffer(textureConverter.GetBuffer(), textureConverter.GetWidth(), textureConverter.GetHeight(), textureConverter.GetElementNum());
+	texture->CreateNormalBuffer();
 	textureConverter.Release();
 	fileloader.Release();
 

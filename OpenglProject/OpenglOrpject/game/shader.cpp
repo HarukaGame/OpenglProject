@@ -40,10 +40,16 @@ bool CShader::SetUpUniform()
         PRINT("texture uniform‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½\n");
     }
 
+    m_uniformList[SHADER_UNIFORM_NORMAL_MAP] = -1;
+    m_uniformList[SHADER_UNIFORM_NORMAL_MAP] = glGetUniformLocation(m_programID, "normal_map");
+    if (m_uniformList[SHADER_UNIFORM_NORMAL_MAP] == -1) {
+        PRINT("normal_map uniform‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½\n");
+    }
+
     m_uniformList[SHADER_UNIFORM_ADD_POSITION] = -1;
     m_uniformList[SHADER_UNIFORM_ADD_POSITION] = glGetUniformLocation(m_programID, "add");
     if (m_uniformList[SHADER_UNIFORM_ADD_POSITION] == -1) {
-        PRINT("texture uniform‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½\n");
+        PRINT("add uniform‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½\n");
     }
 
     m_uniformList[SHADER_UNIFORM_SCALE] = -1;

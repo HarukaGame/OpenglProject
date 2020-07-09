@@ -174,7 +174,7 @@ void CBmpAnalyzer::SerUpColorPalette(const u8* _buffer, u32& _sride, const u32 _
 
 bool CBmpAnalyzer::SetUpColorData24(const u8* _buffer, u32& _sride, const BITMAP_FORMAT _bitmap)
 {
-	u32 index = _sride;
+	u32 index = _bitmap.m_headerFile.m_bfOffBits;
 	u32 height = _bitmap.m_infoFile.m_biHeight;
 	u32 width = _bitmap.m_infoFile.m_biWidth;
 	u32 size = width * height * 3;
