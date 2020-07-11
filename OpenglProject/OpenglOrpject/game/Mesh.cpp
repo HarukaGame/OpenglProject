@@ -63,6 +63,9 @@ void CMesh::AddTangent()
             newVertices[i] = myvertices[sride];
             sride++;
         }
+        else {
+            newVertices[i] = 0;
+        }
     }
 
     unsigned int posSride = 0;
