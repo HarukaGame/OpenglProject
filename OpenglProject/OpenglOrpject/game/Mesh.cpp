@@ -9,98 +9,23 @@
 #include "vertexfiles/quad_index.h"
 
 #include "common_math.h"
-//GLuint CMesh::CreateShaderProgram(GLuint programID) {
-//
-//
-//    m_programID = programID;
-//    glUseProgram(m_programID);
-//
-//    m_uniformColor = glGetUniformLocation(m_programID, "color");
-//    if (m_uniformColor == -1) {
-//        printf("color uniformの取得に失敗しました");
-//
-//    }
-//    m_uniformLight = glGetUniformLocation(m_programID, "light");
-//    if (m_uniformLight == -1) {
-//        printf("light uniformの取得に失敗しました");
-//
-//    }
-//
-//    m_uniformModelMat = glGetUniformLocation(m_programID, "MVP");
-//    if (m_uniformModelMat == -1) {
-//        printf("MVP uniformの取得に失敗しました");
-//
-//    }
-//
-//
-//
-//
-//    return m_programID;
-//
-//}
 
-//GLint CMesh::CreateVAO(){
-//    //頂点配列オブジェクト
-//    m_vaoID = -1;
-//    glGenBuffers(1, &m_vaoID); // Generate our Vertex Buffer Object
-//    glBindBuffer(GL_ARRAY_BUFFER, m_vaoID); // Bind our Vertex Buffer Object
-//
-//    //頂点バッファオブジェクト
-//    m_vboID = -1;
-//    glGenBuffers(1, &m_vboID); // Generate our Vertex Buffer Object
-//    glBindBuffer(GL_ARRAY_BUFFER, m_vboID); // Bind our Vertex Buffer Object
-//
-//    glBufferData(GL_ARRAY_BUFFER, vertexNum * 2 * 3 * sizeof(GLfloat), &myvertices[0], GL_STATIC_DRAW); // Set the size and data of our VBO and set it to STATIC_DRAW
-//
-//    //int attlocation = glGetAttribLocation(m_programID, "position");         //何番目のattribute変数か
-//    //glEnableVertexAttribArray(attlocation);                                 //attribute属性を有効にする
-//    //glVertexAttribPointer(attlocation, 3, GL_FLOAT, GL_FALSE, 0, 0); //OpenGLからシェーダーに頂点情報を
-//
-//
-//
-//    //m_normalID = -1;
-//    //glGenBuffers(1, &m_normalID); // Generate our Vertex Buffer Object
-//    //glBindBuffer(GL_ARRAY_BUFFER, m_normalID); // Bind our Vertex Buffer Object
-//
-//
-//
-//    //glBufferData(GL_ARRAY_BUFFER, vertexNum * 3 * sizeof(GLfloat), &m_normals[0], GL_STATIC_DRAW); // Set the size and data of our VBO and set it to STATIC_DRAW
-//    //int normalLocation = glGetAttribLocation(m_programID, "normals");
-//    //glEnableVertexAttribArray(normalLocation);
-//    //glVertexAttribPointer(normalLocation, 3, GL_FLOAT, GL_TRUE, 0,0);
-//
-//
-//    //glBindBuffer(GL_ARRAY_BUFFER, attlocation);
-//
-//    //glBindBuffer(GL_ARRAY_BUFFER, normalLocation);
-//
-//    //
-//    //glBindVertexArray(0);
-//
-//    return m_vaoID;
-//}
+
+static const unsigned int COLUMN_START_POSITION = 0;
+static const unsigned int COLUMN_END_POSITION = 2;
+static const unsigned int COLUMN_START_NORMAL = 3;
+static const unsigned int COLUMN_END_NORMAL = 5;
+static const unsigned int COLUMN_START_UV = 6;
+static const unsigned int COLUMN_END_UV = 7;
+static const unsigned int COLUMN_START_TANGENT = 8;
+static const unsigned int COLUMN_END_TANGENT = 10;
+
 
 void CMesh::InitVertex()
 {
     myvertices = PolygonQuadIndex::vertices;
     indeces = PolygonQuadIndex::indeces;
-    //myvertices = PolygonCube::verticex;
-    //m_normals = PolygonCube::normals;
-    //vertexNum = PolygonCube::vertexNum;
-    //elementNum = PolygonCube::elementNum;
 }
-
-//void CMesh::SetColor(float r, float g, float b, float a) {
-//    glUniform4f(m_uniformColor, r, g, b, a);
-//}
-//
-//void CMesh::SetLight(float x, float y, float z)
-//{
-//    float length = sqrtf(x * x + y * y + z * z);
-//    glUniform3f(m_uniformLight, x/length, y/length, z/length);
-//}
-
-
 
 bool CMesh::CreateBuffer()
 {
@@ -125,22 +50,67 @@ CBuffer* CMesh::GetBuffer() const
 
 void CMesh::AddTangent()
 {
-    unsigned int vertexDataNum = vertexNum * (elementNum + 3);
+    unsigned int tangentElementNum = 3;
+    unsigned int newElementNum = elementNum + tangentElementNum;
+    unsigned int vertexDataNum = vertexNum * newElementNum;
     float* newVertices = (float*)malloc(vertexDataNum * sizeof(float));
 
     unsigned int vertexIndex = 0;
     unsigned int sride = 0;
     for (unsigned int i = 0; i < vertexDataNum; i++) {
-        vertexIndex = i % (elementNum + 3);
+        vertexIndex = i % newElementNum;
         if (vertexIndex < elementNum) {
             newVertices[i] = myvertices[sride];
             sride++;
         }
     }
 
+    unsigned int posSride = 0;
+    unsigned int normallSride = 0;
+    unsigned int tangentSride = 0;
+    vertexIndex = 0;
+    for (unsigned int i = 0; i < vertexNum /3; i++) {
+        unsigned int index0 = newElementNum * (i * 3 + 0);
+        unsigned int index1 = newElementNum * (i * 3 + 1);
+        unsigned int index2 = newElementNum * (i * 3 + 2);
+        glm::vec3 pos[3];
+        glm::vec2 uv[3];
+        pos[0].x = newVertices[index0 + COLUMN_START_POSITION + 0];
+        pos[0].y = newVertices[index0 + COLUMN_START_POSITION + 1];
+        pos[0].z = newVertices[index0 + COLUMN_START_POSITION + 2];
+        pos[1].x = newVertices[index1 + COLUMN_START_POSITION + 0];
+        pos[1].y = newVertices[index1 + COLUMN_START_POSITION + 1];
+        pos[1].z = newVertices[index1 + COLUMN_START_POSITION + 2];
+        pos[2].x = newVertices[index2 + COLUMN_START_POSITION + 0];
+        pos[2].y = newVertices[index2 + COLUMN_START_POSITION + 1];
+        pos[2].z = newVertices[index2 + COLUMN_START_POSITION + 2];
+
+        uv[0].x = newVertices[index0 + COLUMN_START_UV + 0];
+        uv[0].y = newVertices[index0 + COLUMN_START_UV + 1];
+        uv[1].x = newVertices[index1 + COLUMN_START_UV + 0];
+        uv[1].y = newVertices[index1 + COLUMN_START_UV + 1];
+        uv[2].x = newVertices[index2 + COLUMN_START_UV + 0];
+        uv[2].y = newVertices[index2 + COLUMN_START_UV + 1];
+        glm::vec3 deltaPos1 = pos[1] - pos[0];
+        glm::vec3 deltaPos2 = pos[2] - pos[0];
+        glm::vec2 deltaUV1 = uv[1] - uv[0];
+        glm::vec2 deltaUV2 = uv[2] - uv[0];
+        float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+        glm::vec3 tangent = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y);
+        newVertices[index0 + COLUMN_START_TANGENT + 0] += tangent.x;
+        newVertices[index1 + COLUMN_START_TANGENT + 0] += tangent.x;
+        newVertices[index2 + COLUMN_START_TANGENT + 0] += tangent.x;
+        newVertices[index0 + COLUMN_START_TANGENT + 1] += tangent.y;
+        newVertices[index1 + COLUMN_START_TANGENT + 1] += tangent.y;
+        newVertices[index2 + COLUMN_START_TANGENT + 1] += tangent.y;
+        newVertices[index0 + COLUMN_START_TANGENT + 2] += tangent.z;
+        newVertices[index1 + COLUMN_START_TANGENT + 2] += tangent.z;
+        newVertices[index2 + COLUMN_START_TANGENT + 2] += tangent.z;
+
+    }
 
     m_tangentFrag = true;
-    elementNum += 2;
+    elementNum += tangentElementNum;
     myvertices = newVertices;
 }
 
