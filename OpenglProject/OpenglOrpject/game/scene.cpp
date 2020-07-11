@@ -26,6 +26,21 @@
 #include <math.h>
 
 
+bool CScene::Initilize()
+{
+	CGameObject* tempObject = m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+	const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
+	const CShader* shader = SearchOrCreateShader(CHash::CRC32("TextureShader"));
+	const CTexture* texture = SearchOrCreateTexture(CHash::CRC32("BlockTexture"), CHash::CRC32("BlockNormalTexture"));
+
+	tempObject->SetMesh(mesh);
+	tempObject->SetShader(shader);
+	tempObject->SetTexture(texture);
+	tempObject->SetPosition(0,0,0);
+
+	return true;
+}
+
 void CScene::Finalize()
 {
 	m_pObjectManager->AllObjectDelete();
@@ -72,58 +87,7 @@ void CScene::Update()
 	if (Input::GetKey('3')) {
 		m_pObjectManager->DeleteObject(CHash::CRC32("TestCube"));
 	}
-	//if (Input::GetKeyDown('1')) {
-	//	for (int i = 0; i < 10; i++) {
-	//		float range = 10.0f;
-	//		float x = fmod(rand() / 100.0f, range) - range / 2.0f;
-	//		float y = fmod(rand() / 100.0f, range) - range / 2.0f;
-	//		float z = fmod(rand() / 100.0f, range) - range / 2.0f;
-	//		CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-	//		const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
-	//		const CShader* shader = SearchOrCreateShader(CHash::CRC32("TransparentShader"));
-	//		tempObject->SetMesh(mesh);
-	//		tempObject->SetShader(shader);
-	//		tempObject->SetPosition(x, y, z);
 
-	//	}
-
-
-	//}
-	if (Input::GetKeyDown('2')) {
-		for (int i = 0; i < 10; i++) {
-			float range = 10.0f;
-			float x = fmod(rand() / 100.0f, range) - range / 2.0f;
-			float y = fmod(rand() / 100.0f, range) - range / 2.0f;
-			float z = fmod(rand() / 100.0f, range) - range / 2.0f;
-			CGameObject* tempObject =  m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
-			const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("IndexMesh"));
-			const CShader* shader = SearchOrCreateShader(CHash::CRC32("TextureShader"));
-			//const CTexture*	texture = SearchOrCreateTexture(CHash::CRC32("BlockTexture"));
-
-			//-----------------------------------------------------
-			const CTexture* texture = nullptr;
-			//if (x > 0) {
-			//	texture = SearchOrCreateTexture(CHash::CRC32("BlockTexture"));
-
-			//}
-			//else {
-				texture = SearchOrCreateTexture(CHash::CRC32("BlockTexture"), CHash::CRC32("BlockNormalTexture"));
-
-			//}
-			
-
-			//-----------------------------------------------------
-
-			//const CShader* shader = SearchOrCreateShader(CHash::CRC32("BasicShader"));
-			tempObject->SetMesh(mesh);
-			tempObject->SetShader(shader);
-			tempObject->SetTexture(texture);
-			tempObject->SetPosition(x, y, z);
-
-		}
-
-
-	}
 
 #ifdef _DEBUG
 	if (Input::GetKeyDown('4')) {
@@ -143,9 +107,6 @@ void CScene::Update()
 		tempObject->SetPosition(0.0, 0.0, 0);
 	}
 
-	//if (Input::GetKeyDown('5')) {
-	//	CSceneManager::GetInstance().LoadScene(CHash::CRC32("MainScene"));
-	//}
 
 	if (Input::GetKey('6')) {
 		m_trans -= 0.01f;
@@ -205,6 +166,7 @@ const CMesh* CScene::SearchOrCreateMesh(const hash _hash)
 	else if (_hash == CHash::CRC32("IndexMesh")) {
 		mesh->myvertices = PolygonQuadIndex::vertices;
 		mesh->indeces = PolygonQuadIndex::indeces;
+		mesh->vertexNum = PolygonQuadIndex::verticesNum;
 		mesh->m_isIndex = true;
 	}
 	else {

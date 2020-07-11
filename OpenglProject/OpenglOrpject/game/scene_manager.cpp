@@ -14,9 +14,9 @@ void CSceneManager::LoadScene(hash _sceneID)
 	CSceneBase* sceneBase = nullptr;
 	if (_sceneID == CHash::CRC32("MainScene")) {
 		CScene* newScene = new CScene();
-		newScene->Initilize();
-		newScene->SetID(_sceneID);
 		newScene->SetObjectManager(m_objectManager);
+		newScene->SetID(_sceneID);
+		newScene->Initilize();
 		sceneBase = newScene;
 	}
 	else {

@@ -112,6 +112,7 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
 
     if (_texture != nullptr) {
         SetTexture(_shader, _texture);
+        SetNormalTexture(_shader, _texture);
     }
     //_mesh->SetLight(1, 2, 3);
 
@@ -147,7 +148,12 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_UV), 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 6));
 
     if (_texture != nullptr) {
+        glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, _texture->m_textureID);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, _texture->m_normalID);
+        glActiveTexture(GL_TEXTURE0);
+
     }
 
     glDrawArrays(GL_TRIANGLES, 0, _buffer->GetVertexNum());

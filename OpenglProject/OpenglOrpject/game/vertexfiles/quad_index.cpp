@@ -10,4 +10,5 @@ const unsigned int PolygonQuadIndex::indeces[] = {
 	0,1,2,3
 };
 
+const unsigned int PolygonQuadIndex::verticesNum = 32;
 

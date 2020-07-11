@@ -12,7 +12,7 @@ class CTexture;
 #include "hash.h"
 class CScene :public CSceneBase{
 public:
-	bool Initilize()override { return true; };
+	bool Initilize()override;
 	void Finalize()override;
 
 	void SetObjectManager(CObjectManager* _objectManager) { m_pObjectManager = _objectManager; };

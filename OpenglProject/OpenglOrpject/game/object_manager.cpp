@@ -55,8 +55,12 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 		CBuffer* buffer = (*iter)->GetMesh()->GetBuffer();
 		const CTexture* texture = (*iter)->GetTexture();
 		glm::mat4 model = (*iter)->GetTransMat();
-		_renderer->MeshDrawIndex(buffer, shader, texture,model,4,mesh->indeces);
-		//_renderer->MeshDraw(buffer, shader, texture,model);
+		if (mesh->m_isIndex == true) {
+			_renderer->MeshDrawIndex(buffer, shader, texture,model,4,mesh->indeces);
+		}
+		else {
+			_renderer->MeshDraw(buffer, shader, texture,model);
+		}
 	}
 }
 
