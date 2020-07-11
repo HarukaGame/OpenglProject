@@ -25,6 +25,7 @@ public:
 	CBuffer* GetBuffer()const;
 	GLuint GetVertexNum()const { return vertexNum; }
 	GLuint GetElementNum()const { return elementNum; }
+	void AddTangent();
 	glm::mat4 GetModelMatrix()const;
 	void Finalize()override;
 
@@ -34,13 +35,14 @@ public:
 
 	GLuint vertexNum = 0;
 	GLuint elementNum = 0;
+	GLuint indexNum = 0;
 
 	glm::vec3 m_pos = glm::vec3(0, 0, 0);
 	glm::vec3 m_rot = glm::vec3(0, 0, 0);
 	glm::vec3 m_scale = glm::vec3(1, 1, 1);
 
 	bool m_isIndex = false;
-
+	bool m_tangentFrag = false;
 private:
 
 	glm::mat4 GetTransMatrix(glm::vec3 trans)const;

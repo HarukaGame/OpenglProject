@@ -167,6 +167,7 @@ const CMesh* CScene::SearchOrCreateMesh(const hash _hash)
 		mesh->myvertices = PolygonQuadIndex::vertices;
 		mesh->indeces = PolygonQuadIndex::indeces;
 		mesh->vertexNum = PolygonQuadIndex::verticesNum;
+		mesh->elementNum = PolygonQuadIndex::elementNum;
 		mesh->m_isIndex = true;
 	}
 	else {

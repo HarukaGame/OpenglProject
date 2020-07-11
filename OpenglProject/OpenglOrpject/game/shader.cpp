@@ -89,6 +89,11 @@ bool CShader::SetUpUniform()
         PRINT("texture_uv attribute‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½\n");
     }
 
+    m_attributeList[SHADER_ATTRIBUTE_TANGENT] = glGetAttribLocation(m_programID, "tangent");
+    if (m_attributeList[SHADER_ATTRIBUTE_TANGENT] == -1) {
+        PRINT("tangent attribute‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½\n");
+    }
+
     return true;
 }
 

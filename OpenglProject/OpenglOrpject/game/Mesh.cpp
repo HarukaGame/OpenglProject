@@ -108,6 +108,7 @@ bool CMesh::CreateBuffer()
     if (m_pBuffer == nullptr) {
         return false;
     }
+    AddTangent();
     if (m_isIndex == true) {
         m_pBuffer->CreateBufferIndex(this);
     }
@@ -120,6 +121,27 @@ bool CMesh::CreateBuffer()
 CBuffer* CMesh::GetBuffer() const
 {
     return m_pBuffer;
+}
+
+void CMesh::AddTangent()
+{
+    unsigned int vertexDataNum = vertexNum * (elementNum + 3);
+    float* newVertices = (float*)malloc(vertexDataNum * sizeof(float));
+
+    unsigned int vertexIndex = 0;
+    unsigned int sride = 0;
+    for (unsigned int i = 0; i < vertexDataNum; i++) {
+        vertexIndex = i % (elementNum + 3);
+        if (vertexIndex < elementNum) {
+            newVertices[i] = myvertices[sride];
+            sride++;
+        }
+    }
+
+
+    m_tangentFrag = true;
+    elementNum += 2;
+    myvertices = newVertices;
 }
 
 glm::mat4 CMesh::GetModelMatrix() const
@@ -136,6 +158,9 @@ void CMesh::Finalize()
     if (m_pBuffer != nullptr) {
         m_pBuffer->DeleteBuffer();
         delete m_pBuffer;
+    }
+    if (m_tangentFrag == true) {
+        delete myvertices;
     }
 }
 

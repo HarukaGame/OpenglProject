@@ -141,11 +141,13 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     //PRINT("%d\n",a);
     //Attribure設定
     glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION));
-    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, 0);
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_POSITION), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 11, 0);
     glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL));
-    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat)*3));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_NORMAL), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 11, (void*)(sizeof(GLfloat)*3));
     glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_UV));
-    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_UV), 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 8, (void*)(sizeof(GLfloat) * 6));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_UV), 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 11, (void*)(sizeof(GLfloat) * 6));
+    glEnableVertexAttribArray(_shader->GetAttribute(SHADER_ATTRIBUTE_TANGENT));
+    glVertexAttribPointer(_shader->GetAttribute(SHADER_ATTRIBUTE_TANGENT), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 11, (void*)(sizeof(GLfloat) * 8));
 
     if (_texture != nullptr) {
         glActiveTexture(GL_TEXTURE0);
