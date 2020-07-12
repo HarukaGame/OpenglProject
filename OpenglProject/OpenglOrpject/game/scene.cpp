@@ -38,6 +38,14 @@ bool CScene::Initilize()
 	m_cube->SetTexture(texture);
 	m_cube->SetPosition(0,0,0);
 
+	CGameObject* secondCube = m_pObjectManager->CreateGameObject(CHash::CRC32("SecondCube"));
+	secondCube->SetMesh(SearchOrCreateMesh(CHash::CRC32("CubeMesh")));
+	const CShader* secondShader = SearchOrCreateShader(CHash::CRC32("BasicShader"));
+	secondCube->SetShader(secondShader);
+	secondShader->SetColor(glm::vec3(1, 1, 1));
+	secondCube->SetPosition(2, 0, 0);
+	
+
 	return true;
 }
 

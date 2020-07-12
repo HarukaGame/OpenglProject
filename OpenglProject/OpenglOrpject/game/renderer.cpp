@@ -147,6 +147,8 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     model3[2][1] = modelMat[2][1];
     model3[2][2] = modelMat[2][2];
 
+    model3 =  glm::transpose(model3);
+
     glUniformMatrix3fv(_shader->GetUniform(SHADER_UNIFORM_MODEL_MAT), 1, GL_FALSE, &model3[0][0]);
 
     int a = sizeof(GLfloat) * 6;

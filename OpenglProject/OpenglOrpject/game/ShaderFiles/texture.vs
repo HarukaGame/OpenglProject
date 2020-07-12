@@ -13,11 +13,11 @@ void main(void) {
     vec3 n = normalize(normals);
     vec3 t = normalize(tangent);
     vec3 b = cross(n,t);
-    _light.x = dot(t,light);
-    _light.y = dot(b,light);
-    _light.z = dot(n,light);
+    vec3 tempLight = model_mat * light;
+    _light.x = dot(t,tempLight);
+    _light.y = dot(b,tempLight);
+    _light.z = dot(n,tempLight);
 
-    _light = model_mat * _light;
     vec4 v = vec4(position, 1.0);
     gl_Position = MVP * v;
 }
