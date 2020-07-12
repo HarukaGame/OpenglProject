@@ -20,6 +20,7 @@ public:
 	void SetPosition(const float _x,const float _y,const float _z);
 	void SetRotate(const float _x, const float _y, const float _z);
 	void SetScale(const float _x, const float _y, const float _z);
+	void Rotate(const float _x, const float _y, const float _z);
 	glm::vec3 GetPosition()const;
 	glm::mat4 GetTransMat();
 

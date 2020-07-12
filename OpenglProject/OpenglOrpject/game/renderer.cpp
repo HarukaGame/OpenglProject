@@ -136,6 +136,18 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
     //行列のUniform設定
     glUniformMatrix4fv(_shader->GetUniform(SHADER_UNIFORM_MVP), 1, GL_FALSE, &mvp[0][0]);
 
+    glm::mat3 model3 = glm::mat3();
+    model3[0][0] = modelMat[0][0];
+    model3[0][1] = modelMat[0][1];
+    model3[0][2] = modelMat[0][2];
+    model3[1][0] = modelMat[1][0];
+    model3[1][1] = modelMat[1][1];
+    model3[1][2] = modelMat[1][2];
+    model3[2][0] = modelMat[2][0];
+    model3[2][1] = modelMat[2][1];
+    model3[2][2] = modelMat[2][2];
+
+    glUniformMatrix3fv(_shader->GetUniform(SHADER_UNIFORM_MODEL_MAT), 1, GL_FALSE, &model3[0][0]);
 
     int a = sizeof(GLfloat) * 6;
     //PRINT("%d\n",a);

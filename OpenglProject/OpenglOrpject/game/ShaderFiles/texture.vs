@@ -3,6 +3,7 @@ attribute vec3 normals;
 attribute vec2 texture_uv;
 attribute vec3 tangent;
 uniform mat4 MVP;
+uniform mat3 model_mat;
 uniform vec3 light;
 varying vec2 _texture_uv;
 varying vec3 _light;
@@ -16,6 +17,7 @@ void main(void) {
     _light.y = dot(b,light);
     _light.z = dot(n,light);
 
+    _light = model_mat * _light;
     vec4 v = vec4(position, 1.0);
     gl_Position = MVP * v;
 }

@@ -5,6 +5,7 @@
 #include "scene_base.h"
 
 class CObjectManager;
+class CGameObject;
 class CShader;
 class CMesh;
 class CTexture;
@@ -25,6 +26,7 @@ public:
 private:
 	CObjectManager* m_pObjectManager = nullptr;
 	float m_trans = 1.0f;
+	CGameObject* m_cube = nullptr;
 };
 
 #endif // !__SCENE_H__

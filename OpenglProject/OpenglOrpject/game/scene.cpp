@@ -28,15 +28,15 @@
 
 bool CScene::Initilize()
 {
-	CGameObject* tempObject = m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
+	m_cube = m_pObjectManager->CreateGameObject(CHash::CRC32("TestCube"));
 	const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("CubeMesh"));
 	const CShader* shader = SearchOrCreateShader(CHash::CRC32("TextureShader"));
 	const CTexture* texture = SearchOrCreateTexture(CHash::CRC32("BlockTexture"), CHash::CRC32("BlockNormalTexture"));
 
-	tempObject->SetMesh(mesh);
-	tempObject->SetShader(shader);
-	tempObject->SetTexture(texture);
-	tempObject->SetPosition(0,0,0);
+	m_cube->SetMesh(mesh);
+	m_cube->SetShader(shader);
+	m_cube->SetTexture(texture);
+	m_cube->SetPosition(0,0,0);
 
 	return true;
 }
@@ -90,23 +90,20 @@ void CScene::Update()
 
 
 #ifdef _DEBUG
-	if (Input::GetKeyDown('4')) {
-		CGameObject* tempObject = m_pObjectManager->CreateGameObject(CHash::CRC32("UIObject"));
-		const CShader* shader = SearchOrCreateShader(CHash::CRC32("TransShader"));
-		shader->SetRatio(m_trans);
-		shader->SetColor(glm::vec3(1, 0.8, 0.8));
-		shader->SetScale(glm::vec3(2, 2, 2));
-		shader->SetSlope(-1.0f);
-		shader->SetTransparent(true);
-		const CMesh* mesh = SearchOrCreateMesh(CHash::CRC32("UIMesh"));
+	const float rotetaSpeed = 0.05f;
 
-		const CTexture* texture = SearchOrCreateTexture(CHash::CRC32("TransTexture"));
-		tempObject->SetMesh(mesh);
-		tempObject->SetShader(shader);
-		tempObject->SetTexture(texture);
-		tempObject->SetPosition(0.0, 0.0, 0);
+	if (Input::GetKey('I')) {
+		m_cube->Rotate(-rotetaSpeed, 0.0f, 0.0f);
 	}
-
+	if (Input::GetKey('K')) {
+		m_cube->Rotate(rotetaSpeed, 0.0f, 0.0f);
+	}
+	if (Input::GetKey('J')) {
+		m_cube->Rotate(0.0f, -rotetaSpeed, 0.0f);
+	}
+	if (Input::GetKey('L')) {
+		m_cube->Rotate(0.0f, rotetaSpeed, 0.0f);
+	}
 
 	if (Input::GetKey('6')) {
 		m_trans -= 0.01f;

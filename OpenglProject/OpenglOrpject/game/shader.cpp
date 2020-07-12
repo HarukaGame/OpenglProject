@@ -27,10 +27,16 @@ bool CShader::SetUpUniform()
     }
 
     m_uniformList[SHADER_UNIFORM_MVP] = -1;
-
     m_uniformList[SHADER_UNIFORM_MVP] = glGetUniformLocation(m_programID, "MVP");
     if (m_uniformList[SHADER_UNIFORM_MVP] == -1) {
         PRINT("MVP uniform‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½\n");
+
+    }
+
+    m_uniformList[SHADER_UNIFORM_MODEL_MAT] = -1;
+    m_uniformList[SHADER_UNIFORM_MODEL_MAT] = glGetUniformLocation(m_programID, "model_mat");
+    if (m_uniformList[SHADER_UNIFORM_MODEL_MAT] == -1) {
+        PRINT("model_mat uniform‚ÌŽæ“¾‚ÉŽ¸”s‚µ‚Ü‚µ‚½\n");
 
     }
 
