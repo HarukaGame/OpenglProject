@@ -135,7 +135,7 @@ void CScene::Update()
 	}
 
 	if (Input::GetKey(VK_SPACE)) {
-		m_cube->RotateAxis(glm::vec3(0, 1, 0), 1);
+		m_cube->RotateAxis(glm::vec3(1, 0, 1), 1);
 	}
 
 
