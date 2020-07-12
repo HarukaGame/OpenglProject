@@ -21,8 +21,11 @@ public:
 	void SetRotate(const float _x, const float _y, const float _z);
 	void SetScale(const float _x, const float _y, const float _z);
 	void Rotate(const float _x, const float _y, const float _z);
+	void Move(const float _x, const float _y, const float _z);
 	glm::vec3 GetPosition()const;
 	glm::mat4 GetTransMat();
+
+	void RotateAxis(glm::vec3 _axis, float _angle);
 
 	void SetHash(const hash _hash);
 	hash GetHash()const;

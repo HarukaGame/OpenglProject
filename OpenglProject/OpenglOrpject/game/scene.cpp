@@ -99,19 +99,45 @@ void CScene::Update()
 
 #ifdef _DEBUG
 	const float rotetaSpeed = 0.05f;
+	const float moveSpeed = 0.1f;
 
-	if (Input::GetKey('I')) {
+	if (Input::GetKey(VK_SHIFT)&&Input::GetKey('I')) {
 		m_cube->Rotate(-rotetaSpeed, 0.0f, 0.0f);
 	}
-	if (Input::GetKey('K')) {
+	if (Input::GetKey(VK_SHIFT) && Input::GetKey('K')) {
 		m_cube->Rotate(rotetaSpeed, 0.0f, 0.0f);
 	}
-	if (Input::GetKey('J')) {
+	if (Input::GetKey(VK_SHIFT) && Input::GetKey('J')) {
 		m_cube->Rotate(0.0f, -rotetaSpeed, 0.0f);
 	}
-	if (Input::GetKey('L')) {
+	if (Input::GetKey(VK_SHIFT) && Input::GetKey('L')) {
 		m_cube->Rotate(0.0f, rotetaSpeed, 0.0f);
 	}
+
+
+	if (Input::GetKey(VK_CONTROL)&&Input::GetKey('I')) {
+		m_cube->Move(0,moveSpeed,0);
+	}
+	if (Input::GetKey(VK_CONTROL) && Input::GetKey('K')) {
+		m_cube->Move(0,-moveSpeed,0);
+	}
+	if (Input::GetKey(VK_CONTROL) && Input::GetKey('J')) {
+		m_cube->Move(-moveSpeed,0,0);
+	}
+	if (Input::GetKey(VK_CONTROL) && Input::GetKey('L')) {
+		m_cube->Move(moveSpeed,0,0);
+	}
+	if (Input::GetKey(VK_CONTROL) && Input::GetKey('U')) {
+		m_cube->Move(0,0,moveSpeed);
+	}
+	if (Input::GetKey(VK_CONTROL) && Input::GetKey('O')) {
+		m_cube->Move(0, 0, -moveSpeed);
+	}
+
+	if (Input::GetKey(VK_SPACE)) {
+		m_cube->RotateAxis(glm::vec3(0, 1, 0), 1);
+	}
+
 
 	if (Input::GetKey('6')) {
 		m_trans -= 0.01f;

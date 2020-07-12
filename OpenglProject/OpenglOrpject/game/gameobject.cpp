@@ -71,6 +71,12 @@ void CGameObject::Rotate(const float _x, const float _y, const float _z)
 	m_moved = true;
 }
 
+void CGameObject::Move(const float _x, const float _y, const float _z)
+{
+	m_position += glm::vec3(_x, _y, _z);
+	m_moved = true;
+}
+
 glm::vec3 CGameObject::GetPosition() const
 {
 	return m_position;;
@@ -82,6 +88,54 @@ glm::mat4 CGameObject::GetTransMat()
 		ReCalculateTrans();
 	}
 	return m_trans;
+}
+
+void CGameObject::RotateAxis(glm::vec3 _axis, float _angle)
+{
+	glm::vec3 tempAxis = glm::vec3(0,1,0);
+		
+	if (glm::length(_axis) != 0) {
+		tempAxis = glm::normalize(_axis);
+	}
+	float x = _axis.x;
+	float y = _axis.y;
+	float z = _axis.z;
+	float ang = deg_to_rad(_angle);
+	float COS = cosf(ang);
+	float SIN = sinf(ang);
+	float COSA = 1 - COS;
+	glm::mat3 rot = glm::mat3();
+	rot[0][0] = COS + x * x * COSA;
+	rot[0][1] = x * y * COSA - z * SIN;
+	rot[0][2] = z * x * COSA + y * SIN;
+
+	rot[1][0] = x * y * COSA + z * SIN;
+	rot[1][1] = COS + y * y * COSA;
+	rot[1][2] = y * z * COSA - x * SIN;
+
+	rot[2][0] = z * x * COSA - y * SIN;
+	rot[2][1] = y * z * COSA * x * SIN;
+	rot[2][2] = COS + z * z * COSA;
+
+	m_position = rot * m_position;
+
+	glm::mat3 tempModel = glm::mat3();
+	tempModel[0] = m_trans[0];
+	tempModel[1] = m_trans[1];
+	tempModel[2] = m_trans[2];
+	tempModel[0][0] = 1;
+	tempModel[1][1] = 1;
+	tempModel[2][2] = 1;
+	tempModel = glm::transpose(tempModel);
+
+	m_rotation.x += dot(tempModel * glm::vec3(1, 0, 0), tempAxis) * ang;
+	m_rotation.y += dot(tempModel * glm::vec3(0, 1, 0), tempAxis) * ang;
+	m_rotation.z += dot(tempModel * glm::vec3(0, 0, 1), tempAxis) * ang;
+
+	printf("%f\n", m_rotation.x);
+
+	m_moved = true;
+
 }
 
 void CGameObject::SetHash(const hash _hash)
