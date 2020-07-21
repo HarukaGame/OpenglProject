@@ -14,6 +14,7 @@
 #include "vertexfiles/quad.h"
 #include "vertexfiles/ui.h"
 #include "vertexfiles/quad_index.h"
+#include "vertexfiles/font_mesh.h"
 #include "fileloader.h"
 #include "object_manager.h"
 
@@ -44,6 +45,20 @@ bool CScene::Initilize()
 	secondCube->SetShader(secondShader);
 	secondShader->SetColor(glm::vec3(1, 1, 1));
 	secondCube->SetPosition(2, 0, 0);
+
+
+	CGameObject* font = m_pObjectManager->CreateGameObject(CHash::CRC32("FontObject"));
+	const CMesh* fontMesh = SearchOrCreateMesh(CHash::CRC32("FontMesh"));
+	const CShader* fontShader = SearchOrCreateShader(CHash::CRC32("FontShader"));
+	char moji = 'H';
+	float x = (1.0f / 16.0f) * (moji & 0x0f);
+	float y = (1.0f / 8.0f) * (moji >> 4);
+	fontShader->SetUV(glm::vec2(x, y));
+	const CTexture* fontTexture = SearchOrCreateTexture(CHash::CRC32("FontTexture"));
+	font->SetMesh(fontMesh);
+	font->SetShader(fontShader);
+	font->SetTexture(fontTexture);
+	font->SetScale(0.5f, 1.0f, 0.0f);
 	
 
 	return true;
@@ -194,6 +209,12 @@ const CMesh* CScene::SearchOrCreateMesh(const hash _hash)
 		mesh->vertexNum = PolygonUI::vertexNum;
 		mesh->elementNum = PolygonUI::elementNum;
 	}
+	else if (_hash == CHash::CRC32("FontMesh")) {
+		mesh->myvertices = FontMesh::verticex;
+		mesh->m_normals = FontMesh::normals;
+		mesh->vertexNum = FontMesh::vertexNum;
+		mesh->elementNum = FontMesh::elementNum;
+	}
 	else if (_hash == CHash::CRC32("IndexMesh")) {
 		mesh->myvertices = PolygonQuadIndex::vertices;
 		mesh->indeces = PolygonQuadIndex::indeces;
@@ -241,6 +262,10 @@ const CShader* CScene::SearchOrCreateShader(const hash _hash)
 	else if (_hash == CHash::CRC32("UIShader")) {
 		vertFilePath = "game/ShaderFiles/UIShader.vs";
 		fragFilePath = "game/ShaderFiles/UIShader.fs";
+	}
+	else if (_hash == CHash::CRC32("FontShader")) {
+		vertFilePath = "game/ShaderFiles/font.vs";
+		fragFilePath = "game/ShaderFiles/font.fs";
 	}
 	else if (_hash == CHash::CRC32("TransShader")) {
 		vertFilePath = "game/ShaderFiles/transition.vs";
@@ -291,6 +316,10 @@ const CTexture* CScene::SearchOrCreateTexture(const hash _hash)
 	else if (_hash == CHash::CRC32("BlockNormalTexture")) {
 		fileloader.LoadFile("game/res/bmpfiles/block_normal.bmp");
 	}
+	else if (_hash == CHash::CRC32("FontTexture")) {
+		fileloader.LoadFile("game/res/bmpfiles/moji.bmp");
+	}
+
 	CTextureConverter textureConverter = CTextureConverter();
 	textureConverter.ConvertTexture(fileloader.GetVoidBuffer(), fileloader.GetLength());
 	CTexture* texture = CResourceManager::CreateResourceObject<CTexture>(_hash);

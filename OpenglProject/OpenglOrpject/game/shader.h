@@ -4,6 +4,7 @@
 
 #include "resource_base.h"
 #include "glm/vec3.hpp"
+#include "glm/vec2.hpp"
 
 typedef unsigned int GLuint;
 enum SHADER_UNIFORM {
@@ -17,6 +18,7 @@ enum SHADER_UNIFORM {
 	SHADER_UNIFORM_SCALE,
 	SHADER_UNIFORM_RATIO,
 	SHADER_UNIFORM_TRANS_SLOPE,
+	SHADER_UNIFORM_UV,
 	SHADER_UNIFORM_NUM
 };
 
@@ -43,6 +45,7 @@ public:
 	void SetColor(const glm::vec3 _color)const;
 	void SetScale(const glm::vec3 _scale)const;
 	void SetSlope(const float _slope)const;
+	void SetUV(const glm::vec2& _uv)const;
 private:
 	mutable bool m_transparent = false;
 	GLuint m_programID = 0;

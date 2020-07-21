@@ -76,6 +76,12 @@ bool CShader::SetUpUniform()
         PRINT("slope uniformÇÃéÊìæÇ…é∏îsÇµÇ‹ÇµÇΩ\n");
     }
 
+    m_uniformList[SHADER_UNIFORM_UV] = -1;
+    m_uniformList[SHADER_UNIFORM_UV] = glGetUniformLocation(m_programID, "uv");
+    if (m_uniformList[SHADER_UNIFORM_UV] == -1) {
+        PRINT("uv uniformÇÃéÊìæÇ…é∏îsÇµÇ‹ÇµÇΩ\n");
+    }
+
 
     //----------------------------------------------------------
     //attributeê›íË
@@ -217,6 +223,16 @@ void CShader::SetSlope(const float _slope) const
     if (m_uniformList[SHADER_UNIFORM_TRANS_SLOPE] != -1) {
         glUseProgram(m_programID);
         glUniform1f(m_uniformList[SHADER_UNIFORM_TRANS_SLOPE],_slope);
+        glUseProgram(0);
+    }
+
+}
+
+void CShader::SetUV(const glm::vec2& _uv) const
+{
+    if (m_uniformList[SHADER_UNIFORM_UV] != -1) {
+        glUseProgram(m_programID);
+        glUniform2f(m_uniformList[SHADER_UNIFORM_UV], _uv.x,_uv.y);
         glUseProgram(0);
     }
 

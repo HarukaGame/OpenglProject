@@ -112,6 +112,9 @@
     <ClCompile Include="game\vertexfiles\quad_index.cpp">
       <Filter>game\res\vertexfiles</Filter>
     </ClCompile>
+    <ClCompile Include="game\vertexfiles\font_mesh.cpp">
+      <Filter>game\res\vertexfiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -213,6 +216,9 @@
     <ClInclude Include="game\vertexfiles\quad_index.h">
       <Filter>game\res\vertexfiles</Filter>
     </ClInclude>
+    <ClInclude Include="game\vertexfiles\font_mesh.h">
+      <Filter>game\res\vertexfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -247,6 +253,12 @@
       <Filter>game\res\shaderfiles</Filter>
     </None>
     <None Include="game\ShaderFiles\transition.vs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+    <None Include="game\ShaderFiles\font.fs">
+      <Filter>game\res\shaderfiles</Filter>
+    </None>
+    <None Include="game\ShaderFiles\font.vs">
       <Filter>game\res\shaderfiles</Filter>
     </None>
   </ItemGroup>
