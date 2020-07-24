@@ -24,6 +24,8 @@
 
 #include "scene_manager.h"
 
+#include "text_object.h"
+
 #include <math.h>
 
 
@@ -46,19 +48,26 @@ bool CScene::Initilize()
 	secondShader->SetColor(glm::vec3(1, 1, 1));
 	secondCube->SetPosition(2, 0, 0);
 
+	CCharObject* charObject = new CCharObject();
 
-	CGameObject* font = m_pObjectManager->CreateGameObject(CHash::CRC32("FontObject"));
 	const CMesh* fontMesh = SearchOrCreateMesh(CHash::CRC32("FontMesh"));
 	const CShader* fontShader = SearchOrCreateShader(CHash::CRC32("FontShader"));
-	char moji = 'H';
-	float x = (1.0f / 16.0f) * (moji & 0x0f);
-	float y = (1.0f / 8.0f) * (moji >> 4);
-	fontShader->SetUV(glm::vec2(x, y));
 	const CTexture* fontTexture = SearchOrCreateTexture(CHash::CRC32("FontTexture"));
-	font->SetMesh(fontMesh);
-	font->SetShader(fontShader);
-	font->SetTexture(fontTexture);
-	font->SetScale(0.5f, 1.0f, 0.0f);
+	charObject->SetUp('A', m_pObjectManager, fontMesh, fontShader, fontTexture);
+	charObject->SetScale(0.1f);
+	//CGameObject* font = m_pObjectManager->CreateGameObject(CHash::CRC32("FontObject"));
+	//const CMesh* fontMesh = SearchOrCreateMesh(CHash::CRC32("FontMesh"));
+	//const CShader* fontShader = SearchOrCreateShader(CHash::CRC32("FontShader"));
+	//char moji = 'H';
+	//float x = (1.0f / 16.0f) * (moji & 0x0f);
+	//float y = (1.0f / 8.0f) * (moji >> 4);
+	//fontShader->SetUV(glm::vec2(x, y));
+	//fontShader->SetTransparent(true);
+	//const CTexture* fontTexture = SearchOrCreateTexture(CHash::CRC32("FontTexture"));
+	//font->SetMesh(fontMesh);
+	//font->SetShader(fontShader);
+	//font->SetTexture(fontTexture);
+	//font->SetScale(0.5f, 1.0f, 0.0f);
 	
 
 	return true;

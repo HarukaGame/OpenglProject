@@ -115,6 +115,9 @@
     <ClCompile Include="game\vertexfiles\font_mesh.cpp">
       <Filter>game\res\vertexfiles</Filter>
     </ClCompile>
+    <ClCompile Include="game\text_object.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\application.h">
@@ -218,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="game\vertexfiles\font_mesh.h">
       <Filter>game\res\vertexfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="game\text_object.h">
+      <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

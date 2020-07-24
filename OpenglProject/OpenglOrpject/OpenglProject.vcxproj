@@ -46,6 +46,7 @@
     <ClCompile Include="game\shader_loader.cpp" />
     <ClCompile Include="game\texture.cpp" />
     <ClCompile Include="game\texture_loader.cpp" />
+    <ClCompile Include="game\text_object.cpp" />
     <ClCompile Include="game\vertexfiles\cube.cpp" />
     <ClCompile Include="game\vertexfiles\font_mesh.cpp" />
     <ClCompile Include="game\vertexfiles\quad.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="game\shader_loader.h" />
     <ClInclude Include="game\texture.h" />
     <ClInclude Include="game\texture_loader.h" />
+    <ClInclude Include="game\text_object.h" />
     <ClInclude Include="game\vertexfiles\cube.h" />
     <ClInclude Include="game\vertexfiles\font_mesh.h" />
     <ClInclude Include="game\vertexfiles\quad.h" />
