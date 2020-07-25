@@ -2,6 +2,7 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
+#include "my_list.h"
 #include "scene_base.h"
 
 class CObjectManager;
@@ -9,6 +10,7 @@ class CGameObject;
 class CShader;
 class CMesh;
 class CTexture;
+class CTextObject;
 
 #include "hash.h"
 class CScene :public CSceneBase{
@@ -27,6 +29,7 @@ private:
 	CObjectManager* m_pObjectManager = nullptr;
 	float m_trans = 1.0f;
 	CGameObject* m_cube = nullptr;
+	CList<CTextObject*> m_textObjectList = CList<CTextObject*>();
 };
 
 #endif // !__SCENE_H__

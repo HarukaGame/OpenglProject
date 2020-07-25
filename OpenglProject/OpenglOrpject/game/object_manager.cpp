@@ -13,7 +13,7 @@
 #include "hash.h"
 
 #include "debug_print.h"
-
+#pragma warning(disable : 4996)
 bool CObjectManager::Initilize()
 {
 	if (CCamera::CreateInstance(800, 600) == false) {
@@ -55,30 +55,33 @@ void CObjectManager::AllObjectDraw(CRenderer* _renderer)
 		CBuffer* buffer = (*iter)->GetMesh()->GetBuffer();
 		const CTexture* texture = (*iter)->GetTexture();
 		glm::mat4 model = (*iter)->GetTransMat();
+		glm::vec3 addUV = (*iter)->GetAddUV();
 		if (mesh->m_isIndex == true) {
 			_renderer->MeshDrawIndex(buffer, shader, texture,model,4,mesh->indeces);
 		}
 		else {
-			_renderer->MeshDraw(buffer, shader, texture,model);
+			_renderer->MeshDraw(buffer, shader, texture,model,addUV);
 		}
 	}
 }
 
 CGameObject* CObjectManager::CreateGameObject()
 {
-	CGameObject* tempObject = new CGameObject();
 	//CMesh* mesh = CResourceManager::SearchOrCreateResourceObject<CMesh>(CHash::CRC32("TestMesh"));
 	//CShader* shader = CResourceManager::SearchOrCreateResourceObject<CShader>(CHash::CRC32("TestShader"));
 	//tempObject->SetMesh(mesh);
 	//tempObject->SetShader(shader);
-	m_gameObjectList.PushBack(tempObject);
-	return tempObject;
+	char str[24];
+	sprintf(str, "object%d", m_createObjectCounter);
+	m_createObjectCounter++;
+	return CreateGameObject(CHash::CRC32(str));
 }
 
 CGameObject* CObjectManager::CreateGameObject(const hash _hash)
 {
-	CGameObject* temp = CreateGameObject();
+	CGameObject* temp = new CGameObject();
 	temp->SetHash(_hash);
+	m_gameObjectList.PushBack(temp);
 	return temp;
 }
 

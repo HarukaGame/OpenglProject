@@ -84,7 +84,7 @@ void CRenderer::StartDisplay() {
     glClearDepth(1.0f);
 }
 
-void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture* _texture,glm::mat4& modelMat) {
+void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture* _texture,glm::mat4& modelMat,const glm::vec3& _addUV) {
     if (_buffer == nullptr) {
         PRINT("CRenderer::MeshDraw _buffer is nullptr\n");
         return;
@@ -133,6 +133,9 @@ void CRenderer::MeshDraw(CBuffer* _buffer,const CShader* _shader,const CTexture*
 
 
     glUniform3f(_shader->GetUniform(SHADER_UNIFORM_ADD_POSITION), modelMat[3][0], modelMat[3][1], -1);
+    glUniform3f(_shader->GetUniform(SHADER_UNIFORM_SCALE), modelMat[0][0], modelMat[1][1], modelMat[2][2]);
+    glUniform2f(_shader->GetUniform(SHADER_UNIFORM_UV), _addUV.x, _addUV.y);
+
     //行列のUniform設定
     glUniformMatrix4fv(_shader->GetUniform(SHADER_UNIFORM_MVP), 1, GL_FALSE, &mvp[0][0]);
 

@@ -29,5 +29,6 @@ public:
 
 private:
 	CList<CGameObject*> m_gameObjectList = CList<CGameObject*>();
+	unsigned int m_createObjectCounter = 0;
 };
 #endif // !__OBJECT_MANAGER_H__

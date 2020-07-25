@@ -23,7 +23,7 @@ class CRenderer {
 public:
 	bool Initialize(HWND _hwnd);
 	void StartDisplay();
-	void MeshDraw(CBuffer* _buffer, const CShader* _shader, const CTexture* _texture, glm::mat4& modelMat);
+	void MeshDraw(CBuffer* _buffer, const CShader* _shader, const CTexture* _texture, glm::mat4& modelMat,const glm::vec3& _addUV);
 	void MeshDrawIndex(CBuffer* _buffer, const CShader* _shader, const CTexture* _texture, glm::mat4& modelMat,const unsigned int _indexCount,const unsigned int* indeces);
 	void Release();
 

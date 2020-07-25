@@ -25,6 +25,9 @@ public:
 	glm::vec3 GetPosition()const;
 	glm::mat4 GetTransMat();
 
+	void SetAddUV(const glm::vec3& _add) { m_addUV = _add; };
+	const glm::vec3& GetAddUV()const { return m_addUV; };
+
 	void RotateAxis(glm::vec3 _axis, float _angle);
 
 	void SetHash(const hash _hash);
@@ -44,6 +47,7 @@ private:
 	glm::vec3 m_rotation = glm::vec3(0, 0, 0);
 	glm::vec3 m_scale = glm::vec3(1, 1, 1);
 	glm::mat4 m_trans = glm::mat4();
+	glm::vec3 m_addUV = glm::vec3(0, 0,0);
 	bool m_moved = true;
 };
 #endif // !__GAMEOBJECT_H__
